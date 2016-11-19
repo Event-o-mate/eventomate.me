@@ -12,4 +12,5 @@ gem "coffee-script"
 gem 'sinatra-assetpack', :require => 'sinatra/assetpack'
 gem 'airborne'
 gem 'houston'
+gem 'sinatra-logentries'
 
