@@ -1,5 +1,4 @@
 class Event
-
   include DataMapper::Resource
 
   property :id, 					 Serial
@@ -11,5 +10,5 @@ class Event
 	property :finish_date,   DateTime 
 	property :all_day,		   Boolean 
   property :created_on,		 DateTime 
-  
+
 end
