@@ -43,7 +43,7 @@ class WebController < Sinatra::Base
 
 	get "/" do 
 		# haml :index
-		File.join(settings.public_folder, 'index.html')
+		send_file File.join(settings.public_folder, 'index.html')
 	end	
 end
 
