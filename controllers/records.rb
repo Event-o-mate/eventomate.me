@@ -30,7 +30,7 @@ class RecordsController < Sinatra::Base
 	end
 
 	#GET ALL RECORDS FOR MODEL
-	get '/all/:model' do
+	get '/:model' do
 		Response.for :all_records, api_request do |response|
 			if valid_model?
 				all_records = Object.const_get(model_name).all()
@@ -65,7 +65,7 @@ class RecordsController < Sinatra::Base
 	end
 
 	#CREATE RECORD
-	post '/create/:model' do
+	put '/create/:model' do
 		Response.for :create_record, api_request do |response|
 			if valid_model?
 				new_record = Object.const_get(model_name).new

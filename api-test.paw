@@ -305,7 +305,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"struki84@gmail.com\\",\\"password\\":\\"an00biis\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"test@gmail.com\\",\\"password\\":\\"1234qwert\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">1</attribute>
         <attribute name="name" type="string">Login</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -395,7 +395,7 @@
         <relationship name="variable" type="1/1" destination="LMENVIRONMENTVARIABLE" idrefs="z105"></relationship>
     </object>
     <object type="LMENVIRONMENTVARIABLEVALUE" id="z135">
-        <attribute name="value" type="string">hash=bec38e648cd03c6b82e2e1ba64ae0e7d81e1853a1c17e763241d08a02be0b8aa</attribute>
+        <attribute name="value" type="string">hash=6fa11ff84483f5e5cb3c94ba924a8fefd54d7c02ee62827f2bbaec1d7cca23d7</attribute>
         <relationship name="environment" type="1/1" destination="LMENVIRONMENT" idrefs="z136"></relationship>
         <relationship name="variable" type="1/1" destination="LMENVIRONMENTVARIABLE" idrefs="z103"></relationship>
     </object>
