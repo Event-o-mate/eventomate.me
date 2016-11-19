@@ -29,10 +29,6 @@ class RecordsController < Sinatra::Base
 		# end 
 	end
 
-	configure do
-  	Sinatra::Logentries.token = '6d9229f0-738e-4dc8-8310-e58c78459d5d'
-	end
-
 	#GET ALL RECORDS FOR MODEL
 	get '/all/:model' do
 		Response.for :all_records, api_request do |response|
