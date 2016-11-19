@@ -5,7 +5,7 @@ class Request
 		@data = args[:for][:request]
 		@params = args[:for][:params]
 
-		if @data.request_method == 'POST'
+		if @data.request_method == 'POST' || @data.request_method == 'PUT'
 			@data.body.rewind
 			@body = JSON.parse(@data.body.read)
 		end
