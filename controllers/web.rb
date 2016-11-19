@@ -6,7 +6,8 @@ require 'sinatra/assetpack'
 
 class WebController < Sinatra::Base
 	set :root, File.dirname(File.dirname(__FILE__))
-	# set :public_folder, '/var/www/app/public'
+	set :public_folder, 'public'
+	
 	# set :views, '/var/www/app/views'
 	enable :static
 
