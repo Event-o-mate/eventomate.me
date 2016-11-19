@@ -1,7 +1,3 @@
-#######################
-#### EXAMPLE MODEL ####
-#######################
-
 class User
 
   include DataMapper::Resource

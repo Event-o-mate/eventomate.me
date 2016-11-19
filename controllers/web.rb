@@ -19,7 +19,7 @@ class WebController < Sinatra::Base
 	# 	serve '/css',  from: '/assets/css'
 	# 	serve '/imgs', from: '/assets/imgs' 
 		
-	# 	js :main, [
+ #	 	js :main, [
  #      '/js/main.js',
  #    ]
 
