@@ -34,7 +34,7 @@ class WebController < Sinatra::Base
 
     # js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
     # css_compression :simple   # :simple | :sass | :yui | :sqwish
-	end
+	# end
 
 	# fetch angular templates
 	get '/templates/:filename' do
