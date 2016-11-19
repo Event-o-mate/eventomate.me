@@ -20,7 +20,7 @@ Dir[File.dirname(__FILE__) + '/models/*.rb'].each {|file| require file}
 #load managers
 Dir[File.dirname(__FILE__) + '/managers/*.rb'].each {|file| require file}
 
-Setup Database
+#Setup Database
 if ENV['RACK_ENV'] == 'development' 
 	DataMapper.setup(:default, "postgres://#{@config['db_user']}:#{@config['db_user_password']}@127.0.0.1/#{@config['db_name']}")
 elsif ENV['RACK_ENV'] == 'heroku'
