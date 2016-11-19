@@ -65,7 +65,7 @@ class RecordsController < Sinatra::Base
 	end
 
 	#CREATE RECORD
-	put '/create/:model' do
+	put '/:model' do
 		Response.for :create_record, api_request do |response|
 			if valid_model?
 				new_record = Object.const_get(model_name).new
@@ -83,7 +83,7 @@ class RecordsController < Sinatra::Base
 	end
 
 	#SAVE RECORD
-	post '/save/:model/?:id?' do
+	post '/:model/?:id?' do
 		Response.for :save_record, api_request do |response|
 			id = api_request.params[:id]
 			if valid_model?
