@@ -1,8 +1,10 @@
 (function () {
   'use strict';
 
-  var app = angular.module("eventomate", ["ngRoute"]);
-  app.config(function($routeProvider) {
+  var eventoMate = angular.module('eventomate', ['ngRoute','ngResource']);
+
+    // configure our routes
+    eventoMate.config(function($routeProvider) {
       $routeProvider
       .when("/", {
           templateUrl : "landing.html"
@@ -16,5 +18,5 @@
       .when("/new_event", {
           templateUrl : "new_event.html"
       });
-  });
+    });
 })()
