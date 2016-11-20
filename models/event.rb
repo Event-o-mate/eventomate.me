@@ -12,6 +12,6 @@ class Event
   property :created_on,		 DateTime 
 
   belongs_to :user
-  has n, attendees
+  has n, :attendees
 
 end

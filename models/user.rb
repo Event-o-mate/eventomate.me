@@ -8,7 +8,7 @@ class User
   property :recover_code,  String,   :length => 255
   property :registered_on, DateTime
 
-  has 1, account
-  has n, events 
+  has 1, :account
+  has n, :events 
   
 end
