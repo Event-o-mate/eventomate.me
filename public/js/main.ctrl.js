@@ -5,7 +5,7 @@
 
   	function MainCotroller() {
 
-  		
+  		$scope.test = "Simun ima brkove"
   	}
 
 
