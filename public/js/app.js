@@ -7,7 +7,8 @@
     eventoMate.config(function($routeProvider) {
       $routeProvider
       .when("/", {
-          templateUrl: "landing.html"
+          templateUrl: "landing.html",
+          controller: "MainController"
       })
       .when("/dashboard", {
           templateUrl : "dashboard.html" 
