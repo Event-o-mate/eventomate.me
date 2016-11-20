@@ -6,6 +6,9 @@ class User
   property :password, 		 String,   :length => 255
   property :token, 				 String,   :length => 255
   property :recover_code,  String,   :length => 255
-  property :registered_on, DateTime 
+  property :registered_on, DateTime
+
+  has 1, account
+  has n, events 
   
 end

@@ -6,4 +6,5 @@ class Account
   property :email, 		   	 String,   :length => 255
   property :created_on,		 DateTime 
 
+  belongs_to :user
 end

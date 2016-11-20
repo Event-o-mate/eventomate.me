@@ -11,4 +11,7 @@ class Event
 	property :all_day,		   Boolean 
   property :created_on,		 DateTime 
 
+  belongs_to :user
+  has n, attendees
+
 end
