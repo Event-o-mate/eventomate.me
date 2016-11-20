@@ -48,7 +48,7 @@ class Response
 
 	#Records Controller
 	def all_records
-		@content = @data if @error.nil?
+		@content = @data.to_json(:include => :accounts) if @error.nil?
 	end
 
 	def get_record
