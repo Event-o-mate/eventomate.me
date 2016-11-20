@@ -14,27 +14,27 @@ class WebController < Sinatra::Base
 	register Sinatra::Reloader
 	register Sinatra::AssetPack
 
-	# assets do
-	# 	serve '/js',   from: '/assets/js'
-	# 	serve '/css',  from: '/assets/css'
-	# 	serve '/imgs', from: '/assets/imgs' 
+	assets do
+		serve '/js',   from: '/assets/js'
+		serve '/css',  from: '/assets/css'
+		serve '/imgs', from: '/assets/imgs' 
 		
- #	 	js :main, [
- #      '/js/main.js',
- #    ]
+ 	 	js :main, [
+      '/js/main.js',
+    ]
 
- #    css :main, [
- #      '/css/style.css'
- #    ]
+    css :main, [
+      '/css/style.css'
+    ]
 
- #    js :ngApp, [
- #    	'/js/client.js',
- #    	'/js/main.ctrl.js',
- #    ]
+    js :ngApp, [
+    	'/js/client.js',
+    	'/js/main.ctrl.js',
+    ]
 
-    # js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
-    # css_compression :simple   # :simple | :sass | :yui | :sqwish
-	# end
+    js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
+    css_compression :simple   # :simple | :sass | :yui | :sqwish
+	end
 
 	# fetch angular templates
 	get '/templates/:filename' do
