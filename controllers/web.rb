@@ -42,7 +42,7 @@ class WebController < Sinatra::Base
 	end
 
 	get '/' do 
-		send_file 'index.html'
+		send_file File.join(settings.views, 'index.html')
 	end
 
 	get "/clock" do 
