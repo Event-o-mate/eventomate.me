@@ -36,6 +36,7 @@ class AuthenticationController < Sinatra::Base
 				record.account = Account.new
 				record.account.email = email
 				record.account.name = api_request.body["name"]
+				record.account.save
 				if record.save
 					response.data = record
 				else
