@@ -15,7 +15,7 @@ class WebController < Sinatra::Base
 	register Sinatra::AssetPack
 
 	assets do
-		serve '/js',   from: '/assets/js'
+		serve '/js',   from: 'assets/js'
 		serve '/css',  from: '/assets/css'
 		serve '/imgs', from: '/assets/imgs' 
 		
