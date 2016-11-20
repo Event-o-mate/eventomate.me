@@ -7,8 +7,8 @@ require 'sinatra/assetpack'
 class WebController < Sinatra::Base
 	set :root, File.dirname(File.dirname(__FILE__))
 	set :public_folder, 'public'
+	set :views, '/var/www/app/views'
 	
-	# set :views, '/var/www/app/views'
 	enable :static
 
 	register Sinatra::Reloader
@@ -41,7 +41,11 @@ class WebController < Sinatra::Base
 		haml params[:filename].to_sym
 	end
 
-	get "/" do 
+	get '/' do 
+		send_file 'index.html'
+	end
+
+	get "/clock" do 
 		# haml :index
 		send_file File.join(settings.public_folder, 'index.html')
 	end	
