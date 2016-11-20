@@ -71,29 +71,45 @@ ul.nav a:hover { color: #fff !important; }
 	 padding-left: 20px;
 	 font-size: 2rem;
 }
-
+.show{
+  opacity: 1;
+}
 /*  REGISTER DROPDOWN PAGE */
 .registar-dopdown-menu{
 	float: right;
 	width: 340px;
 	height: auto;
-	border: solid medium white;
 	text-align: center;
+  background: rgba(0,0,0,0.5);
+    padding: 20px;
+    margin-bottom: 10px;
+    transition: 1s;
+    opacity: 0;
+    z-index: 0;
 }
 
 .registar-dopdown-menu input {
 	margin: 10px;
+  width: 80%;
+}
+
+.registar-dopdown-menu button{
+    width: 50%; background-color: #995AA4; color: white; padding: 10px; box-shadow: 2px 2px 0 #5F0CA4; font-size: 1em;
 }
 
 .input-name-register{
 	margin-top: 30px;
 }
 
-.input-password-register{
-}
 
 .button-register{
 	margin: 15px;
+  width: 50%; 
+  background-color: #995AA4;
+   color: white; 
+   padding: 10px; 
+   box-shadow: 2px 2px 0 #5F0CA4;
+    font-size: 1em;
 }
 
 
@@ -101,18 +117,31 @@ ul.nav a:hover { color: #fff !important; }
 /*  LOG IN DROPDOWN PAGE */
 
 .login-dopdown-menu{
-		float: right;
+	float: right;
 	width: 340px;
 	height: auto;
-	border: solid medium white;
-	text-align: center;
+  right: 0;
+  position: absolute;
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+    padding: 20px;
+    margin-bottom: 10px;
+    transition: 1s;
+    opacity: 0;
+    z-index: 0;
+
 }
 
 .login-dopdown-menu input {
 	margin: 10px;
+  width: 80%;
 }
 
-.button-login{
+.login-dopdown-menu button{
+  width: 50%; background-color: #995AA4; color: white; padding: 10px; box-shadow: 2px 2px 0 #5F0CA4; font-size: 1em;
+}
+
+.button-dropdown{
 	margin: 25px;
 }
 
