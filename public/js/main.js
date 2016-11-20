@@ -12,3 +12,5 @@ $( '.login-button' ).click(function() {
  $( '.login-button' ).css( 'color', '#FCB549');
  $( '.register-button' ).css( 'color', 'white');
 });
+
+console.log("Loaded jquery")
