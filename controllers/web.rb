@@ -14,27 +14,27 @@ class WebController < Sinatra::Base
 	register Sinatra::Reloader
 	register Sinatra::AssetPack
 
-	assets do
-		serve '/js',   from: 'assets/js'
-		serve '/css',  from: 'assets/css'
-		serve '/imgs', from: 'assets/img' 
+	# assets do
+	# 	serve '/js',   from: 'assets/js'
+	# 	serve '/css',  from: 'assets/css'
+	# 	serve '/imgs', from: 'assets/img' 
 		
- 	 	js :main, [
-      '/js/main.js',
-    ]
+ # 	 	js :main, [
+ #      '/js/main.js',
+ #    ]
 
-    css :main, [
-      '/css/style.css'
-    ]
+ #    css :main, [
+ #      '/css/style.css'
+ #    ]
 
-    js :ngApp, [
-    	'/js/client.js',
-    	'/js/main.ctrl.js',
-    ]
+ #    js :ngApp, [
+ #    	'/js/client.js',
+ #    	'/js/main.ctrl.js',
+ #    ]
 
-    js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
-    css_compression :simple   # :simple | :sass | :yui | :sqwish
-	end
+ #    js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
+ #    css_compression :simple   # :simple | :sass | :yui | :sqwish
+	# end
 
 	# fetch angular templates
 	get '/templates/:filename' do
@@ -42,13 +42,9 @@ class WebController < Sinatra::Base
 	end
 
 	get '/' do 
-		send_file File.join(settings.views, 'index.html')
+		send_file File.join(settings.public_folder, 'index.html')
 	end
 
-	get "/clock" do 
-		# haml :index
-		send_file File.join(settings.public_folder, 'index.html')
-	end	
 end
 
 
