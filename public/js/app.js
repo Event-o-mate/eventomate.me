@@ -7,20 +7,16 @@
     eventoMate.config(function($routeProvider) {
       $routeProvider
       .when("/", {
-          templateUrl: "landing.html",
-          controller: "MainController" 
+          templateUrl: "landing.html"
       })
       .when("/dashboard", {
-          templateUrl : "dashboard.html",
-          controller: "MainController" 
+          templateUrl : "dashboard.html" 
       })
       .when("/event_page", {
-          templateUrl : "event_page.html",
-          controller: "MainController" 
+          templateUrl : "event_page.html"
       })
       .when("/new_event", {
-          templateUrl : "new_event.html",
-          controller: "MainController" 
+          templateUrl : "new_event.html"
       });
     });
 })()
