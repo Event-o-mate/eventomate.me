@@ -1,7 +1,7 @@
 (function ($) {
-  var app = angular.module('eventomate')
+  //var app = angular.module('eventomate')
   	
-  app.controller('MainController', function($scope){
+  eventoMate.controller('MainController', function($scope){
   		$scope.test = "Simun ima brkove"
 
   		console.log("Main Contrller " + test)
