@@ -33,6 +33,7 @@ class AuthenticationController < Sinatra::Base
 				record = security.model.new
 				record.attributes = api_request.for :register
 				record.token = security.generate_token
+				record.account = Account.new
 				record.account.email = email
 				record.account.name = api_request.body["name"]
 				if record.save
