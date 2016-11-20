@@ -1,5 +1,5 @@
 (function ($) {
-  var app = angular.module('eventomate', [])
+  var app = angular.module('eventomate')
   	
   app.controller('MainController', function($scope){
   		$scope.test = "Simun ima brkove"
