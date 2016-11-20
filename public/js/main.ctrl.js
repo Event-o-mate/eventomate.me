@@ -3,7 +3,7 @@
   	.module('eventomate')
   	.controller('MainController')
 
-  	function MainCotroller() {
+  	function MainCotroller($scope) {
 
   		$scope.test = "Simun ima brkove"
   	}
