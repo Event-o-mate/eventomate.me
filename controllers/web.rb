@@ -5,46 +5,56 @@ require 'sinatra/assetpack'
 
 
 class WebController < Sinatra::Base
+	enable :method_override
+
 	set :root, File.dirname(File.dirname(__FILE__))
 	set :public_folder, 'public'
-	set :views, 'views'
 	
-	# enable :static
-
 	register Sinatra::Reloader
 	register Sinatra::AssetPack
 
-	# assets do
-	# 	serve '/js',   from: 'assets/js'
-	# 	serve '/css',  from: 'assets/css'
-	# 	serve '/imgs', from: 'assets/img' 
-		
- # 	 	js :main, [
- #      '/js/main.js',
- #    ]
+	helpers do 
+		def html(view)
+			File.read(File.join("#{settings.views}/templates", "#{view.to_s}.html"))
+		end
+	end
 
- #    css :main, [
- #      '/css/style.css'
- #    ]
+	assets do
+		serve '/js',   from: 'public/js'
+		serve '/css',  from: 'public/css'
+		serve '/imgs', from: 'public/img' 
 
- #    js :ngApp, [
- #    	'/js/client.js',
- #    	'/js/main.ctrl.js',
- #    ]
+    # array of style files
+    css :main, [
+      '/css/main.css'
+    ]
 
- #    js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
- #    css_compression :simple   # :simple | :sass | :yui | :sqwish
-	# end
+    # array of angular app files
+    js :ngApp, [
+    	# Global app js file
+    	'/js/app.js',
+    	#Controllers
+    	'/js/landing_page/landing.ctrl.js',
+    	'/js/dashboard/dashboard.ctrl.js',
+    	'/js/event/event.ctrl.js',
+    	'/js/new_event/new_event.ctrl.js'
+    ]
+
+    js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
+    css_compression :simple   # :simple | :sass | :yui | :sqwish
+	end
+
+	# fetch layout and landing page
+	get '/' do 
+		haml :index
+	end
 
 	# fetch angular templates
 	get '/templates/:filename' do
-		haml params[:filename].to_sym
+		template = File.join("#{settings.views}/templates", "#{params[:filename]}.html")
+		send_file template
+		# haml params[:filename].to_sym
 	end
-
-	get '/' do 
-		send_file File.join(settings.public_folder, 'index.html')
-	end
-
 end
 
 

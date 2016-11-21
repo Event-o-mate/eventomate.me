@@ -1,5 +1,5 @@
 #Gemfile
-ruby '2.0.0'
+ruby '2.3.2'
 source 'http://rubygems.org'
 
 gem "sinatra"

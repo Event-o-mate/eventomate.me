@@ -1,19 +1,39 @@
-var eventomate = angular.module('eventomate', ['ngRoute','ngResource']);
+(function() {
+  'use_strict'
 
-// configure our routes
-eventomate.config(function($routeProvider) {
-  $routeProvider
-  .when("/", {
-      templateUrl: "landing.html",
-      controller: "MainController"
-  })
-  .when("/dashboard", {
-      templateUrl : "dashboard.html" 
-  })
-  .when("/event_page", {
-      templateUrl : "event_page.html"
-  })
-  .when("/new_event", {
-      templateUrl : "new_event.html"
-  });
-});
+  var modules = [
+    "ngRoute",
+    'ngResource',
+    'ngCookies'
+  ]
+
+  angular
+    .module("EventoMate", modules)
+    .config(['$routeProvider', function($routeProvider) {
+      $routeProvider
+      .when("/", {
+          controller: "LandingPageController",
+          controllerAs: "landing",
+          templateUrl: "templates/landing"
+      })
+      .when("/dashboard", {
+          controller: "DashboardController",
+          controllerAs: "dashboard",
+          templateUrl : "templates/dashboard" 
+      })
+      .when("/event_page", {
+          controller: "EventController",
+          controllerAs: "event",
+          templateUrl : "templates/event_page"
+      })
+      .when("/new_event", {
+          controller: "NewEventController",
+          controllerAs: "new_event",
+          templateUrl : "templates/new_event"
+      });
+    }])
+})()
+
+
+
+

@@ -3,7 +3,7 @@
 ###################
 # RBENV
 rbenv_root: /usr/local/rbenv
-ruby_version: 2.0.0-p353
+ruby_version: 2.2.6
 
 #NGINX
 config_file_path: files/nginx.conf

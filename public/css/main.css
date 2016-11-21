@@ -1,5 +1,5 @@
 body{
-	background-image: url('../img/space-bg-tileable.jpg');
+	background-image: url('/img/space-bg-tileable.jpg');
 	background-size: 200px;
 	color: white;
 }
