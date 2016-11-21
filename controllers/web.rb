@@ -33,6 +33,9 @@ class WebController < Sinatra::Base
     js :ngApp, [
     	# Global app js file
     	'/js/app.js',
+    	# App common libs
+    	'/js/common/directives/ngRegister.js',
+    	'/js/common/directives/ngLogin.js',
     	#Controllers
     	'/js/landing_page/landing.ctrl.js',
     	'/js/dashboard/dashboard.ctrl.js',

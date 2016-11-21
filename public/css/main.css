@@ -77,6 +77,7 @@ ul.nav a:hover { color: #fff !important; }
 /*  REGISTER DROPDOWN PAGE */
 .registar-dopdown-menu{
 	float: right;
+  display: none;
 	width: 340px;
 	height: auto;
 	text-align: center;
@@ -118,6 +119,7 @@ ul.nav a:hover { color: #fff !important; }
 
 .login-dopdown-menu{
 	float: right;
+  display: none;
 	width: 340px;
 	height: auto;
   right: 0;
