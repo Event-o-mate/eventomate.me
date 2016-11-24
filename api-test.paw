@@ -91,7 +91,7 @@
     <object type="LMENVIRONMENTDOMAIN" id="z106">
         <attribute name="uuid" type="string">1A7DA251-C63E-4DEC-AA47-54BBED7994D7</attribute>
         <attribute name="order" type="int64">0</attribute>
-        <attribute name="name" type="string">Records</attribute>
+        <attribute name="name" type="string">Interface</attribute>
         <relationship name="environments" type="0/0" destination="LMENVIRONMENT" idrefs="z136 z102"></relationship>
         <relationship name="variables" type="0/0" destination="LMENVIRONMENTVARIABLE" idrefs="z105 z104 z103"></relationship>
     </object>
@@ -352,7 +352,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"test@gmail.com\\",\\"password\\":\\"1234qwert\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"email\\":\\"falix@gmail.com\\",\\"password\\":\\"1234qwert\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Register</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -380,17 +380,17 @@
         <attribute name="name" type="string">Default Jar</attribute>
     </object>
     <object type="LMENVIRONMENTVARIABLEVALUE" id="z132">
-        <attribute name="value" type="string">server.dev:3000/api/authenticate</attribute>
+        <attribute name="value" type="string">eventomate.dev:8080/api/authenticate</attribute>
         <relationship name="environment" type="1/1" destination="LMENVIRONMENT" idrefs="z102"></relationship>
         <relationship name="variable" type="1/1" destination="LMENVIRONMENTVARIABLE" idrefs="z104"></relationship>
     </object>
     <object type="LMENVIRONMENTVARIABLEVALUE" id="z133">
-        <attribute name="value" type="string">hash=bec38e648cd03c6b82e2e1ba64ae0e7d81e1853a1c17e763241d08a02be0b8aa</attribute>
+        <attribute name="value" type="string">hash=833ff5115a36616302dc460385457bc6944ce0c16c0f4072d1b6a7844d90e421</attribute>
         <relationship name="environment" type="1/1" destination="LMENVIRONMENT" idrefs="z102"></relationship>
         <relationship name="variable" type="1/1" destination="LMENVIRONMENTVARIABLE" idrefs="z103"></relationship>
     </object>
     <object type="LMENVIRONMENTVARIABLEVALUE" id="z134">
-        <attribute name="value" type="string">server.dev:3000/api/records</attribute>
+        <attribute name="value" type="string">eventomate.dev:8080/api/records</attribute>
         <relationship name="environment" type="1/1" destination="LMENVIRONMENT" idrefs="z102"></relationship>
         <relationship name="variable" type="1/1" destination="LMENVIRONMENTVARIABLE" idrefs="z105"></relationship>
     </object>

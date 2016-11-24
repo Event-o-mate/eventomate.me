@@ -27,11 +27,13 @@ class AuthenticationController < Sinatra::Base
 	post '/register' do
 		Response.for :register, api_request do |response|
 			email = api_request.body["email"]
+			password = api_request.body["password"]
 			record = security.model.first(:email => email)
 			if record.nil?
 				#provided email is not in use, user can register with it
 				record = security.model.new
-				record.attributes = api_request.for :register
+				record.email = email
+				record.password = password
 				record.token = security.generate_token
 				record.account = Account.new
 				record.account.email = email

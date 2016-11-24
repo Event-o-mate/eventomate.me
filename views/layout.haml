@@ -10,9 +10,13 @@
     /Bootstrap
     / %link{:rel => "stylesheet", :href => "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap.min.css"}
     %link{:rel => "stylesheet", :href => "css/bootstrap.css"}
+    %link{:rel => "stylesheet", :href => "css/autocomplete.css"}
     
-    /include css
+    /Include main css file
     = css :main
+
+    /Include used libraries css files
+    = css :libs
 
   %body{"ng-app" => "EventoMate"}
     
@@ -30,19 +34,28 @@
   %footer
     /JQuery
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"}
+
+    /Momnet.js
+    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js"}
     
-    / AngularJS
+    /AngularJS
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"}
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.js"}
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.5.8/angular-resource.min.js"}
+    
     /Angular libs
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/angular-js-bootstrap-datetimepicker/2.0.3/datetimepicker.min.js"}
+    //Cookies manager
     %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-cookies.js"}
     
-
-
+    /Google maps API
+    %script{:src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyC20xo5vUPz42LM5lG0GOhdwjniQR7pUu0&libraries=places"}
+    
     /Boostrap
     %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"}
     
-    /Angular app files
+    /Include used libraries
+    = js :libs
+
+    /Include angular app files
     = js :ngApp
+

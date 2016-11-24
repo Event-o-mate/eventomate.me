@@ -35,7 +35,7 @@ class QueryController < Sinatra::Base
 		end
 	end
 
-	get '/my_events' do 
+	get '/hosting' do 
 		token = security.parse_tokens api_request.env
 		id = @model.first(:token => token).id
 		unless user.nil? 
@@ -46,7 +46,7 @@ class QueryController < Sinatra::Base
 
 	end
 
-	get '/my_attending_events' do 
+	get '/attending' do 
 		token = security.parse_tokens api_request.env
 		id = @model.first(:token => token).id
 		Attendee.all(:user_id => id).to_json

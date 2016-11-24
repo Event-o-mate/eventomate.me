@@ -1,0 +1,70 @@
+  <!-- CREATE EVENT FORM -->
+  <div class="container" id="create-event">
+    <div class="row">
+
+      <div class="col-md-6 offset-md-3">
+          <h1 class="text-center">Create new event</h1>
+          <form role="form" class="text-left">
+              <div class="form-group">
+                  <label class="control-label" for="inputLabel1">Event name</label>
+                  <input type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" ng-model="events.title">
+              </div>
+              <div class="row">
+                  <div class="col-md-6 dropdown">
+                    
+                    <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#">
+                      <div class="input-group">
+                        <label class="control-label" for="inputLabel1">Start time</label>
+                        <input type="text" id="inputLabel1" class="form-control" data-ng-model="{{dateRangeStart | date:'EEE dd MMM yyyy HH:mm'}}">
+                      </div>
+                    </a>
+                    <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
+                      <datetimepicker 
+                        data-ng-model="dateRangeStart"
+                        data-datetimepicker-config="{ dropdownSelector: '#dropdownStart', renderOn: 'end-date-changed' }"
+                        data-on-set-time="startDateOnSetTime()"
+                        data-before-render="startDateBeforeRender($dates)"/></datetimepicker>
+                    </ul>
+                    
+                      <!-- <div class="form-group">
+                          <label class="control-label" for="inputLabel1">Start time</label>
+                          <input type="text" class="form-control" id="inputLabel1" ng-model="events.startTime">
+                      </div> -->
+                  </div>
+                  <div class="col-md-6 dropdown">
+                    <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#">
+                      <div class="input-group">
+                        <label class="control-label" for="inputLabel1">Start time</label>
+                        <input type="text" id="inputLabel1" class="form-control" data-ng-model="dateRangeEnd | date:'EEE dd MMM yyyy HH:mm'">
+                      </div>
+                    </a>
+                    <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
+                      <datetimepicker data-ng-model="dateRangeEnd"
+                        data-datetimepicker-config="{ dropdownSelector: '#dropdownEnd', renderOn: 'start-date-changed' }"
+                        data-on-set-time="endDateOnSetTime()"
+                        data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+                    </ul>
+
+                    <!--   <div class="form-group">
+                          <label class="control-label" for="inputLabel1">End time</label>
+                          <input type="text" class="form-control" id="inputLabel1" ng-model="events.endTime">
+                      </div> -->
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="control-label" for="inputLabel1">Location</label>
+                  <input type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" g-places-autocomplete ng-model="events.location">
+              </div>
+              <div class="form-group">
+                  <label class="control-label" for="textareaLabel1">Description</label>
+                  <textarea class="form-control" id="textareaLabel1">{{ events.description }}</textarea>
+              </div>
+              <button type="button" class="btn btn-add-section">+ Add new Section</button>
+              <button type="button" class="btn btn-publish" ng-click="events.publish()"> 
+                  Publish event
+              </button>
+          </form>
+        </div><!-- END COL -->
+
+      </div><!-- END ROW -->
+  </div>

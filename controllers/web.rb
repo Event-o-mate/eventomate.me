@@ -24,30 +24,43 @@ class WebController < Sinatra::Base
 		serve '/css',  from: 'public/css'
 		serve '/imgs', from: 'public/img' 
 
-    # array of style files
+    # main css style file
     css :main, [
       '/css/main.css'
     ]
 
-    # array of angular app files
-    js :ngApp, [
-    	# Global app js file
-    	'/js/app.js',
-    	# App common libs
-    	'/js/common/directives/ngRegister.js',
-    	'/js/common/directives/ngLogin.js',
-    	#Controllers
-    	'/js/landing_page/landing.ctrl.js',
-    	'/js/dashboard/dashboard.ctrl.js',
-    	'/js/event/event.ctrl.js',
-    	'/js/new_event/new_event.ctrl.js'
+    # css local libs
+    css :libs, [
+    	#bootstrap date time picker
+    	'/lib/datetimepicker/css/datetimepicker.css'
     ]
+
+    # angular app files
+    js :ngApp, [
+    	#main app js file
+    	'/js/app.js',
+    	#app common libs
+    	'/js/common/services/security.service.js',
+    	'/js/common/controllers/menu.ctrl.js',
+    	'/js/common/lib/autocomplete.js',
+    	#pages controllers
+    	'/js/home/home.ctrl.js',
+    	'/js/dashboard/dashboard.ctrl.js',
+    	'/js/events/events.ctrl.js'
+    ]
+
+    # js local libs
+    js :libs, [
+    	#bootstrap date time picker
+    	'/lib/datetimepicker/js/datetimepicker.js',
+    	'/lib/datetimepicker/js/datetimepicker.templates.js'
+    ] 
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
     css_compression :simple   # :simple | :sass | :yui | :sqwish
 	end
 
-	# fetch layout and landing page
+	# fetch layout and index(ng-view) with home page
 	get '/' do 
 		haml :index
 	end
@@ -56,7 +69,6 @@ class WebController < Sinatra::Base
 	get '/templates/:filename' do
 		template = File.join("#{settings.views}/templates", "#{params[:filename]}.html")
 		send_file template
-		# haml params[:filename].to_sym
 	end
 end
 
