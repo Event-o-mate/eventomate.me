@@ -28,6 +28,7 @@
 		function publish() {
 			if (!security.userValid) {
 				console.log("Register or login first")
+				$rootScope.registerInProgress = true
 			}
 
 		}
