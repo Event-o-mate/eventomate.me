@@ -15,7 +15,7 @@
                     <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#">
                       <div class="input-group">
                         <label class="control-label" for="inputLabel1">Start time</label>
-                        <input type="text" id="inputLabel1" class="form-control" data-ng-model="dateRangeStart | date:'EEE dd MMM yyyy HH:mm'">
+                        <input type="text" id="inputLabel1" class="form-control" data-ng-model="dateRangeStart">
                       </div>
                     </a>
                     <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
@@ -25,17 +25,12 @@
                         data-on-set-time="startDateOnSetTime()"
                         data-before-render="startDateBeforeRender($dates)"/></datetimepicker>
                     </ul>
-                    
-                      <!-- <div class="form-group">
-                          <label class="control-label" for="inputLabel1">Start time</label>
-                          <input type="text" class="form-control" id="inputLabel1" ng-model="events.startTime">
-                      </div> -->
                   </div>
                   <div class="col-md-6 dropdown">
                     <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#">
                       <div class="input-group">
                         <label class="control-label" for="inputLabel1">Start time</label>
-                        <input type="text" id="inputLabel1" class="form-control" data-ng-model="dateRangeEnd | date:'EEE dd MMM yyyy HH:mm'">
+                        <input type="text" id="inputLabel1" class="form-control" datetime="EEE dd MMM yyyy HH:mm" data-ng-model="dateRangeEnd">
                       </div>
                     </a>
                     <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
@@ -44,11 +39,6 @@
                         data-on-set-time="endDateOnSetTime()"
                         data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
                     </ul>
-
-                    <!--   <div class="form-group">
-                          <label class="control-label" for="inputLabel1">End time</label>
-                          <input type="text" class="form-control" id="inputLabel1" ng-model="events.endTime">
-                      </div> -->
                   </div>
               </div>
               <div class="form-group">

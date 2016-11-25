@@ -12,38 +12,42 @@
         </li>
         
         <li class="nav-item">
-          <a class="nav-link login-button" ng-hide="menu.userValid" ng-click="menu.toggleLogin()" href> LOG IN </a>
+          <a class="nav-link login-button" ng-hide="menu.security.userValid" ng-click="menu.toggleLogin()" href> LOG IN </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link logout-button" ng-show="menu.userValid" ng-click="menu.logout()" href>LOG OUT</a>
+          <a class="nav-link logout-button" ng-show="menu.security.userValid" ng-click="menu.logout()" href>LOG OUT </a>
         </li>
         
         <li class="nav-item">
-          <a class="nav-link register-button" ng-hide="menu.userValid" ng-click="menu.toggleRegister()" href> REGISTER</a>
+          <a class="nav-link register-button" ng-hide="menu.security.userValid" ng-click="menu.toggleRegister()" href> REGISTER</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" ng-show="menu.userValid" ng-href="#/dashboard"> DASHBOARD</a>
+          <a class="nav-link" ng-show="menu.security.userValid" ng-href="#/dashboard"> DASHBOARD</a>
         </li>
 
       </ul>
     </div>
 
   </nav>
-
-  <!-- REGISTAR-DROPDOWN MENU -->
-  <div class="registar-dopdown-menu" ng-show="menu.registerInProgress">
-    <input class="input-name-register" placeholder="name" type="name" ng-model="menu.name" >
-    <input class="input-email-register" placeholder="email" type="email" ng-model="menu.email">
-    <input class="input-password-register" type="password" ng-model="menu.password">
-    <button class="button-dropdown btn" ng-click="menu.register()"> REGISTER</button>
-  </div>
-
-  <!-- LOGIN-DROPDOWN MENU-->
-  <div class="login-dopdown-menu" ng-show="menu.loginInProgress">
-    <input class="input-email-login" placeholder="email" type="name" ng-model="menu.email" >
-    <input class="input-password-login" type="password" ng-model="menu.password">
-    <button class="button-dropdown  btn" ng-click="menu.login()"> LOGIN</button>
-  </div>
 </ng-controller>
+
+<!-- LOGIN MENU-->
+<script type="text/ng-template" id="loginDialog">
+  <div class="login-dialog">
+    <input class="input-email-login" placeholder="email" type="name" ng-model="email" >
+    <input class="input-password-login" type="password" ng-model="password">
+    <button class="button-dropdown  btn" ng-click="login()"> LOGIN</button>
+  </div>
+</script>
+
+<!-- REGISTER MENU -->
+<script type="text/ng-template" id="registerDialog">
+  <div class="registar-dialog" >
+    <input class="input-name-register" placeholder="name" type="name" ng-model="name" >
+    <input class="input-email-register" placeholder="email" type="email" ng-model="email">
+    <input class="input-password-register" type="password" ng-model="password">
+    <button class="button-dropdown btn" ng-click="register()"> REGISTER</button>
+  </div>
+</script>

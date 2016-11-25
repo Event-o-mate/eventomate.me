@@ -1,5 +1,5 @@
 body{
-	background-image: url('/img/space-bg-tileable.jpg');
+	background-image: url('../img/space-bg-tileable.jpg');
 	background-size: 200px;
 	color: white;
 }
@@ -49,7 +49,7 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 
-#create-event {padding-top: 50px;}
+#create-event {}
 .btn-add-section {width:  100%; background: none; border: dashed 2px white; margin-bottom: 50px; margin-top: 20px; color: white; }
 .btn-publish {width: 100%; background-color: #995AA4; color: white; padding: 20px; box-shadow: 2px 2px 0 #5F0CA4;}
 .form-control {background-color: rgba(0,0,0,0.3); border: 1px black solid;}
@@ -74,13 +74,12 @@ ul.nav a:hover { color: #fff !important; }
 .show{
   opacity: 1;
 }
-/*  REGISTER DROPDOWN PAGE */
-.registar-dopdown-menu{
-	float: right;
-  /*display: none;*/
-	width: 340px;
-	height: auto;
-	text-align: center;
+
+/* AUTH DIALOGS */
+
+.registar-dialog, .login-dialog {
+  height: auto;
+  text-align: center;
   background: rgba(0,0,0,0.5);
     padding: 20px;
     margin-bottom: 10px;
@@ -88,22 +87,21 @@ ul.nav a:hover { color: #fff !important; }
     z-index: 0;
 }
 
-.registar-dopdown-menu input {
-	margin: 10px;
+.registar-dialog input, .login-dialog input{
+  margin: 10px;
   width: 80%;
 }
 
-.registar-dopdown-menu button{
+.registar-dialog button, .login-dialog button{
     width: 50%; background-color: #995AA4; color: white; padding: 10px; box-shadow: 2px 2px 0 #5F0CA4; font-size: 1em;
 }
 
 .input-name-register{
-	margin-top: 30px;
+  margin-top: 30px;
 }
 
-
 .button-register{
-	margin: 15px;
+  margin: 15px;
   width: 50%; 
   background-color: #995AA4;
    color: white; 
@@ -112,41 +110,9 @@ ul.nav a:hover { color: #fff !important; }
     font-size: 1em;
 }
 
-
-
-/*  LOG IN DROPDOWN PAGE */
-
-.login-dopdown-menu{
-	float: right;
-  /*display: none;*/
-	width: 340px;
-	height: auto;
-  right: 0;
-  position: absolute;
-  text-align: center;
-  background: rgba(0,0,0,0.5);
-    padding: 20px;
-    margin-bottom: 10px;
-    transition: 1s;
-    z-index: 0;
-
-}
-
-.login-dopdown-menu input {
-	margin: 10px;
-  width: 80%;
-}
-
-.login-dopdown-menu button{
-  width: 50%; background-color: #995AA4; color: white; padding: 10px; box-shadow: 2px 2px 0 #5F0CA4; font-size: 1em;
-}
-
 .button-dropdown{
-	margin: 25px;
+  margin: 25px;
 }
-
-
-
 /*  PLANET  & ROBOT */
 .planet-robot{
 	 margin-top: 20px;
@@ -188,20 +154,27 @@ ul.nav a:hover { color: #fff !important; }
 .text-center {text-align: center;}
 
 /* EVENT PAGE */
-#event-page {padding-top: 50px;}
+#event-page {}
 #event-wrapper {text-align: center;}
-  .map-wrapper {}
-    #googleMap {width: 100%; height: 200px;}
+  .map-wrapper {margin-top:30px; padding: 30px; background: rgba(0,0,0,0.5)}
+    #googleMap {width: 100%; height: 200px; margin-top: 20px;}
 
 #rsvp-button-wrapper {padding: 30px 0;}
   .btn-publish2 {width: 50%; background-color: #995AA4; color: white; padding: 20px; box-shadow: 2px 2px 0 #5F0CA4; font-size: 2em}
+
+#atendees-wrapper {padding:30px 0 ; background: rgba(0,0,0,0.5)}
+  #atendees-wrapper a {color:#995AA4; text-decoration: underline;}
+  .atendees-list {list-style: none; margin:0; padding: 0;}
+    .atendees-list li {display: inline-block; text-align: center; padding: 20px; text-overflow: ellipsis;  white-space: nowrap; overflow: hidden; max-width: 160px;}
+    .atendees-list li img {clear: both; display: block; margin-left: auto; margin-right: auto; border-radius: 25px;}
+    .atendees-list li span {}
 
   .details-wrapper {margin-top:30px; padding: 30px; background: rgba(0,0,0,0.5)}
     .details-wrapper h4, .details-wrapper p {text-align: left;}
      .details-wrapper img {width: 100%;}
 
 /* DASHBOARD PAGE */
-#dashboard-page {padding-top: 50px;}
+#dashboard-page {}
   #dashboard-page h3 {text-shadow: 1px 1px  black;}
 #dasboard-wrapper {text-align: center;}
 
@@ -324,17 +297,17 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 .rotoBg-container {
- position: absolute;
- top: -50%;
- width: 100%;
- min-height: 100%;
- overflow: hidden;
- z-index: -9999;
+  position: absolute;
+  top: -50%;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  z-index: -9999;
 }
 
 .rotoBg {
-   -webkit-animation: rotoBgRotate 300s linear infinite; /* Safari 4+ */
-   -moz-animation:    rotoBgRotate 300s linear infinite; /* Fx 5+ */
-   -o-animation:      rotoBgRotate 300s linear infinite; /* Opera 12+ */
-   animation:         rotoBgRotate 300s linear infinite; /* IE 10+, Fx 29+ */
+	-webkit-animation: rotoBgRotate 300s linear infinite; /* Safari 4+ */
+    -moz-animation:    rotoBgRotate 300s linear infinite; /* Fx 5+ */
+    -o-animation:      rotoBgRotate 300s linear infinite; /* Opera 12+ */
+    animation:         rotoBgRotate 300s linear infinite; /* IE 10+, Fx 29+ */
 }

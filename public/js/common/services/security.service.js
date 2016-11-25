@@ -8,7 +8,8 @@
     function security($http, $cookies) {
       var service =  {
         registerUser: registerUser,
-        loginUser:    loginUser
+        loginUser:    loginUser,
+        userValid:    false
       };
 
       var url = {
@@ -16,11 +17,6 @@
         login:    '/api/authenticate/login'
       }
 
-      var userValid = false
-
-      if ($cookies.get('userValid') !== undefined) {
-        userValid = $cookies.get('userValid')
-      }
       return service
 
       function registerUser(data) {

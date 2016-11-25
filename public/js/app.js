@@ -6,12 +6,14 @@
     'ngResource',
     'ngCookies',
     'google.places',
-    'ui.bootstrap.datetimepicker'
+    'ui.bootstrap.datetimepicker',
+    'ngDialog'
+    // 'ngDateTime'
   ]
 
   angular
     .module("EventoMate", modules)
-    //.run()
+    .run(authenticate)
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
       .when("/", {
@@ -36,43 +38,40 @@
       });
     }])
 
-  // function authenticate($rootScope, $location, $log, $cookies) {
-  //   $log.debug("-== Authenticate Path ==-")
-  //   $rootScope.$on('$routeChangeStart', function (event, next, current) {
+    function authenticate($rootScope, $location, $cookies, security) {
+      var userCookie = $cookies.getObject('userCookie')
       
-  //     // redirect to login page if not logged in and trying to access a restricted page
-  //     var restrictedPage = $.inArray($location.path(), ['/login', '/install']) === -1;
+      if (userCookie.valid === undefined) {
+        var userCookie = {
+          valid: false,
+          token: "",
+          remember: false
+        }
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() + 3);
+        $cookies.putObject('userCookie', {'expires': expireDate})
+      }
+      security.userValid = userCookie.valid
+
+      // $rootScope.$on('$routeChangeStart', function (event, next, current) {
       
-  //     if ($location.path() == '/login') {
-  //       $rootScope.loggedIn = false
-  //     };
-      
-  //     if ($cookies.get('user')) {
-  //       $rootScope.loggedIn = true
-  //     };
+      //   // redirect to login page if not logged in and trying to access a restricted page
+      //   var restrictedPage = $.inArray($location.path(), ['/login', '/install']) === -1;
         
-  //     if (restrictedPage && !$cookies.get('user')) {
-  //      $location.path('/login')
-  //     }
-  //   });
-  // } 
+      //   if ($location.path() == '/login') {
+      //     $rootScope.loggedIn = false
+      //   };
+        
+      //   if ($cookies.get('user')) {
+      //     $rootScope.loggedIn = true
+      //   };
+          
+      //   if (restrictedPage && !$cookies.get('user')) {
+      //    $location.path('/login')
+      //   }
+      // });
 
-  //Auth v2
-  // function($rootScope, $location) {
-
-  //   // register listener to watch route changes
-  //   $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-  //     if ( $rootScope.loggedUser == null ) {
-  //       // no logged user, we should be going to #login
-  //       if ( next.templateUrl == "partials/login.html" ) {
-  //         // already going to #login, no redirect needed
-  //       } else {
-  //         // not going to #login, we should redirect now
-  //         $location.path( "/login" );
-  //       }
-  //     }         
-  //   });
-  // }
+    }
 
 })()
 

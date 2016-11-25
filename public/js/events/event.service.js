@@ -3,10 +3,10 @@
 
   angular
   	.module("adminClient")
-  	.factory("event", event)
+  	.factory("Event", Event)
 
-  function event($resource) {
-  	var service {
+  function Event($resource) {
+  	var service = {
   		hosting: hosting,
   		attending: attending,
   		create: create,
@@ -20,8 +20,8 @@
   		attending: '/api/query/attending'
   	} 
   	var Event = $resource(url.crud)
-  	var AttendingEvents.$resource(url.hosting)
-  	var HostingEvents.$resource(url.hosting)
+  	var AttendingEvents = $resource(url.hosting)
+  	var HostingEvents = $resource(url.hosting)
 
   	return service
 

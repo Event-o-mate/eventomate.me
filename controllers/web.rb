@@ -32,7 +32,10 @@ class WebController < Sinatra::Base
     # css local libs
     css :libs, [
     	#bootstrap date time picker
-    	'/lib/datetimepicker/css/datetimepicker.css'
+    	'/lib/datetimepicker/css/datetimepicker.css',
+        #ngDialog
+        'lib/ngDialog/css/ngDialog.min.css',
+        'lib/ngDialog/css/ngDialog-theme-default.min.css'
     ]
 
     # angular app files
@@ -42,18 +45,24 @@ class WebController < Sinatra::Base
     	#app common libs
     	'/js/common/services/security.service.js',
     	'/js/common/controllers/menu.ctrl.js',
+        '/js/common/controllers/auth.ctrl.js',
     	'/js/common/lib/autocomplete.js',
+        '/js/common/directives/datetime.js',
     	#pages controllers
     	'/js/home/home.ctrl.js',
     	'/js/dashboard/dashboard.ctrl.js',
-    	'/js/events/events.ctrl.js'
+    	'/js/events/events.ctrl.js',
+        #pages services
+        '/js/events/event.service.js'
     ]
 
     # js local libs
     js :libs, [
     	#bootstrap date time picker
     	'/lib/datetimepicker/js/datetimepicker.js',
-    	'/lib/datetimepicker/js/datetimepicker.templates.js'
+    	'/lib/datetimepicker/js/datetimepicker.templates.js',
+        #ngDialog
+        'lib/ngDialog/js/ngDialog.min.js'
     ] 
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
