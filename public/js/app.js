@@ -41,7 +41,7 @@
     function authenticate($rootScope, $location, $cookies, security) {
       var userCookie = $cookies.getObject('userCookie')
       
-      if (userCookie.valid === undefined) {
+      if (userCookie === undefined) {
         var userCookie = {
           valid: false,
           token: "",
