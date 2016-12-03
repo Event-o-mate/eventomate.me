@@ -4,28 +4,22 @@ class Response
 	def initialize args
 		@request = args[:for]
 		@type = args[:of]
-		@model_name = @request.params[:model]
 		@content = {}
 		@error = nil
 		@data = nil
 	end
 
+	# Static Methods
 	def self.for type, request
 		response = new :for => request, :of => type
 		yield response
 	end
 
-	def prepare_response 
-		send @type unless @type.nil?		
-	end
-
-	def set_error 
-		@content["errors"] = @error.get
-	end
-
 	def submit
-		set_error unless @error.nil?
-		prepare_response 
+		unless @error.nil?
+			@content["errors"] = @error.get
+		end
+		send @type unless @type.nil?
 		@content.to_json
 	end
 

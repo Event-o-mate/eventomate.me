@@ -7,14 +7,15 @@
     'ngCookies',
     'google.places',
     'ui.bootstrap.datetimepicker',
-    'ngDialog'
-    // 'ngDateTime'
+    'ngDialog',
+    'ngMap',
+    'ui.gravatar'
   ]
 
   angular
     .module("EventoMate", modules)
     .run(authenticate)
-    .config(['$routeProvider', function($routeProvider) {
+    .config(['$routeProvider', function($routeProvider, $routeParams) {
       $routeProvider
       .when("/", {
           controller: "HomeController",
@@ -26,10 +27,11 @@
           controllerAs: "dashboard",
           templateUrl : "templates/dashboard" 
       })
-      .when("/event", {
+      .when("/event/:id", {
           controller: "EventsController",
           controllerAs: "events",
           templateUrl : "templates/event"
+
       })
       .when("/create_event", {
           controller: "EventsController",
@@ -45,7 +47,9 @@
         var userCookie = {
           valid: false,
           token: "",
-          remember: false
+          remember: false,
+          user_id: 0,
+          email: null
         }
         var expireDate = new Date();
         expireDate.setDate(expireDate.getDate() + 3);
@@ -53,23 +57,14 @@
       }
       security.userValid = userCookie.valid
 
-      // $rootScope.$on('$routeChangeStart', function (event, next, current) {
-      
-      //   // redirect to login page if not logged in and trying to access a restricted page
-      //   var restrictedPage = $.inArray($location.path(), ['/login', '/install']) === -1;
-        
-      //   if ($location.path() == '/login') {
-      //     $rootScope.loggedIn = false
-      //   };
-        
-      //   if ($cookies.get('user')) {
-      //     $rootScope.loggedIn = true
-      //   };
-          
-      //   if (restrictedPage && !$cookies.get('user')) {
-      //    $location.path('/login')
-      //   }
-      // });
+      $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        // redirect to login page if not logged in and trying to access a restricted page
+        var restrictedPage = $.inArray($location.path(), ['/dashboard']) != -1 ;
+  
+        if (restrictedPage && !security.userValid) {
+          $location.path("/")
+        }
+      });
 
     }
 

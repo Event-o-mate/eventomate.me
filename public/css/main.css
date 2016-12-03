@@ -80,7 +80,7 @@ ul.nav a:hover { color: #fff !important; }
 .registar-dialog, .login-dialog {
   height: auto;
   text-align: center;
-  background: rgba(0,0,0,0.5);
+  /*background: rgba(0,0,0,0.5);*/
     padding: 20px;
     margin-bottom: 10px;
     transition: 1s;
@@ -113,6 +113,7 @@ ul.nav a:hover { color: #fff !important; }
 .button-dropdown{
   margin: 25px;
 }
+
 /*  PLANET  & ROBOT */
 .planet-robot{
 	 margin-top: 20px;
@@ -294,6 +295,11 @@ ul.nav a:hover { color: #fff !important; }
          -webkit-transform: rotate(-360deg); /* Safari */
     	 transform: rotate(-360deg);
     	}
+}
+
+/*Remove toggle arrow on datepicker input*/
+.dropdown-toggle::after {
+  content: none !important;
 }
 
 .rotoBg-container {

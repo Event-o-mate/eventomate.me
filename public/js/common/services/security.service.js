@@ -6,10 +6,14 @@
     .factory('security', security);
 
     function security($http, $cookies) {
+      var userCookie = $cookies.getObject("userCookie")
+      
       var service =  {
         registerUser: registerUser,
         loginUser:    loginUser,
-        userValid:    false
+        userValid:    false,
+        userId: getUserId,
+        userEmail: $cookies.getObject("userCookie").email
       };
 
       var url = {
@@ -21,30 +25,35 @@
 
       function registerUser(data) {
         return $http.post(url.register, data)
-            .then(registrationComplete)
-            .catch(registrationFailed);
+          .then(registrationComplete)
+          .catch(registrationFailed);
 
         function registrationComplete(response) {
-            return response.data;
+          return response.data;
         }
 
         function registrationFailed(error) {
-            console.log('XHR Failed for getAvengers.' + error.data);
+          return error
         }
       }
 
       function loginUser(data) {
         return $http.post(url.login, data)
-            .then(loginComplete)
-            .catch(loginFailed);
+          .then(loginComplete)
+          .catch(loginFailed);
 
         function loginComplete(response) {
-            return response.data;
+          return response.data;
         }
 
         function loginFailed(error) {
-            console.log('XHR Failed for getAvengers.' + error.data);
+          console.log('XHR Failed for getAvengers.' + error.data);
         }
+      }
+
+      function getUserId() {
+        var userCookie = $cookies.getObject("userCookie")
+        return userCookie.user_id
       }
     }
 })()

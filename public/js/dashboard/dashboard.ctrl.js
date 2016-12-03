@@ -3,32 +3,36 @@
 		.module("EventoMate")
 		.controller("DashboardController", DashboardController)
 
-	function DashboardController($scope) {
+	function DashboardController($scope, Event) {
 		var vm = this
 
 		//Properties
-		vm.hostingEvents = [
-			{
-				"title": "Movie Screening: Infinity wars",
-				"startTime": "11. August 2017 18:30",
-				"endTime": "11. August 2017 19:30",
-				"description": "Come and see the new movie",
-				"lat": "vm.location.lat",
-				"lng": "vm.location.lng"
-			}
-		]
+		vm.event = Event
+		vm.hostingEvents
+		vm.attendingEvents
 
-		vm.attendingEvents = [
-			{
-				"title": "BBQ @ Rick\'s",
-				"startTime": "19. November 2017 11:30",
-				"endTime": "19. November 2017 23:00",
-				"description": "It's BYOB, and dates are welcome.",
-				"lat": "vm.location.lat",
-				"lng": "vm.location.lng"
-			}
-		]
+		init()
 
+		function init() {
+			console.log("init")
+			vm.event.hosting()
+			.then(function(response) {
+				console.log('-== Hosting events ==-')
+				console.log(response)
+				vm.hostingEvents = response
+			})
+			.catch(function(error){
+
+			})
+
+			console.log("attending")
+			vm.event.attending()
+			.then(function(response){
+				console.log('-== Attending events ==-')
+				console.log(response)
+				vm.attendingEvents = response
+			})
+		}
 	}
 
 })()

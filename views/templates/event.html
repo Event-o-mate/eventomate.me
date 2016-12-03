@@ -1,31 +1,40 @@
-  <div class="container" id="event-page">
+<div class="container" id="event-page">
     <div class="row">
 
       <div class="col-md-8 offset-md-2" id="event-wrapper">
-              <h1 class="text-center">Secret Project Hackathon Event</h1>
-              <h5 class="text-center">Saturday 19th Nov. 8:00AM - Sunday 20th Nov. 12:00PM</h5>
+              <h1 class="text-center">{{ events.title}}</h1>
+              <h5 class="text-center">{{events.startTime | date: 'EEEE d MMM HH:mm'}} - {{events.endTime | date: 'EEEE d MMM HH:mm'}}</h5>
 
               <div id="rsvp-button-wrapper">
-                  <button type="button" class="btn btn-publish2">
+                  <button type="button" class="btn btn-publish2" ng-click="events.submitRsvp()">
                       RSVP
                   </button>
               </div>
 
+              <div id="atendees-wrapper">
+                    <h4>People Attending this event</h4>
+                    <ul class="atendees-list">
+                        <li ng-repeat="attendee in events.attendees">
+                            <img gravatar-src="attendee.email" gravatar-size="100">
+                            <span>{{attendee.name}}</span>
+                        </li>
+                        <!-- <p>
+                            <a href="#">+37 More Atendees</a>
+                        </p> -->
+                    </ul>
+              </div>
+
               <div class="map-wrapper">
-                  <h5>Avenija Dubrovnik 127, 10000 Zagreb</h5>
-                  <div id="googleMap"></div>
+                  <h5>{{events.address}}</h5>
+                  <div id="googleMap" ng-map center="[{{events.lat}}, {{events.lng}}]" zoom="13">
+                    <marker position="[{{events.lat}}, {{events.lng}}]" />
+                  </div>
               </div>
 
               <div class="details-wrapper">
                   <div class="event-decription">
                     <h4>Event Description</h4>
-                    <p>
-                      You bet I'm agitated! I may be surrounded by insanity, but I am not insane. I am your worst nightmare! Then maybe you should consider this: if anything happens to them, Starfleet is going to want a full investigation. And blowing into maximum warp speed, you appeared for an instant to be in two places at once.
-                    </p>
-                    <p>
-                      The look in your eyes, I recognize it. You used to have it for me. Well, that's certainly good to know. Fate protects fools, little children and ships named Enterprise. Computer, belay that order. Travel time to the nearest starbase? The game's not big enough unless it scares you a little.
-                    </p>
-                    <img src="http://i.imgur.com/voa8281.jpg">
+                    <p>{{ events.description }}</p>
                   </div>
               </div>
       </div>

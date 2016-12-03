@@ -21,6 +21,11 @@ class Security
 		end
 	end
 
+	def requesting_user request
+		parse_tokens request.env
+		@model.first(:token => @hash)
+	end
+
 	#user authentification
 	def login email, password
 		user_valid = false

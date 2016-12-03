@@ -2,13 +2,22 @@ class RecordsController < Sinatra::Base
 	enable :method_override
 
 	helpers do
+
 		def api_request
-			#Wrapping incoming request in custom object
-			Request.new(:for => {:request => request, :params => params})
+			body = nil
+			unless request.request_method == 'GET'
+				request.body.rewind
+				body = JSON.parse(request.body.read)
+			end
+			{:request => request, :params => params, :json_body => body}
 		end
 
+		def validate_request 
+			yield request.media_type == 'application/json'
+		end
+		
 		def model_name
-			api_request.params["model"].capitalize
+			api_request[:params]["model"].capitalize
 		end
 
 		def valid_model?
@@ -19,9 +28,9 @@ class RecordsController < Sinatra::Base
 	before do
 		content_type :json
 
-		Request.validate request do |valid|
-			error 400 unless valid
-		end
+		# validate_request do |valid|
+		# 	error 400 unless valid
+		# end
 
 		model_object = Object.const_get('User')
 		# Security.new(:model => model_object).validate request do |valid|
@@ -49,7 +58,7 @@ class RecordsController < Sinatra::Base
 	#GET RECORD FROM MODEL
 	get '/:model/:id' do
 		Response.for :get_record, api_request do |response|
-			id = api_request.params[:id]
+			id = api_request[:params][:id]
 			if valid_model?
 				record = Object.const_get(model_name).get(id) 
 				unless record.nil?
@@ -64,12 +73,86 @@ class RecordsController < Sinatra::Base
 		end
 	end
 
+	## 	EVENTOMATE SPECIFIC REQUESTS, FIXING API DESIGN
+
+	# GET RECORD BY RELATIONS
+	get '/user/:id/event' do
+		user_id = api_request[:params][:id]
+		user = User.get(user_id)
+		Response.for :get_record, api_request do |response|
+			hosting_events = user.events.all
+			response.data = hosting_events
+			response.submit 
+		end
+	end
+
+	get '/event/:id/attendee' do
+		event_id = api_request[:params][:id]
+		event = Event.get(event_id)
+		attending = []
+		Response.for :get_record, api_request do |response|
+			event.attendees.each do |attendee|
+				attending << User.get(attendee.user_id).account
+			end
+			response.data = attending
+			response.submit
+		end
+	end
+
+	# CREATE EVENT
+	put '/user/:id/event' do 
+		# parent_model_id = params[:id]
+		user_id = api_request[:params][:id]
+		user = User.get(user_id)
+		Response.for :create_record, api_request do |response|
+			# parent_model = Object.const_get(model_name).get(id)
+			event = user.events.new
+			event.attributes = api_request[:json_body]
+			event.save
+			#attendee = event.attendees.create(:user_id => user_id)
+			
+			if user.save	
+				response.data = event
+			else
+				event.errors.each do |e| 
+					puts e
+				end
+				
+				# error = Error.code 1002
+				# error.original_error = event.errors
+				# response.error =  error
+
+				response.error = Error.code 1002 #record not created, invalid data request, or sent data invalid
+			end
+			response.submit
+		end
+	end
+
+	# RSVP EVENT
+	# Needs to create new record in attendees table, containing user_id of the rsvping user
+	put '/event/:id/attendee' do
+		event_id = api_request[:params][:id]
+		event = Event.get(event_id)
+		Response.for :create_record, api_request do |response|
+			attendee = event.attendees.create(:user_id => api_request[:json_body]["user_id"])
+			if event.save
+				response.data = attendee
+			else
+				response.error = Error.code 1002 #record not created, invalid data request, or sent data invalid 
+			end
+			response.submit
+		end
+	end
+
+	# SAVE EVENT (?)
+
 	#CREATE RECORD
+	# put '/:parent_model/:id/:child_model/' do 
 	put '/:model' do
 		Response.for :create_record, api_request do |response|
 			if valid_model?
-				new_record = Object.const_get(model_name).new
-				new_record.attributes = api_request.for :create_record
+				new_record = Object.const_get(model_name).new 	
+		 		new_record.attributes = api_request[:json_body]
 				if new_record.save 
 					response.data = new_record
 				else

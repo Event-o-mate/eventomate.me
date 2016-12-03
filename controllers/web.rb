@@ -35,7 +35,7 @@ class WebController < Sinatra::Base
     	'/lib/datetimepicker/css/datetimepicker.css',
         #ngDialog
         'lib/ngDialog/css/ngDialog.min.css',
-        'lib/ngDialog/css/ngDialog-theme-default.min.css'
+        'lib/ngDialog/css/ngDialog-theme-default.css'
     ]
 
     # angular app files
@@ -62,7 +62,11 @@ class WebController < Sinatra::Base
     	'/lib/datetimepicker/js/datetimepicker.js',
     	'/lib/datetimepicker/js/datetimepicker.templates.js',
         #ngDialog
-        'lib/ngDialog/js/ngDialog.min.js'
+        'lib/ngDialog/js/ngDialog.min.js',
+        #ngMap
+        'lib/ngMap/ngMap.js',
+        #ngGravatar
+        'lib/ngGravatar/ngGravatar.js'
     ] 
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify

@@ -5,7 +5,7 @@
 		.module("EventoMate")
 		.controller("MenuController", MenuController)
 
-	function MenuController($scope, $http, $cookies, security, ngDialog) {
+	function MenuController($scope, $http, $cookies, $location, security, ngDialog) {
 		var vm = this
 
 		// Methods bindables
@@ -22,6 +22,7 @@
 			clearCookie()
 			vm.security.userValid = false
 			$http.defaults.headers.common.Authorization = ""
+			$location.path("/")
 		}
 
 		function toggleRegister() {
@@ -44,7 +45,10 @@
 			var userCookie = $cookies.getObject('userCookie')
 			userCookie.valid = false
 			userCookie.token = ''
+			userCookie.user_id = 0
+			userCookie.email = null
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
+			console.log($cookies.getObject('userCookie'))
 		}
 
 	}

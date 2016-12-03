@@ -2,6 +2,7 @@ class Request
 	attr_accessor :body, :params
 	
 	def initialize args
+		puts "-== Request Initialized"
 		@data = args[:for][:request]
 		@params = args[:for][:params]
 

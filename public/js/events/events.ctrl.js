@@ -6,38 +6,103 @@
 		.module("EventoMate")
 		.controller("EventsController", EventsController)
 
-	function EventsController($scope, $location, security, ngDialog) {
+	function EventsController($scope, $routeParams, $location, security, ngDialog, Event) {
 		var vm = this
 
 		//Method Bindables
 		vm.publish = publish
+		vm.submitRsvp = submitRsvp
 		
 		//Properties
-		vm.attending = []
-		vm.hosting = []
+		vm.event_id
 		vm.title
+		vm.address
 		vm.startTime
 		vm.endTime
-		vm.location
+		vm.lat
+		vm.lng
 		vm.description
 		vm.eventData
-		vm.security = security
+		vm.attendees
+		vm.location
+		
+		init()
 
 		//Bindables
+		function init() {
+			vm.security = security
+			vm.event = Event
+			vm.event_id = $routeParams.id
+			vm.event.fetch(vm.event_id)
+			.then(function(response){
+				vm.title = response.title
+				vm.startTime = response.start_date
+				vm.endTime = response.finish_date
+				vm.address = response.address
+				vm.lat = response.lat
+				vm.lng = response.lng
+				vm.description = response.description
+			})
+
+			vm.event.attendees(vm.event_id)
+			.then(function(response){
+				vm.attendees = response
+			})
+		}
+
+		function submitRsvp() {
+			if (vm.security.userValid) {
+				var jsonData = JSON.stringify({user_id: vm.security.userId()})
+				vm.event.sumbitRsvp(vm.event_id, jsonData)
+				.then(function(response){
+					console.log('-== success==-')
+					console.log(response)
+				})
+			}
+		}
+
 		function publish() {
+
+			var createEvent = function() {
+				if (vm.security.userValid) {
+					vm.eventData = {
+						"title": vm.title,
+						"address": vm.location.formatted_address,
+						"lat": vm.location.geometry.location.lat(),
+						"lng": vm.location.geometry.location.lng(),
+						"start_date": $scope.dateRangeStart,
+						"finish_date": $scope.dateRangeEnd,
+						"description": vm.description,
+					}
+
+					var jsonData = JSON.stringify(vm.eventData)
+
+					vm.event.create(jsonData)
+					.then(function(response){
+						console.log(response)
+						if (response.errors === undefined) {
+							$location.path('/dashboard')
+						}
+					})
+					.catch(function(error){
+						console.log(error)
+					})
+				}
+			}
+
 			if (!vm.security.userValid) {
 				ngDialog.open({
 					template: 'loginDialog',
 					controller: 'AuthenticationController',
-					preCloseCallback: saveEvent 
+					preCloseCallback: createEvent 
 				})
 			}
 			else {
-				saveEvent()	
+				createEvent()
 			}
 		}
 
-		//Some datapickers magic 
+		//Default datapicker settings 
 		$scope.endDateBeforeRender = endDateBeforeRender
 		$scope.endDateOnSetTime = endDateOnSetTime
 		$scope.startDateBeforeRender = startDateBeforeRender
@@ -72,38 +137,6 @@
 		      date.selectable = false;
 		    })
 		  }
-		}
-		// Magic ends
-
-		//Helpers
-		function saveEvent() {
-			if (vm.security.userValid) {
-				gatherData()
-				vm.hosting.push(vm.eventData)
-				console.log("-== Save event, with data ==-")
-				console.log(vm.eventData)
-
-				Event.create(vm.eventData, function(response){
-					console.log(response)
-				}, 
-				function(error){
-
-				})
-
-
-
-				$location.path('/dashboard')
-			}
-		}
-
-		function gatherData() {
-			vm.eventData = {
-				"title": vm.title,
-				"startTime": $scope.dateRangeStart,
-				"endTime": $scope.dateRangeEnd,
-				"description": vm.description,
-				"location": vm.location
-			}
 		}
 	}
 

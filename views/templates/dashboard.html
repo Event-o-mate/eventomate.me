@@ -9,9 +9,9 @@
             <ul class="event-list">
               <h3>My Created Events</h3>
               <li class="event-list-item" ng-repeat="event in dashboard.hostingEvents">
-                <h5>{{event.title}}</h5>
-                <p><img src="img/time.png">{{event.startTime}}</p>
-                <p><img src="img/location.png">{{event.location.lng}}</p>
+                <h5><a ng-href="#/event/{{event.id}}">{{event.title}}</a></h5>
+                <p><img src="img/time.png">{{event.start_date | date : 'dd MMMM yyyy HH:mm' }}</p>
+                <p><img src="img/location.png">{{event.address}}</p>
               </li>
             </ul>
 
@@ -22,9 +22,9 @@
             <ul class="event-list">
               <h3>My RSVP'd Events</h3>
               <li class="event-list-item" ng-repeat="event in dashboard.attendingEvents">
-                <h5>{{event.title}}</h5>
-                <p><img src="img/time.png">{{event.startTime}}</p>
-                <p><img src="img/location.png">{{event.location}}</p>
+                <h5><a ng-href="#/event/{{event.id}}">{{event.title}}</a></h5>
+                <p><img src="img/time.png">{{event.start_date | date : 'dd MMMM yyyy HH:mm' }}</p>
+                <p><img src="img/location.png">{{event.address}}</p>
               </li>
             </ul>
 

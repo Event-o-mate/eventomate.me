@@ -5,7 +5,7 @@
 		.module("EventoMate")
 		.controller("AuthenticationController", AuthenticationController)
 
-	function AuthenticationController($scope, $cookies, $http, security, ngDialog) {
+	function AuthenticationController($scope, $cookies, security, ngDialog) {
 		var vm = this
 
 		//Method Bindables
@@ -45,7 +45,6 @@
 				if (data.errors == undefined) {
 					console.log("-= success =-")
 					updateCookie(data)
-					$http.defaults.headers.common.Authorization = "hash="+data.token
 					ngDialog.closeAll()
 				}
 				else {
@@ -71,7 +70,6 @@
 				if (data.errors == undefined) {
 					console.log("-= success =-")
 					updateCookie(data)
-					$http.defaults.headers.common.Authorization = "hash="+data.token
 					ngDialog.closeAll()
 				}
 				else {
@@ -87,6 +85,8 @@
 			var userCookie = $cookies.getObject('userCookie')
 			userCookie.valid = true
 			userCookie.token = data.token
+			userCookie.user_id = data.user_id
+			userCookie.email = data.email 
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
 			vm.security.userValid = true
 		}

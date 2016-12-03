@@ -4,10 +4,6 @@ class QueryController < Sinatra::Base
 	before do
 		content_type :json
 
-		Request.validate request do |valid|
-			error 400 unless valid
-		end
-
 		model_object = Object.const_get('User')
 		# Security.new(:model => model_object).validate request do |valid|
 		# 	error 401 unless valid	
@@ -18,38 +14,31 @@ class QueryController < Sinatra::Base
 
 	helpers do
 		def api_request
-			#Wrapping incoming request in custom object
-			Request.new(:for => {:request => request, :params => params})
+			body = nil
+			unless request.request_method == 'GET'
+				request.body.rewind
+				body = JSON.parse(request.body.read)
+			end
+			{:request => request, :params => params, :json_body => body}
 		end
 
+		def validate_request 
+			yield request.media_type == 'application/json'
+		end
+		
 		def model_name
-			api_request.params["model"].capitalize
+			api_request[:params]["model"].capitalize
 		end
 
 		def valid_model?
 			Object.const_defined? model_name
 		end
-
-		def security
-			@security
-		end
 	end
 
-	get '/hosting' do 
-		token = security.parse_tokens api_request.env
-		id = @model.first(:token => token).id
-		unless user.nil? 
-			Event.all(:user_id => id).to_json
-		else
-
-		end
-
-	end
-
-	get '/attending' do 
-		token = security.parse_tokens api_request.env
-		id = @model.first(:token => token).id
-		Attendee.all(:user_id => id).to_json
+	get '/user/:id/attending' do 
+		user_id = params[:id]
+		events = Attendee.all(:user_id => user_id).events
+		events.to_json
 	end
 
 end
