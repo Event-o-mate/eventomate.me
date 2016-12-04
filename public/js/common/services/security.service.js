@@ -13,7 +13,7 @@
         loginUser:    loginUser,
         userValid:    false,
         userId: getUserId,
-        userEmail: $cookies.getObject("userCookie").email
+        userEmail: getUserEmail
       };
 
       var url = {
@@ -52,8 +52,16 @@
       }
 
       function getUserId() {
-        var userCookie = $cookies.getObject("userCookie")
-        return userCookie.user_id
+        if (userCookie != null) {
+          return userCookie.user_id
+        }
+        
+      }
+
+      function getUserEmail() {
+        if (userCookie != null) {
+          userCookie.email
+        }
       }
     }
 })()
