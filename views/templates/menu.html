@@ -35,19 +35,76 @@
 
 <!-- LOGIN MENU-->
 <script type="text/ng-template" id="loginDialog">
-  <div class="login-dialog">
-    <input class="input-email-login" placeholder="email" type="name" ng-model="email" >
-    <input class="input-password-login" type="password" ng-model="password">
-    <button class="button-dropdown  btn" ng-click="login()"> LOGIN</button>
-  </div>
+  <form name="loginForm" required>
+    <div class="login-dialog">
+      <input type="email" name="userEmail" class="input-email-login" placeholder="email*" ng-model="email" required>
+      <input name="userPassword" class="input-password-login" placeholder="password*" type="password" ng-model="password" required>
+      <button class="button-dropdown  btn" ng-click="login()"> LOGIN</button>
+
+      <!--alerts-->
+      <!-- email -->
+      <div ng-messages="loginForm.userEmail.$error" ng-if="loginForm.userEmail.$touched">
+        <div ng-message="required" class="alert alert-danger login-errors" role="alert">
+          Please eneter all required fields!
+        </div>
+        <div ng-message="email" class="alert alert-danger login-errors" role="alert">
+          Input is not a valid email!
+        </div>
+      </div>
+
+      <!-- password -->
+      <div ng-messages="loginForm.userPassword.$error" ng-if="loginForm.userPassword.$touched">
+        <div ng-message="required" class="alert alert-danger login-errors" role="alert">
+          Please eneter all required fields!
+        </div>
+      </div>
+
+      <!-- submited -->
+      <div class="alert alert-danger text-center login-errors" role="alert" ng-hide="!userValid" ng-show="loginSubmited && !userValid">
+        {{ errorMsg }}
+      </div>
+
+    </div>
+
+  </form>
 </script>
 
 <!-- REGISTER MENU -->
 <script type="text/ng-template" id="registerDialog">
-  <div class="registar-dialog" >
-    <input class="input-name-register" placeholder="name" type="name" ng-model="name" >
-    <input class="input-email-register" placeholder="email" type="email" ng-model="email">
-    <input class="input-password-register" type="password" ng-model="password">
-    <button class="button-dropdown btn" ng-click="register()"> REGISTER</button>
-  </div>
+  <form name="registerForm" required>
+    <div class="registar-dialog" >
+      <input name="userName" class="input-name-register" placeholder="name*" type="name" ng-model="name" required>
+      <input name="userEmail" class="input-email-register" placeholder="email*" type="email" ng-model="email" required>
+      <input name="userPassword" class="input-password-register" placeholder="password*" type="password" ng-model="password" required>
+      <button class="button-dropdown btn" ng-click="register()"> REGISTER</button>
+
+      <div ng-messages="registerForm.userName.$error" ng-if="registerForm.userName.$touched">
+        <div ng-message="required" class="alert alert-danger login-errors" role="alert">
+          Please eneter all required fields!
+        </div>
+      </div>
+
+      <div ng-messages="registerForm.userEmail.$error" ng-if="registerForm.userEmail.$touched">
+        <div ng-message="required" class="alert alert-danger login-errors" role="alert">
+          Please eneter all required fields!
+        </div>
+        <div ng-message="email" class="alert alert-danger login-errors" role="alert">
+            Input is not a valid email!
+        </div>
+      </div>
+
+      <!-- password -->
+      <div ng-messages="registerForm.userPassword.$error" ng-if="registerForm.userPassword.$touched">
+        <div ng-message="required" class="alert alert-danger login-errors" role="alert">
+          Please eneter all required fields!
+        </div>
+      </div>
+
+      <!-- submited -->
+      <div class="alert alert-danger text-center login-errors" role="alert" ng-show="registerSubmited && !userValid">
+        {{ errorMsg }}
+      </div>
+    </div>
+  </form>
+
 </script>

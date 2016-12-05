@@ -317,3 +317,13 @@ ul.nav a:hover { color: #fff !important; }
     -o-animation:      rotoBgRotate 300s linear infinite; /* Opera 12+ */
     animation:         rotoBgRotate 300s linear infinite; /* IE 10+, Fx 29+ */
 }
+
+/*Login & register dialog alterts*/
+
+.login-errors {
+  background-color: #a94442;
+  opacity: 0.9;
+  border-color: #a94442;
+  color: white; 
+  border-radius: 0;
+}

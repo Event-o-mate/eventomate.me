@@ -9,7 +9,8 @@
     'ui.bootstrap.datetimepicker',
     'ngDialog',
     'ngMap',
-    'ui.gravatar'
+    'ui.gravatar',
+    'ngMessages'
   ]
 
   angular

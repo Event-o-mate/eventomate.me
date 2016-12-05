@@ -14,15 +14,26 @@
 
 		//Properties
 		vm.security
-
-		$scope.email
+		vm.errorMsg
+		vm.user 
+		vm.password
+		vm.name
+		//Defining scope properties due to bug in ngDialog not handling controllerAs mode
+		$scope.user
 		$scope.password
 		$scope.name
+		$scope.loginSubmited
+		$scope.userValid
 
 		init()
 
 		function init() {
 			vm.security = security
+			vm.email = $scope.email
+			vm.password = $scope.password
+			$scope.loginSubmited = false
+			$scope.registerSubmited = false
+			$scope.userValid = false
 		}
 
 		function register() {
@@ -34,49 +45,61 @@
 				password: $scope.password
 			}
 
-			console.log("-= with data")
-			console.log(data)
-
 			var jsonData = angular.toJson(data)
 
-			vm.security.registerUser(jsonData).then(function(data) {
-				console.log("-= server responded =-")
-				console.log(data)	
-				if (data.errors == undefined) {
-					console.log("-= success =-")
-					updateCookie(data)
-					ngDialog.closeAll()
-				}
-				else {
-					console.log("-= error: " + data.errors.code + " | " + data.errors.msg)
-					$cookies.put("userValid", false) 
-				}
-			})
+			if ($scope.registerForm.$valid) {
+				vm.security.registerUser(jsonData)
+				.then(function(data) {
+					console.log(data)	
+					if (data.errors == undefined) {
+						updateCookie(data)
+						ngDialog.closeAll()
+						$scope.userValid = true
+					}
+					else {
+						$scope.registerSubmited = true
+						$scope.userValid = false
+						$scope.errorMsg = data.errors.msg
+					}
+				})
+				.catch(function(error){
+					$scope.registerSubmited = true
+					$scope.userValid = false
+					scope.errorMsg = error
+				})
+			}
+
 		}
 
 		function login() {
-			console.log("-=== Login User ===-")
-
 			var data = {
 				email: $scope.email,
 				password: $scope.password
 			}
 			
 			var jsonData = angular.toJson(data)
-			
-			vm.security.loginUser(jsonData).then(function(data) {
-				console.log("-= server responded =-")
-				console.log(data)
-				if (data.errors == undefined) {
-					console.log("-= success =-")
-					updateCookie(data)
-					ngDialog.closeAll()
-				}
-				else {
-					console.log("-= error: " + data.errors.code + " | " + data.errors.msg)
-					vm.userValid = false
-				}
-			})
+
+			if ($scope.loginForm.$valid){
+				vm.security.loginUser(jsonData)
+				.then(function(data) {
+					console.log(data)
+					if (data.errors == undefined) {
+						$scope.userValid = true
+						updateCookie(data)
+						ngDialog.closeAll()
+					}
+					else {
+						$scope.errorMsg = data.errors.msg
+						$scope.loginSubmited = true
+						$scope.userValid = false
+					}
+				})
+				.catch(function(error){
+					$scope.loginSubmited = true
+					$scope.userValid = false
+					$scope.errorMsg = error
+				})	
+			}
 		}
 
 		function updateCookie(user) {
