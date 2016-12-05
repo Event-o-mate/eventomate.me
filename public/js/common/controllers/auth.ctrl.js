@@ -79,14 +79,14 @@
 			})
 		}
 
-		function updateCookie(data) {
+		function updateCookie(user) {
 			var expireDate = new Date();
       expireDate.setDate(expireDate.getDate() + 3);
 			var userCookie = $cookies.getObject('userCookie')
 			userCookie.valid = true
-			userCookie.token = data.token
-			userCookie.user_id = data.id
-			userCookie.email = data.email 
+			userCookie.token = user.token
+			userCookie.user_id = user.id
+			userCookie.email = user.email 
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
 			vm.security.userValid = true
 		}
