@@ -85,7 +85,7 @@
 			var userCookie = $cookies.getObject('userCookie')
 			userCookie.valid = true
 			userCookie.token = data.token
-			userCookie.user_id = data.user_id
+			userCookie.user_id = data.id
 			userCookie.email = data.email 
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
 			vm.security.userValid = true
