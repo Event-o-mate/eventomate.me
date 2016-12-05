@@ -29,7 +29,6 @@ if ENV['RACK_ENV'] == 'development'
 elsif ENV['RACK_ENV'] == 'heroku'
 	DataMapper.setup(:default, ENV['DATABASE_URL'])
 end
-
 DataMapper.finalize.auto_upgrade!
 
 #Setup Apple Push Notifications
