@@ -29,9 +29,9 @@
 			console.log("-=== Register User ===-")
 
 			var data = {
-				name: $scope.email,
-				email: $scope.password,
-				password: $scope.name
+				name: $scope.name,
+				email: $scope.email,
+				password: $scope.password
 			}
 
 			console.log("-= with data")
