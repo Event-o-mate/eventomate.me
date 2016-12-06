@@ -152,7 +152,7 @@
         return getAttendingEventsRequest
     	}
 
-      function attendees(event_id) {
+      function attendees(eventId) {
         loadCookie()
 
         var attendeesUrl = '/api/records/event/'+ eventId +'/attendee'
