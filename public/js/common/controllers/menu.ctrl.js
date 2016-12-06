@@ -13,8 +13,17 @@
 		vm.toggleRegister = toggleRegister
 		vm.toggleLogin = toggleLogin
 
+		//ngDialog patch
+		$scope.toggleRegister = vm.toggleRegister
+
 		//Properties
-		vm.security = security
+		vm.security
+
+		init()
+
+		function init() {
+			vm.security = security
+		}
 
 
 		// Bindables
@@ -48,7 +57,6 @@
 			userCookie.user_id = 0
 			userCookie.email = null
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
-			console.log($cookies.getObject('userCookie'))
 		}
 
 	}

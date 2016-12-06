@@ -5,8 +5,9 @@
   	.module("EventoMate")
   	.factory("Event", EventService)
 
-    function EventService($http, $resource, $cookies) {
-      var userCookie = $cookies.getObject('userCookie')
+    function EventService($http, $resource, $cookies, security) {
+      var userCookie
+      var userId
 
       var service = {
         hosting: hosting,
@@ -16,27 +17,30 @@
         sumbitRsvp: sumbitRsvp,
         attendees: attendees
       }
-      
-      var url = {
-        get: '/api/records/event',
-        hosting: '/api/records/user/' + userCookie.user_id + '/event',
-        attending: '/api/query/user/' + userCookie.user_id + '/attending',
-        createEvent: '/api/records/user/' + userCookie.user_id + '/event'
-      }
 
-      $http.defaults.headers.common.Authorization = "hash="+userCookie.token
-      $http.defaults.headers.common.Accept = "application/json"
+      // $http.defaults.headers.common.Authorization = "hash="+userCookie.token
+      // $http.defaults.headers.common.Accept = "application/json"
 
-      if (userCookie !== undefined) {
-        if (userCookie.token !== undefined) {
-          url.token = userCookie.token
-        }
-      } 
+      // if (userCookie !== undefined) {
+      //   if (userCookie.token !== undefined) {
+      //     url.token = userCookie.token
+      //   }
+      // } 
 
     	return service
 
+      //reload cookie to get latest user id
+      function loadCookie() {
+        userCookie = $cookies.getObject('userCookie')
+        userId = userCookie.user_id     
+      }
+
       // create event
     	function create(data) {
+        loadCookie()
+
+        var createEventUrl = '/api/records/user/'+ userId +'/event'
+
         function createRequestCompleted(response) {
           return response.data
         }
@@ -47,7 +51,7 @@
 
         var createRquest = $http({
           method: "PUT",
-          url: url.createEvent,
+          url: createEventUrl,
           data: data
         })
         .then(createRequestCompleted)
@@ -57,8 +61,10 @@
     	}
 
       function fetch(id) {
-        var get_url = url.get + '/' + id
-        
+        loadCookie()
+
+        var getEventUrl = '/api/records/event/' + id
+
         function fetchRequestCompleted(response) {
           return response.data
         }
@@ -69,7 +75,7 @@
 
         var fetchRequest = $http({
           method: "GET", 
-          url: get_url
+          url: getEventUrl
         })
         .then(fetchRequestCompleted)
         .then(fetchRequestFailed)
@@ -78,6 +84,10 @@
       }
 
     	function hosting() {
+        loadCookie()
+
+        var hostingUrl = '/api/records/user/'+ userId +'/event'
+
         function getHostingEventsCompleted(response) {
           return response.data
         }
@@ -88,7 +98,7 @@
 
     		var getHostingEventsRequest = $http({
           method: "GET", 
-          url: url.hosting
+          url: hostingUrl
         })
         .then(getHostingEventsCompleted)
         .then(getHostingEventsRequestFailed)
@@ -97,7 +107,7 @@
 
     	}
 
-      function sumbitRsvp(event_id, data) {
+      function sumbitRsvp(eventId, data) {
         function rsvpRequestCompleted(response) {
           return response.data
         }
@@ -106,7 +116,7 @@
           return error
         }
 
-        var submitUrl = '/api/records/event/'+event_id+'/attendee'
+        var submitUrl = '/api/records/event/'+ eventId +'/attendee'
 
         var submitRsvpRquest = $http({
           method: "PUT",
@@ -120,6 +130,10 @@
       }
 
     	function attending(success, error) {
+        loadCookie()
+
+        var attendingUrl = '/api/query/user/'+ userId +'/attending'
+        
         function getAttendingEventsCompleted(response) {
           return response.data
         }
@@ -130,7 +144,7 @@
 
         var getAttendingEventsRequest = $http({
           method: "GET", 
-          url: url.attending
+          url: attendingUrl
         })
         .then(getAttendingEventsCompleted)
         .then(getAttendingEventsFailed)
@@ -139,6 +153,10 @@
     	}
 
       function attendees(event_id) {
+        loadCookie()
+
+        var attendeesUrl = '/api/records/event/'+ eventId +'/attendee'
+
         function getAttendeesCompleted(response) {
           return response.data
         }
@@ -147,7 +165,6 @@
           return error
         }
 
-        var attendeesUrl = url.get + '/' + event_id + '/attendee'
 
         var getAttendingEventsRequest = $http({
           method: "GET", 
@@ -158,6 +175,5 @@
 
         return getAttendingEventsRequest
       }
-
     }
 })()
