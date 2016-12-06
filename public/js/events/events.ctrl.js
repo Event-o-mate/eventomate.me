@@ -25,6 +25,7 @@
 		vm.eventData
 		vm.attendees
 		vm.location
+		vm.currentUserAttending
 		
 		init()
 
@@ -33,30 +34,65 @@
 			vm.security = security
 			vm.event = Event
 			vm.event_id = $routeParams.id
-			vm.event.fetch(vm.event_id)
-			.then(function(response){
-				vm.title = response.title
-				vm.startTime = response.start_date
-				vm.endTime = response.finish_date
-				vm.address = response.address
-				vm.lat = response.lat
-				vm.lng = response.lng
-				vm.description = response.description
-			})
+			vm.currentUserAttending = false
 
-			vm.event.attendees(vm.event_id)
-			.then(function(response){
-				vm.attendees = response
-			})
+			if (vm.event_id != undefined) {
+				vm.event.fetch(vm.event_id)
+				.then(function(response){
+					vm.title = response.title
+					vm.startTime = response.start_date
+					vm.endTime = response.finish_date
+					vm.address = response.address
+					vm.lat = response.lat
+					vm.lng = response.lng
+					vm.description = response.description
+				})
+
+				vm.event.attendees(vm.event_id)
+				.then(function(response){
+					vm.attendees = response
+					var userInAttending = vm.attendees.filter(function ( attendee ) {
+					    return attendee.user_id == vm.security.userId()
+					})[0];
+					
+					if (userInAttending != undefined) {
+						vm.currentUserAttending = true
+					}
+
+				})
+
+			}
 		}
 
 		function submitRsvp() {
+
+			var sendAttendance = function() {
+				if (vm.security.userValid) {
+					if (!vm.currentUserAttending) {
+						var jsonData = JSON.stringify({user_id: vm.security.userId()})
+						vm.event.sumbitRsvp(vm.event_id, jsonData)
+						.then(function(response){
+							console.log(response)
+							vm.currentUserAttending = true
+
+							vm.event.attendees(vm.event_id)
+							.then(function(response){
+								vm.attendees = response
+							})
+							
+						})	
+					}
+				}
+			}
+
 			if (vm.security.userValid) {
-				var jsonData = JSON.stringify({user_id: vm.security.userId()})
-				vm.event.sumbitRsvp(vm.event_id, jsonData)
-				.then(function(response){
-					console.log('-== success==-')
-					console.log(response)
+				sendAttendance()				
+			}
+			else {
+				ngDialog.open({
+					template: 'loginDialog',
+					controller: 'AuthenticationController',
+					preCloseCallback: sendAttendance 
 				})
 			}
 		}
@@ -90,15 +126,17 @@
 				}
 			}
 
-			if (!vm.security.userValid) {
-				ngDialog.open({
-					template: 'loginDialog',
-					controller: 'AuthenticationController',
-					preCloseCallback: createEvent 
-				})
-			}
-			else {
-				createEvent()
+			if ($scope.createEventForm.$valid) {
+				if (!vm.security.userValid) {
+					ngDialog.open({
+						template: 'loginDialog',
+						controller: 'AuthenticationController',
+						preCloseCallback: createEvent 
+					})
+				}
+				else {
+					createEvent()
+				}	
 			}
 		}
 

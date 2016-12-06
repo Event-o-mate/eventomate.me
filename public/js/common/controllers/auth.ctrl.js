@@ -112,6 +112,8 @@
 			userCookie.email = user.email 
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
 			vm.security.userValid = true
+
+			console.log(userCookie)
 		}
 
 	}

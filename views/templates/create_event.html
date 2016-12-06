@@ -4,18 +4,32 @@
 
       <div class="col-md-6 offset-md-3">
           <h1 class="text-center">Create new event</h1>
-          <form role="form" class="text-left">
+          <form role="form" class="text-left" name="createEventForm">
               <div class="form-group">
-                  <label class="control-label" for="inputLabel1">Event name</label>
-                  <input type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" ng-model="events.title">
+                  <label class="control-label" for="inputLabel1">Event name*</label>
+                  
+                  <span ng-messages="createEventForm.eventTitle.$error" ng-if="createEventForm.eventTitle.$touched">
+                    <span ng-message="required" class="event-errors" role="alert">
+                      Please fill in required fields!
+                    </span>
+                  </span>
+
+                  <input name="eventTitle" type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" ng-model="events.title" required>
               </div>
               <div class="row">
                   <div class="col-md-6 dropdown">
                     
                     <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#">
                       <div class="input-group">
-                        <label class="control-label" for="inputLabel1">Start time</label>
-                        <input type="text" id="inputLabel1" class="form-control" data-ng-model="dateRangeStart">
+                        <label class="control-label" for="inputLabel1">Start time*</label>
+
+                        <span ng-messages="createEventForm.startTime.$error" ng-if="createEventForm.startTime.$touched">
+                          <span ng-message="required" class="event-errors" role="alert">
+                            Fill in required field!
+                          </span>
+                        </span>
+
+                        <input name="startTime" type="text" id="inputLabel1" class="form-control" data-ng-model="dateRangeStart" required>
                       </div>
                     </a>
                     <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
@@ -29,8 +43,15 @@
                   <div class="col-md-6 dropdown">
                     <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#">
                       <div class="input-group">
-                        <label class="control-label" for="inputLabel1">Start time</label>
-                        <input type="text" id="inputLabel1" class="form-control" datetime="EEE dd MMM yyyy HH:mm" data-ng-model="dateRangeEnd">
+                        <label class="control-label" for="inputLabel1">End time*</label>
+
+                        <span ng-messages="createEventForm.endTime.$error" ng-if="createEventForm.endTime.$touched">
+                          <span ng-message="required" class="event-errors" role="alert">
+                            Fill in required field!
+                          </span>
+                        </span>
+
+                        <input name="endTime" type="text" id="inputLabel1" class="form-control" datetime="EEE dd MMM yyyy HH:mm" data-ng-model="dateRangeEnd" required>
                       </div>
                     </a>
                     <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
@@ -42,8 +63,15 @@
                   </div>
               </div>
               <div class="form-group">
-                  <label class="control-label" for="inputLabel1">Location</label>
-                  <input type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" g-places-autocomplete ng-model="events.location">
+                  <label class="control-label" for="inputLabel1">Location*</label>
+
+                  <span ng-messages="createEventForm.location.$error" ng-if="createEventForm.location.$touched">
+                    <span ng-message="required" class="event-errors" role="alert">
+                      Please fill in required fields!
+                    </span>
+                  </span>
+
+                  <input name="location" type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" g-places-autocomplete ng-model="events.location" required>
               </div>
               <div class="form-group">
                   <label class="control-label" for="textareaLabel1">Description</label>

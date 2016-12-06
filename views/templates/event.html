@@ -5,9 +5,15 @@
               <h1 class="text-center">{{ events.title}}</h1>
               <h5 class="text-center">{{events.startTime | date: 'EEEE d MMM HH:mm'}} - {{events.endTime | date: 'EEEE d MMM HH:mm'}}</h5>
 
-              <div id="rsvp-button-wrapper">
+              <div id="rsvp-button-wrapper" ng-hide="events.currentUserAttending">
                   <button type="button" class="btn btn-publish2" ng-click="events.submitRsvp()">
                       RSVP
+                  </button>
+              </div>
+
+              <div id="rsvp-confirmed-button-wrapper" ng-show="events.currentUserAttending">
+                  <button type="button" class="btn btn-publish2 unattend-button" ng-click="events.submitRsvp()">
+                      I'M ATTENDING
                   </button>
               </div>
 
