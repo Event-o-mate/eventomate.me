@@ -67,6 +67,14 @@
 		function submitRsvp() {
 
 			var sendAttendance = function() {
+				var userInAttending = vm.attendees.filter(function ( attendee ) {
+			    return attendee.user_id == vm.security.userId()
+				})[0];
+				
+				if (userInAttending != undefined) {
+					vm.currentUserAttending = true
+				}
+
 				if (vm.security.userValid) {
 					if (!vm.currentUserAttending) {
 						var jsonData = JSON.stringify({user_id: vm.security.userId()})
@@ -79,7 +87,7 @@
 							.then(function(response){
 								vm.attendees = response
 							})
-							
+
 						})	
 					}
 				}

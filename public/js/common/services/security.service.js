@@ -6,7 +6,7 @@
     .factory('security', security);
 
     function security($http, $cookies) {
-      var userCookie = $cookies.getObject("userCookie")
+      var userCookie
       
       var service =  {
         registerUser: registerUser,
@@ -52,6 +52,7 @@
       }
 
       function getUserId() {
+        userCookie = $cookies.getObject("userCookie")
         if (userCookie != null) {
           return userCookie.user_id
         }
@@ -59,6 +60,7 @@
       }
 
       function getUserEmail() {
+        userCookie = $cookies.getObject("userCookie")
         if (userCookie != null) {
           userCookie.email
         }
