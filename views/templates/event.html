@@ -21,7 +21,7 @@
                     <h4>People Attending this event</h4>
                     <ul class="atendees-list">
                         <li ng-repeat="attendee in events.attendees">
-                            <img gravatar-src="attendee.email" gravatar-size="100">
+                            <img gravatar-src="attendee.email" gravatar-size="100" gravatar-default="'mm'">
                             <span>{{attendee.name}}</span>
                         </li>
                         <!-- <p>
