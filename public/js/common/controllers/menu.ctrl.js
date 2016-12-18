@@ -46,6 +46,12 @@
 				template: 'loginDialog',
 				controller: "AuthenticationController"
 			})
+			.then(function(){
+				ngDialog.open({
+					template: 'registerDialog',
+					controller: "AuthenticationController"
+				})
+			})
 		}
 
 		function clearCookie() {
