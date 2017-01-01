@@ -26,11 +26,13 @@
 		vm.attendees
 		vm.location
 		vm.currentUserAttending
+		vm.showWidgets
 		
 		init()
 
 		//Bindables
 		function init() {
+			vm.showWidgets = false
 			vm.security = security
 			vm.event = Event
 			vm.event_id = $routeParams.id
@@ -134,12 +136,28 @@
 				}
 			}
 
+			var closeCallback = function() {
+
+			}
+
 			if ($scope.createEventForm.$valid) {
 				if (!vm.security.userValid) {
 					ngDialog.open({
 						template: 'loginDialog',
 						controller: 'AuthenticationController',
 						preCloseCallback: createEvent 
+					})
+					.closePromise.then(function(data){
+						if (data.value == "register") {
+							ngDialog.open({
+								template: 'registerDialog',
+								controller: 'AuthenticationController',
+								preCloseCallback: createEvent 
+							})
+						}
+						else {
+							createEvent()
+						}
 					})
 				}
 				else {

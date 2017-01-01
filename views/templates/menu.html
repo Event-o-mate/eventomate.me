@@ -24,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" ng-show="menu.security.userValid" ng-href="#/dashboard"> DASHBOARD</a>
+          <a class="nav-link dashboard-button" ng-show="menu.security.userValid" ng-href="#/dashboard"> DASHBOARD</a>
         </li>
 
       </ul>
@@ -37,13 +37,14 @@
 <script type="text/ng-template" id="loginDialog">
   <form name="loginForm" required>
     <div class="login-dialog">
-      <input type="email" name="userEmail" class="input-email-login" placeholder="email*" ng-model="email" required>
-      <input name="userPassword" class="input-password-login" placeholder="password*" type="password" ng-model="password" required>
+      <input type="email" name="userEmail" class="input-email-login ng-remove-focus" placeholder="email*" ng-model="email" autocomplete="off" required>
+      <input name="userPassword" class="input-password-login ng-remove-focus" placeholder="password*" type="password" ng-model="password" autocomplete="off" required>
       <button class="button-dropdown  btn" ng-click="login()"> LOGIN</button>
+      <p><a href ng-click=closeThisDialog("register")>Don't have an account? Register.</a></p>
 
       <!--alerts-->
       <!-- email -->
-      <div ng-messages="loginForm.userEmail.$error" ng-if="loginForm.userEmail.$touched">
+      <div ng-messages="loginForm.userEmail.$error" ng-if="loginForm.userPassword.$touched">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>
@@ -53,7 +54,7 @@
       </div>
 
       <!-- password -->
-      <div ng-messages="loginForm.userPassword.$error" ng-if="loginForm.userPassword.$touched">
+      <div ng-messages="loginForm.userPassword.$error" ng-if="loginSubmited">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>
@@ -67,18 +68,19 @@
     </div>
 
   </form>
+
 </script>
 
 <!-- REGISTER MENU -->
 <script type="text/ng-template" id="registerDialog">
   <form name="registerForm" required>
     <div class="registar-dialog" >
-      <input name="userName" class="input-name-register" placeholder="name*" type="name" ng-model="name" required>
-      <input name="userEmail" class="input-email-register" placeholder="email*" type="email" ng-model="email" required>
-      <input name="userPassword" class="input-password-register" placeholder="password*" type="password" ng-model="password" required>
+      <input name="userName" class="input-name-register ng-remove-focus" placeholder="name*" type="name" ng-model="name" autocomplete="off" required>
+      <input name="userEmail" class="input-email-register ng-remove-focus" placeholder="email*" type="email" ng-model="email" autocomplete="off" required>
+      <input name="userPassword" class="input-password-register" placeholder="password*" type="password" ng-model="password" autocomplete="off" required>
       <button class="button-dropdown btn" ng-click="register()"> REGISTER</button>
 
-      <div ng-messages="registerForm.userName.$error" ng-if="registerForm.userName.$touched">
+      <div ng-messages="registerForm.userName.$error" ng-if="registerSubmited">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>
@@ -94,7 +96,7 @@
       </div>
 
       <!-- password -->
-      <div ng-messages="registerForm.userPassword.$error" ng-if="registerForm.userPassword.$touched">
+      <div ng-messages="registerForm.userPassword.$error" ng-if="registerSubmited">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>

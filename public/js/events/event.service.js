@@ -18,15 +18,6 @@
         attendees: attendees
       }
 
-      // $http.defaults.headers.common.Authorization = "hash="+userCookie.token
-      // $http.defaults.headers.common.Accept = "application/json"
-
-      // if (userCookie !== undefined) {
-      //   if (userCookie.token !== undefined) {
-      //     url.token = userCookie.token
-      //   }
-      // } 
-
     	return service
 
       //reload cookie to get latest user id

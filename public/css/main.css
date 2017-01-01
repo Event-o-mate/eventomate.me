@@ -48,6 +48,34 @@ ul.nav a:hover { color: #fff !important; }
   margin-right: 20px;
 }
 
+.widgets-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widgets-list li {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.comment-widget {
+  background: url('../img/comment-icon.png') center center no-repeat;
+  background-size: 100% 100%;
+}
+
+.photos-widget {
+  background: url('../img/photos-icon.png') center center no-repeat;
+  background-size: 100% 100%;
+}
+
+.poll-widget {
+  background: url('../img/poll-icon.png') center center no-repeat;
+  background-size: 100% 100%;
+}
+
 
 #create-event {}
 .btn-add-section {width:  100%; background: none; border: dashed 2px white; margin-bottom: 50px; margin-top: 20px; color: white; }
@@ -73,6 +101,14 @@ ul.nav a:hover { color: #fff !important; }
 }
 .show{
   opacity: 1;
+}
+
+.logout-button {
+  display: none;
+}
+
+.dashboard-button {
+  display: none;
 }
 
 /* AUTH DIALOGS */

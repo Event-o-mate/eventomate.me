@@ -25,7 +25,6 @@
 			vm.security = security
 		}
 
-
 		// Bindables
 		function logout() {
 			clearCookie()
@@ -46,12 +45,11 @@
 				template: 'loginDialog',
 				controller: "AuthenticationController"
 			})
-			.then(function(){
-				ngDialog.open({
-					template: 'registerDialog',
-					controller: "AuthenticationController"
-				})
-			})
+			.closePromise.then(function (data) {
+				if (data.value == "register") {
+					toggleRegister()
+				}
+			});
 		}
 
 		function clearCookie() {

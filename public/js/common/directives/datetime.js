@@ -6,7 +6,7 @@
 	  .module('EventoMate')
 	  .directive('ngDateTime', ngDateTime)
 
-	  function ngDateTime (dateFilter) {
+	  function ngDateTime(dateFilter) {
 	  	var directive = {
 	      require:'ngModel',
 	      link: formatDate
