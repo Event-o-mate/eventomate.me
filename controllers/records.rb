@@ -20,6 +20,10 @@ class RecordsController < Sinatra::Base
 			api_request[:params]["model"].capitalize
 		end
 
+		def model
+			Object.const_get(model_name)
+		end
+
 		def valid_model?
 			Object.const_defined? model_name
 		end
@@ -37,6 +41,75 @@ class RecordsController < Sinatra::Base
 		# 	error 401 unless valid	
 		# end 
 	end
+
+	## 	EVENTOMATE SPECIFIC REQUESTS, FIXING API DESIGN
+
+	# GET EVENTS
+	get '/user/:id/event' do
+		user_id = api_request[:params][:id]
+		user = User.get(user_id)
+		Response.for :get_record, api_request do |response|
+			hosting_events = user.events.all
+			response.data = hosting_events
+			response.submit 
+		end
+	end
+
+	# GET ATTENDEES
+	get '/event/:id/attendee' do
+		event_id = api_request[:params][:id]
+		event = Event.get(event_id)
+		attending = []
+		Response.for :get_record, api_request do |response|
+			event.attendees.each do |attendee|
+				attending << User.get(attendee.user_id).account
+			end
+			response.data = attending
+			response.submit
+		end
+	end
+
+	# CREATE EVENT
+	put '/user/:id/event' do 
+		# parent_model_id = params[:id]
+		user_id = api_request[:params][:id]
+		user = User.get(user_id)
+		Response.for :create_record, api_request do |response|
+			# parent_model = Object.const_get(model_name).get(id)
+			event = user.events.new
+			event.attributes = api_request[:json_body]
+			event.save
+			
+			if user.save	
+				response.data = event
+			else
+				event.errors.each do |e| 
+					puts e
+				end
+
+				response.error = Error.code 1002 #record not created, invalid data request, or sent data invalid
+			end
+			response.submit
+		end
+	end
+
+	# RSVP EVENT
+	# Needs to create new record in attendees table, containing user_id of the rsvping user
+	put '/event/:id/attendee' do
+		event_id = api_request[:params][:id]
+		event = Event.get(event_id)
+		Response.for :create_record, api_request do |response|
+			attendee = event.attendees.create(:user_id => api_request[:json_body]["user_id"])
+			if event.save
+				response.data = attendee
+			else
+				response.error = Error.code 1002 #record not created, invalid data request, or sent data invalid 
+			end
+			response.submit
+		end
+	end
+
+	## ORIGNAL API REQUESTS, ABASTRACT 
 
 	#GET ALL RECORDS FOR MODEL
 	get '/:model' do
@@ -73,81 +146,7 @@ class RecordsController < Sinatra::Base
 		end
 	end
 
-	## 	EVENTOMATE SPECIFIC REQUESTS, FIXING API DESIGN
-
-	# GET RECORD BY RELATIONS
-	get '/user/:id/event' do
-		user_id = api_request[:params][:id]
-		user = User.get(user_id)
-		Response.for :get_record, api_request do |response|
-			hosting_events = user.events.all
-			response.data = hosting_events
-			response.submit 
-		end
-	end
-
-	get '/event/:id/attendee' do
-		event_id = api_request[:params][:id]
-		event = Event.get(event_id)
-		attending = []
-		Response.for :get_record, api_request do |response|
-			event.attendees.each do |attendee|
-				attending << User.get(attendee.user_id).account
-			end
-			response.data = attending
-			response.submit
-		end
-	end
-
-	# CREATE EVENT
-	put '/user/:id/event' do 
-		# parent_model_id = params[:id]
-		user_id = api_request[:params][:id]
-		user = User.get(user_id)
-		Response.for :create_record, api_request do |response|
-			# parent_model = Object.const_get(model_name).get(id)
-			event = user.events.new
-			event.attributes = api_request[:json_body]
-			event.save
-			#attendee = event.attendees.create(:user_id => user_id)
-			
-			if user.save	
-				response.data = event
-			else
-				event.errors.each do |e| 
-					puts e
-				end
-				
-				# error = Error.code 1002
-				# error.original_error = event.errors
-				# response.error =  error
-
-				response.error = Error.code 1002 #record not created, invalid data request, or sent data invalid
-			end
-			response.submit
-		end
-	end
-
-	# RSVP EVENT
-	# Needs to create new record in attendees table, containing user_id of the rsvping user
-	put '/event/:id/attendee' do
-		event_id = api_request[:params][:id]
-		event = Event.get(event_id)
-		Response.for :create_record, api_request do |response|
-			attendee = event.attendees.create(:user_id => api_request[:json_body]["user_id"])
-			if event.save
-				response.data = attendee
-			else
-				response.error = Error.code 1002 #record not created, invalid data request, or sent data invalid 
-			end
-			response.submit
-		end
-	end
-
-	# SAVE EVENT (?)
-
 	#CREATE RECORD
-	# put '/:parent_model/:id/:child_model/' do 
 	put '/:model' do
 		Response.for :create_record, api_request do |response|
 			if valid_model?
@@ -213,18 +212,5 @@ class RecordsController < Sinatra::Base
 			response.submit
 		end
 	end
-
-	# SYNC RECORDS REQUEST
-	post '/sync/:model' do
-		Response.for :sync_records, api_request do |response|
-			if valid_model?
-
-			else
-				response.error = Error.code 1008 #invalid model request
-			end
-			response.submit
-		end
-	end 
-
 end
 

@@ -10,9 +10,14 @@ class Event
 	property :finish_date,   DateTime 
   property :description,   String,   :length => 255
 	property :all_day,		   Boolean 
-  property :created_on,		 DateTime 
+  property :created_at,    DateTime
+  property :created_on,    Date   
+  property :updated_at,    DateTime
+  property :updated_on,    Date
 
   belongs_to :user
   has n, :attendees
+  has n, :comments
+  has n, :sections
 
 end

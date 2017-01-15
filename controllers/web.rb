@@ -1,8 +1,6 @@
 #api.rb
 require 'haml'
-require "coffee-script"
 require 'sinatra/assetpack'
-
 
 class WebController < Sinatra::Base
 	enable :method_override
@@ -11,7 +9,7 @@ class WebController < Sinatra::Base
 	set :public_folder, 'public'
 	
 	register Sinatra::Reloader
-	register Sinatra::AssetPack
+  register Sinatra::AssetPack
 
 	helpers do 
 		def html(view)
@@ -33,9 +31,9 @@ class WebController < Sinatra::Base
     css :libs, [
     	#bootstrap date time picker
     	'/lib/datetimepicker/css/datetimepicker.css',
-        #ngDialog
-        'lib/ngDialog/css/ngDialog.min.css',
-        'lib/ngDialog/css/ngDialog-theme-default.css'
+      #ngDialog
+      'lib/ngDialog/css/ngDialog.min.css',
+      'lib/ngDialog/css/ngDialog-theme-default.css'
     ]
 
     # angular app files
@@ -45,9 +43,9 @@ class WebController < Sinatra::Base
     	#app common libs
     	'/js/common/services/security.service.js',
     	'/js/common/controllers/menu.ctrl.js',
-        '/js/common/controllers/auth.ctrl.js',
+      '/js/common/controllers/auth.ctrl.js',
     	'/js/common/lib/autocomplete.js',
-        '/js/common/directives/datetime.js',
+      '/js/common/directives/datetime.js',
     	#pages controllers
     	'/js/home/home.ctrl.js',
     	'/js/dashboard/dashboard.ctrl.js',
@@ -61,16 +59,13 @@ class WebController < Sinatra::Base
     	#bootstrap date time picker
     	'/lib/datetimepicker/js/datetimepicker.js',
     	'/lib/datetimepicker/js/datetimepicker.templates.js',
-        #ngDialog
-        'lib/ngDialog/js/ngDialog.min.js',
-        #ngMap
-        'lib/ngMap/ngMap.js',
-        #ngGravatar
-        'lib/ngGravatar/ngGravatar.js'
+      #ngDialog
+      'lib/ngDialog/js/ngDialog.min.js',
+      #ngMap
+      'lib/ngMap/ngMap.js',
+      #ngGravatar
+      'lib/ngGravatar/ngGravatar.js'
     ] 
-
-    js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify
-    css_compression :simple   # :simple | :sass | :yui | :sqwish
 	end
 
 	# fetch layout and index(ng-view) with home page
