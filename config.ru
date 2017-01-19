@@ -31,4 +31,5 @@ DataMapper.finalize.auto_upgrade!
 map('/api/records') 		 {run RecordsController}
 map('/api/authenticate') {run AuthenticationController}
 map('/api/query') 			 {run QueryController}
+map('/api/comments') 		 {run CommentsController}
 map('/') 								 {run WebController}

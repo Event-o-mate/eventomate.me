@@ -26,12 +26,12 @@
 		vm.attendees
 		vm.location
 		vm.currentUserAttending
-		vm.showWidgets
 		
 		init()
 
 		//Bindables
 		function init() {
+
 			vm.showWidgets = false
 			vm.security = security
 			vm.event = Event
@@ -123,9 +123,7 @@
 
 					var jsonData = JSON.stringify(vm.eventData)
 
-					vm.event.create(jsonData)
-					.then(function(response){
-						console.log(response)
+					vm.event.create(jsonData).then(function(response) {
 						if (response.errors === undefined) {
 							$location.path('/dashboard')
 						}
@@ -136,18 +134,14 @@
 				}
 			}
 
-			var closeCallback = function() {
-
-			}
-
 			if ($scope.createEventForm.$valid) {
 				if (!vm.security.userValid) {
 					ngDialog.open({
 						template: 'loginDialog',
 						controller: 'AuthenticationController',
 						preCloseCallback: createEvent 
-					})
-					.closePromise.then(function(data){
+					}).closePromise
+					.then(function(data){
 						if (data.value == "register") {
 							ngDialog.open({
 								template: 'registerDialog',

@@ -48,10 +48,19 @@ ul.nav a:hover { color: #fff !important; }
   margin-right: 20px;
 }
 
+.remove-section-btn {
+  float: right;
+  cursor: pointer;
+  margin-top: -30px;
+  margin-right: -25px;
+  color: white;
+}
+
 .widgets-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  text-align: center;
 }
 
 .widgets-list li {
@@ -61,20 +70,44 @@ ul.nav a:hover { color: #fff !important; }
   cursor: pointer;
 }
 
-.comment-widget {
+.comment-widget-icon {
   background: url('../img/comment-icon.png') center center no-repeat;
   background-size: 100% 100%;
 }
 
-.photos-widget {
+.photos-widget-icon {
   background: url('../img/photos-icon.png') center center no-repeat;
   background-size: 100% 100%;
 }
 
-.poll-widget {
+.poll-widget-icon {
   background: url('../img/poll-icon.png') center center no-repeat;
   background-size: 100% 100%;
 }
+
+.snt-comment-profile-img {
+  height: 50px;
+}
+
+.snt-comment-content {
+  height: 50px;
+  padding: 0px;
+}
+
+.snt-comment-content textarea {
+  height: 50px;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  border: solid 1px rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.snt-submit-comment {
+  margin-top: 10px;
+  margin-right: -15px;
+  float: right;
+}
+
 
 
 #create-event {}

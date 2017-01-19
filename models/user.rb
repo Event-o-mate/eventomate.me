@@ -9,6 +9,9 @@ class User
   property :created_on, DateTime
 
   has 1, :account
-  has n, :events 
+  has n, :attendees
+  has n, :events, :through => :attendees
+  has n, :comments
+  has n, :events, :through => :comments
   
 end

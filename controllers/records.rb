@@ -59,6 +59,8 @@ class RecordsController < Sinatra::Base
 	get '/event/:id/attendee' do
 		event_id = api_request[:params][:id]
 		event = Event.get(event_id)
+		event.attendees.user.account
+
 		attending = []
 		Response.for :get_record, api_request do |response|
 			event.attendees.each do |attendee|
@@ -95,6 +97,8 @@ class RecordsController < Sinatra::Base
 
 	# RSVP EVENT
 	# Needs to create new record in attendees table, containing user_id of the rsvping user
+	# table join request
+	# put 'model/:id/child_model/:id/join_model/'
 	put '/event/:id/attendee' do
 		event_id = api_request[:params][:id]
 		event = Event.get(event_id)

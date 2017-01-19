@@ -34,11 +34,10 @@ class QueryController < Sinatra::Base
 			Object.const_defined? model_name
 		end
 	end
-
+	
 	get '/user/:id/attending' do 
 		user_id = params[:id]
-		events = Attendee.all(:user_id => user_id).events
+		events = User.get(user_id).attendees.events
 		events.to_json
 	end
-
 end

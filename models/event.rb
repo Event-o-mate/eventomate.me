@@ -17,7 +17,10 @@ class Event
 
   belongs_to :user
   has n, :attendees
-  has n, :comments
+  has n, :users, :through => :attendees
   has n, :sections
+  has n, :widgets, :through => :sections
+  has n, :comments
+  has n, :users, :through => :comments
 
 end

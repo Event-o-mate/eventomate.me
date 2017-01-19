@@ -51,7 +51,7 @@
                           </span>
                         </span>
 
-                        <input name="endTime" type="text" id="inputLabel1" class="form-control" datetime="EEE dd MMM yyyy HH:mm" data-ng-model="dateRangeEnd" required>
+                        <input name="endTime" type="text" id="inputLabel1" class="form-control" datetime="dd MMM" data-ng-model="dateRangeEnd" required>
                       </div>
                     </a>
                     <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
@@ -77,17 +77,8 @@
                   <label class="control-label" for="textareaLabel1">Description</label>
                   <textarea class="form-control" id="textareaLabel1" ng-model="events.description">{{ events.description }}</textarea>
               </div>
-              <div class="details-wrapper" ng-show="event.showWidgets">
-                <ul class="widgets-list">
-                  <li class="comment-widget"></li>
-                  <li class="photos-widget"></li>
-                  <li class="poll-widget"></li>
-                </ul>
-              </div>
-              <button type="button" class="btn btn-add-section" ng-click="event.showWidgets = !event.showWidgets">+ Add new Section</button>
-              <button type="button" class="btn btn-publish" ng-click="events.publish()"> 
-                  Publish event
-              </button>
+              <button type="button" class="btn btn-add-section" snt-add-event-section>+ Add new Section</button>
+              <button type="button" class="btn btn-publish" ng-click="events.publish()"> Publish event </button>
           </form>
         </div><!-- END COL -->
 

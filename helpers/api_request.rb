@@ -1,7 +1,7 @@
 require 'sinatra/base'
 
 module Sinatra
-	module ApiRequestHelper
+	module ApiRequest
 
 		def read_json
 			unless request.request_method == 'GET'
@@ -36,5 +36,5 @@ module Sinatra
 
 	end
 
-	helpers ApiRequestHelper
+	helpers ApiRequest
 end
