@@ -1,3 +1,6 @@
+#TODO: Add notification layer
+#TODO: Connect to ui 
+
 #load sinatra
 require 'rubygems'
 require 'sinatra/base'

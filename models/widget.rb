@@ -2,7 +2,7 @@ class Widget
 	include DataMapper::Resource
 
 	property :id, 				Serial
-	property :type,  			Boolean
+	property :type,  			String, :length => 255
 	property :icon_url,		String, :length => 255
 	property :enabled,		Boolean
 	property :created_at, DateTime
