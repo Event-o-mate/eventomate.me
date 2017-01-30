@@ -3,18 +3,18 @@
 		.module("EventoMate")
 		.controller("DashboardController", DashboardController)
 
-	function DashboardController($scope, Event) {
+	function DashboardController($scope, DashboardService) {
 		var vm = this
 
 		//Properties
-		vm.event = Event
+		vm.dashboardService
 		vm.hostingEvents
 		vm.attendingEvents
 
 		init()
 
 		function init() {
-			console.log("init")
+			vm.dashboardService = DashboardService
 			vm.event.hosting()
 			.then(function(response) {
 				console.log('-== Hosting events ==-')
@@ -22,7 +22,7 @@
 				vm.hostingEvents = response
 			})
 			.catch(function(error){
-
+				console.log(error)
 			})
 
 			console.log("attending")
@@ -31,6 +31,9 @@
 				console.log('-== Attending events ==-')
 				console.log(response)
 				vm.attendingEvents = response
+			})
+			.catch(function(error){
+				console.log(error)
 			})
 		}
 	}

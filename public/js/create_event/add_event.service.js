@@ -3,7 +3,7 @@
 
   angular
     .module("EventoMate")
-    .factory("AddEvent", AddEventService)
+    .factory("AddEventService", AddEventService)
 
   function AddEventService($http, $resource, security) {
     var service = {

@@ -14,7 +14,7 @@
 		vm.submitRsvp = submitRsvp
 		
 		//Properties
-		vm.event_id
+		vm.eventId
 		vm.title
 		vm.address
 		vm.startTime
@@ -26,6 +26,8 @@
 		vm.attendees
 		vm.location
 		vm.currentUserAttending
+		vm.eventSections
+		vm.eventComments
 		
 		init()
 
@@ -35,11 +37,11 @@
 			vm.showWidgets = false
 			vm.security = security
 			vm.event = Event
-			vm.event_id = $routeParams.id
+			vm.eventId = $routeParams.id
 			vm.currentUserAttending = false
 
-			if (vm.event_id != undefined) {
-				vm.event.fetch(vm.event_id)
+			if (vm.eventId != undefined) {
+				vm.event.fetch(vm.eventId)
 				.then(function(response){
 					vm.title = response.title
 					vm.startTime = response.start_date
@@ -50,7 +52,7 @@
 					vm.description = response.description
 				})
 
-				vm.event.attendees(vm.event_id)
+				vm.event.attendees(vm.eventId)
 				.then(function(response){
 					vm.attendees = response
 					var userInAttending = vm.attendees.filter(function ( attendee ) {
@@ -60,7 +62,22 @@
 					if (userInAttending != undefined) {
 						vm.currentUserAttending = true
 					}
+				})
 
+				vm.event.getSections(vm.eventId)
+				.then(function(response){
+					vm.eventSections = response
+				})
+				.then(function(error){
+					console.log(error)
+				})
+
+				vm.event.getComments(vm.eventId)
+				.then(function(response){
+					vm.eventComments = response
+				})
+				.then(function(error){
+					console.log(error)
 				})
 
 			}
@@ -107,95 +124,13 @@
 			}
 		}
 
-		function publish() {
+		function addComment() {
 
-			var createEvent = function() {
-				if (vm.security.userValid) {
-					vm.eventData = {
-						"title": vm.title,
-						"address": vm.location.formatted_address,
-						"lat": vm.location.geometry.location.lat(),
-						"lng": vm.location.geometry.location.lng(),
-						"start_date": $scope.dateRangeStart,
-						"finish_date": $scope.dateRangeEnd,
-						"description": vm.description,
-					}
-
-					var jsonData = JSON.stringify(vm.eventData)
-
-					vm.event.create(jsonData).then(function(response) {
-						if (response.errors === undefined) {
-							$location.path('/dashboard')
-						}
-					})
-					.catch(function(error){
-						console.log(error)
-					})
-				}
-			}
-
-			if ($scope.createEventForm.$valid) {
-				if (!vm.security.userValid) {
-					ngDialog.open({
-						template: 'loginDialog',
-						controller: 'AuthenticationController',
-						preCloseCallback: createEvent 
-					}).closePromise
-					.then(function(data){
-						if (data.value == "register") {
-							ngDialog.open({
-								template: 'registerDialog',
-								controller: 'AuthenticationController',
-								preCloseCallback: createEvent 
-							})
-						}
-						else {
-							createEvent()
-						}
-					})
-				}
-				else {
-					createEvent()
-				}	
+			if(addCommentForm.$valid) {
+				vm.event.
 			}
 		}
 
-		//Default datapicker settings 
-		$scope.endDateBeforeRender = endDateBeforeRender
-		$scope.endDateOnSetTime = endDateOnSetTime
-		$scope.startDateBeforeRender = startDateBeforeRender
-		$scope.startDateOnSetTime = startDateOnSetTime
-
-		function startDateOnSetTime () {
-		  $scope.$broadcast('start-date-changed');
-		}
-
-		function endDateOnSetTime () {
-		  $scope.$broadcast('end-date-changed');
-		}
-
-		function startDateBeforeRender ($dates) {
-		  if ($scope.dateRangeEnd) {
-		    var activeDate = moment($scope.dateRangeEnd);
-		    $dates.filter(function (date) {
-		      return date.localDateValue() >= activeDate.valueOf()
-		    }).forEach(function (date) {
-		      date.selectable = false;
-		    })
-		  }
-		}
-
-		function endDateBeforeRender ($view, $dates) {
-		  if ($scope.dateRangeStart) {
-		    var activeDate = moment($scope.dateRangeStart).subtract(1, $view).add(1, 'minute');
-
-		    $dates.filter(function (date) {
-		      return date.localDateValue() <= activeDate.valueOf()
-		    }).forEach(function (date) {
-		      date.selectable = false;
-		    })
-		  }
-		}
 	}
 
 })()
