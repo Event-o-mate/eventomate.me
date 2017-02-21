@@ -15,7 +15,7 @@
 
 		function init() {
 			vm.dashboardService = DashboardService
-			vm.event.hosting()
+			vm.dashboardService.hostingEvents()
 			.then(function(response) {
 				console.log('-== Hosting events ==-')
 				console.log(response)
@@ -26,7 +26,7 @@
 			})
 
 			console.log("attending")
-			vm.event.attending()
+			vm.dashboardService.attendingEvents()
 			.then(function(response){
 				console.log('-== Attending events ==-')
 				console.log(response)

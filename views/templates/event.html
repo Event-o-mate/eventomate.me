@@ -44,19 +44,33 @@
           </div>
         </div>
 
-        <div class="details-wrapper event-section">
+        <div class="details-wrapper event-section snt-comment-widget" ng-show='events.commentsAdded'>
           <div class="container">
             <div class="row">
-              <div class="snt-comment-profile-img col-md-2"><img gravatar-src="events.security.getUserEmail()" gravatar-size="50" width="50"></div>
+              <div class="snt-comment-profile-img col-md-2">
+                <img gravatar-src="events.security.userEmail()" gravatar-size="50" width="50">
+              </div>
               <div class="snt-comment-content col-md-10">
-                <textarea placeholder="Write a comment ..."></textarea>
+                <textarea ng-model="events.comment" placeholder="Write a comment ..."></textarea>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <a class="snt-submit-comment btn btn-xs btn-primary">Submit</a>
+                <a class="snt-submit-comment btn btn-xs btn-primary" ng-click="events.addComment()">Submit</a>
               </div>
-            </div>  
+            </div>
+            
+            <div class="row" ng-repeat="comment in events.eventComments | orderBy: '-created_at'">
+              <hr>
+              <div class="col-md-2">
+                <img gravatar-src="comment.user.email" gravatar-size="50" width="50">
+              </div>
+              <div class="col-md-10 snt-comment-preview">
+                <span>{{comment.user.account.name}}</span><br>
+                <span>12.03.2017, 14:32</span><br>
+                <p>{{comment.content}} </p>
+              </div>
+            </div>
           </div> 
         </div>
 

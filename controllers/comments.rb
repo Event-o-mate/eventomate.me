@@ -10,6 +10,7 @@ class CommentsController < Sinatra::Base
 		def comment_id
 			api_request[:params][:id]
 		end
+	end
 
 	get '/' do
 		comment ||= Comment.all() || halt(api_request 1001)
@@ -27,12 +28,9 @@ class CommentsController < Sinatra::Base
 		user_id = api_request[:json_body]["user_id"]
 		event ||= Event.get(event_id) || halt(api_request 1001)
 		user ||= User.get(user_id) || halt(api_request 1001)
-		attributes = [
-			:content =>  api_request[:json_body]["content"],
-			:user => user
-		]
 		comment = event.comments.new
-		comment.attributes = attributes
+		comment.content = api_request[:json_body]["content"]
+		comment.user = user
 		halt(api_request 1002) unless comment.save
 		comment.to_json
 	end

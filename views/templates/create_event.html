@@ -77,8 +77,9 @@
                   <label class="control-label" for="textareaLabel1">Description</label>
                   <textarea class="form-control" id="textareaLabel1" ng-model="events.description">{{ events.description }}</textarea>
               </div>
+              
               <button type="button" class="btn btn-add-section" snt-add-event-section>+ Add new Section</button>
-              <button type="button" class="btn btn-publish" ng-click="events.publish()"> Publish event </button>
+              <button type="button" class="btn btn-publish" ng-click="events.createEvent()"> Publish event </button>
           </form>
         </div><!-- END COL -->
 

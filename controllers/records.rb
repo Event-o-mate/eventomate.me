@@ -2,7 +2,6 @@ class RecordsController < Sinatra::Base
 	enable :method_override
 
 	helpers do
-
 		def api_request
 			body = nil
 			unless request.request_method == 'GET'

@@ -10,8 +10,8 @@
 		var vm = this
 
 		//Method Bindables
-		vm.publish = publish
 		vm.submitRsvp = submitRsvp
+		vm.addComment = addComment
 		
 		//Properties
 		vm.eventId
@@ -28,6 +28,8 @@
 		vm.currentUserAttending
 		vm.eventSections
 		vm.eventComments
+		vm.commentsAdded
+		vm.comment
 		
 		init()
 
@@ -39,9 +41,10 @@
 			vm.event = Event
 			vm.eventId = $routeParams.id
 			vm.currentUserAttending = false
+			vm.comment = ''
 
 			if (vm.eventId != undefined) {
-				vm.event.fetch(vm.eventId)
+				vm.event.get(vm.eventId)
 				.then(function(response){
 					vm.title = response.title
 					vm.startTime = response.start_date
@@ -50,6 +53,26 @@
 					vm.lat = response.lat
 					vm.lng = response.lng
 					vm.description = response.description
+					vm.eventSections = response.sections
+
+					// Temp patch
+					if (vm.eventSections.length > 1 ) {
+						var commentsAdded = vm.eventSections.filter(function ( section ) {
+					    return section.widget.type == 'comments'
+						})[0];
+
+						if (commentsAdded != undefined) {
+							vm.commentsAdded = true
+
+							vm.event.getComments(vm.eventId)
+							.then(function(response){
+								vm.eventComments = response
+							})
+							.catch(function(error){
+								console.log(error)
+							})
+						}
+					}
 				})
 
 				vm.event.attendees(vm.eventId)
@@ -63,23 +86,6 @@
 						vm.currentUserAttending = true
 					}
 				})
-
-				vm.event.getSections(vm.eventId)
-				.then(function(response){
-					vm.eventSections = response
-				})
-				.then(function(error){
-					console.log(error)
-				})
-
-				vm.event.getComments(vm.eventId)
-				.then(function(response){
-					vm.eventComments = response
-				})
-				.then(function(error){
-					console.log(error)
-				})
-
 			}
 		}
 
@@ -126,8 +132,21 @@
 
 		function addComment() {
 
-			if(addCommentForm.$valid) {
-				vm.event.
+			if (vm.comment.length > 0) {
+				data = {
+					"content": vm.comment,
+					"user_id": vm.security.userId()
+				}
+				
+				var jsonData = JSON.stringify(data)
+				vm.event.createComment(vm.eventId, jsonData)
+				.then(function(response){
+					vm.eventComments.push(response)
+					console.log(vm.eventComments)
+				})
+				.catch(function(error){
+					console.log(error)
+				})
 			}
 		}
 

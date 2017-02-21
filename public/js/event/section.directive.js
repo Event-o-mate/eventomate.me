@@ -10,7 +10,8 @@
   function sntAddEventSection($templateRequest, $compile) {
   	var directive = {
       link: link,
-      restrict: 'AEC'
+      restrict: 'AEC',
+      controller: "CreateEventController"
     }
     
     return directive
@@ -30,14 +31,16 @@
 		var directive = {
 			link: link,
 			restrict: 'AEC',
+			controller: "CreateEventController"
 		}
 
 		return directive
 
-		function link(scope, element, attribute) {
+		function link(scope, element, attribute, ctrl) {
 			element.bind('click', function() {
+				var widget_type = element.find('.container').attr('type')
 				element.closest('.event-section').remove()
-				console.log("remove section")
+				ctrl.removeSection(widget_type)
 			})
 		}
 	}

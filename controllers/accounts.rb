@@ -23,9 +23,9 @@ class AccountsController < Sinatra::Base
 	end
 
 	post '/' do 
-		user || = User.get(user_id) || halt(api_error 1001)
+		user ||= User.get(user_id) || halt(api_error 1001)
 		attributes = [
-			:name => api_request[:json_body]["name"]
+			:name => api_request[:json_body]["name"],
 			:email => api_request[:json_body]["email"]
 		]
 		account = user.accounts.new
@@ -36,7 +36,7 @@ class AccountsController < Sinatra::Base
 
 	put '/:id' do
 		attributes = [
-			:name => api_request[:json_body]["name"]
+			:name => api_request[:json_body]["name"],
 			:email => api_request[:json_body]["email"]
 		]
 		account ||= Account.get(account_id) || halt(api_error 1001)

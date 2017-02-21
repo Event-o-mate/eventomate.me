@@ -1,4 +1,4 @@
-class CommentsController < Sinatra::Base
+class UsersController < Sinatra::Base
 	enable :method_override
 	helpers Sinatra::ApiRequest
 
@@ -24,16 +24,16 @@ class CommentsController < Sinatra::Base
 	# Get specific user
 	get '/:id' do
 		user ||= User.get(user_id) || halt(api_error 1001)
-		user.to_json(:methods=> [:accounts])
+		user.to_json(:methods=> [:account])
 	end
 
 	# Create new user record
 	post '/' do
-		attributes = [
+		attributes = {
 			:email => api_request[:json_body]["email"],
 			:password => api_request[:json_body]["password"],
 			:token => api_request[:json_body]["token"]
-		]
+		}
 		user = user.new
 		user.attributes = attributes
 		halt(api_error 1002) unless user.save
@@ -42,11 +42,11 @@ class CommentsController < Sinatra::Base
 
 	# Update existing user record
 	put '/:id' do 
-		attributes = [
+		attributes = {
 			:email => api_request[:json_body]["email"],
-			:password = api_request[:json_body]["password"],
+			:password => api_request[:json_body]["password"],
 			:token => api_request[:json_body]["token"]
-		]
+		}
 		user ||= User.get(user_id) || halt(api_error 1001)
 		user.attributes = attributes
 		halt(api_error 1003) unless user.save
@@ -70,10 +70,10 @@ class CommentsController < Sinatra::Base
 
 	# Create account that belongs to user
 	post '/:id/account' do
-		attributes = [
+		attributes = {
 			:name => api_request[:json_body]["name"],
 			:email => api_request[:json_body]["email"]
-		]
+		}
 		user = User.get(user_id) || halt(api_error 1001)
 		account = user.account.new
 		account.attributes = attributes
@@ -100,7 +100,7 @@ class CommentsController < Sinatra::Base
 
 	# Create event record for a user
 	post '/:id/events' do 
-		attributes = [
+		attributes = {
 			:title => api_request[:json_body]["title"],
   		:address => api_request[:json_body]["address"],
   		:lat => api_request[:json_body]["lat"],
@@ -108,11 +108,12 @@ class CommentsController < Sinatra::Base
   		:start_date => api_request[:json_body]["start_date"],
 			:finish_date => api_request[:json_body]["finish_date"],
   		:description => api_request[:json_body]["description"]
-		]
+		}
   	user ||= User.get(user_id) || halt(api_error 1001)
-		event = user.events.new
+		event = Event.new
 		event.attributes = attributes
-		halt(1002) unless event.save
+		event.user = user
+		halt(api_error 1002) unless event.save
 		event.to_json
 	end
 

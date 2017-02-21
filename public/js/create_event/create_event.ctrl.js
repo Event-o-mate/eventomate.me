@@ -10,8 +10,9 @@
 		var vm = this
 
 		//Method Bindables
-		vm.createEvent
-		vm.addSection
+		vm.createEvent = createEvent
+		vm.addSection = addSection
+		vm.removeSection = removeSection
 
 		//Properties
 		vm.eventId
@@ -19,21 +20,23 @@
 		vm.address
 		vm.startTime
 		vm.endTime
-		vm.lat
-		vm.lng
+		vm.location
 		vm.description
 		vm.eventSections
 		vm.eventService
+		vm.security
 
 		init()
 
 		function init() {
 			vm.eventService = AddEventService
 			vm.eventSections = []
-
+			vm.security = security
 		}
 
 		function createEvent() {
+
+			console.log("create event")
 
 			if (!vm.security.userValid){
 				var loginDialog = ngDialog.open({
@@ -67,21 +70,29 @@
 
 				var jsonData = JSON.stringify(vm.eventData)
 
-				vm.eventService.create(jsonData).then(function(response) {
+				vm.eventService.create(jsonData)
+				.then(function(response) {
 					if (response.errors === undefined) {
+						console.log("sections", vm.eventSections)
 						if (vm.eventSections.length > 0){
-							var eventId = response["id"]
+							console.log("add sections", vm.eventSections.length)
+							
+							// var eventId = response.id
+							// angular.forEach(vm.eventSections, function(section, index){
 
-							vm.eventService.addwidget(eventId, vm.eventSections[0]).then(function(response){
-								if (response.errors === undefined) {
-									$location.path('/dashboard')
-								}
-							})
-							.catch(function(error){
-								console.log(error)
-							})
+							// 	sectionData = JSON.stringify(section)
+							// 	vm.eventService.addwidget(eventId, sectionData)
+							// 	.then(function(response){
+									
+							// 	})
+							// 	.catch(function(error){
+							// 		console.log(error)
+							// 	})
+
+
+							// })
+
 						}
-						
 					}
 				})
 				.catch(function(error){
@@ -90,8 +101,19 @@
 			}
 		}
 
-		function addSection() {
+		function addSection(type) {
+			if (vm.eventSections.length < 2){
+				var section = {"type": type}
+				vm.eventSections.push(section)
+			}
+		}
 
+		function removeSection(type) {
+			if (vm.eventSections.length > 0){
+				vm.eventSections = vm.eventSections.filter(function(section) { 
+					return section.type !== type 
+				});
+			}
 		}
 
 		//Default datapicker settings 

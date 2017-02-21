@@ -3,9 +3,9 @@
 
   angular
   	.module("EventoMate")
-  	.factory("Dashboard", DashboardService)
+  	.factory("DashboardService", DashboardService)
 
-  function EventService($http, $resource, security) {
+  function DashboardService($http, $resource, security) {
 
   	var service = {
   		hostingEvents: hosting,

@@ -35,7 +35,7 @@
 
       })
       .when("/create_event", {
-          controller: "EventsController",
+          controller: "CreateEventController",
           controllerAs: "events",
           templateUrl : "templates/create_event"
       });

@@ -35,8 +35,11 @@ ul.nav a:hover { color: #fff !important; }
   padding-top: 7px;
 }
 
+.nav-item a {
+  font-family: 'Pacifico', cursive;
+}
+
 .create-event-button {
-	font-family: 'Pacifico', cursive;
 	font-size: 1.2rem;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -89,6 +92,10 @@ ul.nav a:hover { color: #fff !important; }
   height: 50px;
 }
 
+.snt-comment-widget hr {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 .snt-comment-content {
   height: 50px;
   padding: 0px;
@@ -96,16 +103,21 @@ ul.nav a:hover { color: #fff !important; }
 
 .snt-comment-content textarea {
   height: 50px;
-  width: 100%;
+  width: 97%;
   background-color: rgba(0,0,0,0.5);
   border: solid 1px rgba(255, 255, 255, 0.2);
   color: white;
+  float: left;
 }
 
 .snt-submit-comment {
   margin-top: 10px;
-  margin-right: -15px;
   float: right;
+}
+
+.snt-comment-preview p, .snt-comment-preview span {
+  float: left;
+  display: block;
 }
 
 

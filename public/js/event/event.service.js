@@ -7,10 +7,12 @@
 
     function EventService($http, $resource, security) {
       var service = {
-        create: create,
         get: get,
         sumbitRsvp: sumbitRsvp,
-        attendees: attendees
+        attendees: attendees,
+        getSections: getSections,
+        getComments: getComments,
+        createComment: createComment
       }
 
     	return service
@@ -134,10 +136,11 @@
 
         var createEventComment = $http({
           method: "POST", 
-          url: createCommentUrl
+          url: createCommentUrl,
+          data: data
         })
-        .then(createCommentsCompleted)
-        .then(createCommentsFailed)
+        .then(createCommentCompleted)
+        .then(createCommentFailed)
 
         return createEventComment
       }

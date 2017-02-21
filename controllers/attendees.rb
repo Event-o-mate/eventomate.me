@@ -1,4 +1,4 @@
-class AttendeescController < Sinatra::Base 
+class AttendeesController < Sinatra::Base 
 	enable :method_override
 	helpers Sinatra::ApiRequest
 
@@ -7,7 +7,6 @@ class AttendeescController < Sinatra::Base
 	end
 
 	helpers do
-		
 		def attendee_id 
 			api_request[:params][:id]
 		end
@@ -32,15 +31,15 @@ class AttendeescController < Sinatra::Base
 		event_id = api_request[:json_body]["event_id"]
 		user = User.get(user_id)
 		event = Event.get(event_id)
-
-		Attendee.create(
-			:user => user,
-			:event => event
-		).to_json
+		attendee = event.attendee.new
+		attendee.user = user
+		halt(api_error 1002) unless attendee.save
+		attendee.to_json
 	end
 
 	#Delete attendee record
 	delete '/:id' do 
-		Attendee.get(attendee_id).destroy()
+		attendee ||= Attendee.get(attendee_id) || halt(api_error 1001)
+		attendee.destroy()
 	end
 end

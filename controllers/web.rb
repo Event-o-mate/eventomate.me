@@ -49,10 +49,14 @@ class WebController < Sinatra::Base
     	'/js/home/home.ctrl.js',
     	'/js/dashboard/dashboard.ctrl.js',
     	'/js/event/events.ctrl.js',
+      '/js/create_event/create_event.ctrl.js',
       #pages services
       '/js/event/event.service.js',
       '/js/event/section.directive.js',
-      '/js/event/widget.directive.js'
+      '/js/event/widget.directive.js',
+      '/js/create_event/add_event.service.js',
+      '/js//dashboard/dashboard.service.js'
+
     ]
 
     # js local libs

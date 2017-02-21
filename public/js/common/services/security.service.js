@@ -47,7 +47,7 @@
         }
 
         function loginFailed(error) {
-          console.log('XHR Failed for getAvengers.' + error.data);
+          return error
         }
       }
 
@@ -62,7 +62,7 @@
       function getUserEmail() {
         userCookie = $cookies.getObject("userCookie")
         if (userCookie != null) {
-          userCookie.email
+          return userCookie.email
         }
       }
     }

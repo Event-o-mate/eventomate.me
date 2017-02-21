@@ -27,12 +27,9 @@ class SectionsController < Sinatra::Base
 		widget_type = api_request[:json_body]["widget_type"]
 		event ||= Event.get(event_id) || halt(api_error 1001)
 		widget ||= first_or_create(:type => widget_type) || halt(api_error 1001)
-		attributes = [
-			:widget => widget,
-			:enabled => true
-		]
 		new_section = event.sections.new
-		new_section.attributes = attributes
+		new_section.enabled = true
+		new_section.widget = widget
 		halt(api_error 1002) unless new_section.save
 		new_section.to_json
 	end
@@ -43,7 +40,7 @@ class SectionsController < Sinatra::Base
 		enabled = api_request[:json_body]["enabled"]
 		event ||= Event.get(event_id) || halt(api_error 1001)
 		widget ||= first_or_create(:type => widget_type) || halt(api_error 1001)
-		section ||= Section.get(section_id) || || halt(api_error 1001)
+		section ||= Section.get(section_id) || halt(api_error 1001)
 		attributes = [
 			:event => event,
 			:widget => widget,
@@ -54,7 +51,7 @@ class SectionsController < Sinatra::Base
 	end
 
 	delete '/:id' do
-		section ||= Section.get(section_id) || || halt(api_error 1001)
+		section ||= Section.get(section_id) || halt(api_error 1001)
 		section.destroy()
 	end
 

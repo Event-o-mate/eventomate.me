@@ -7,17 +7,10 @@ class EventsController < Sinatra::Base
 	end
 
 	helpers do
-		def user_id
-			api_request[:params][:user_id]
-		end
-		
 		def event_id
 			api_request[:params][:id]
 		end
 
-		def attendee_id
-			api_request[:params][:attendee_id]
-		end
 	end
 
 	#EVENT MODEL CRUD
@@ -31,7 +24,7 @@ class EventsController < Sinatra::Base
 	# Get specific event record
 	get '/:id' do
 		event ||= Event.get(event_id) || halt(api_error 1001)
-		event.to_json
+		event.to_json(relationships: {sections: {methods: [:widget]}})
 	end
 
 	# Create new event record
@@ -65,8 +58,10 @@ class EventsController < Sinatra::Base
 	  	:start_date => api_request[:json_body]["start_date"],
 			:finish_date => api_request[:json_body]["finish_date"],
   		:description => api_request[:json_body]["description"],
-  		:user => user
 		]
+		event = Event.new
+		event.attributes
+		event.user = user
 		halt(api_error 1003) unless event.save
 		event.to_json
 	end
@@ -99,8 +94,8 @@ class EventsController < Sinatra::Base
 		user_id = api_request[:json_body]["user_id"]
 		event ||= Event.get(event_id) || halt(api_error 1001)
 		user ||= User.get(user_id) || halt(api_error 1001)
-		attributes = [:user => user]
-		atendee = event.attendees.new 
+		attendee = event.attendees.new 
+		attendee.user = user
 		halt(api_error 1002) unless attendee.save
 		attendee.to_json
 	end
@@ -108,40 +103,37 @@ class EventsController < Sinatra::Base
 	# EVENT COMMENTS
 
 	# Get event comments records
-	get '/:id/comments/' do
+	get '/:id/comments' do
 		event ||= Event.get(event_id) || halt(api_error 1001)
-		comments ||= comments.all() || halt(api_error 1001)
-		comments.to_json
+		comments ||= event.comments.all() || halt(api_error 1001)
+		comments.to_json(relationships: {user: {methods: [:account]}})
 	end
 
 	# Get specific event comment record
 	get '/:id/comments/:comment_id' do
 		comment_id = api_request[:params][:comment_id]
-		event ||=	Event.get(event_id)
-		comment ||= comments.get(comment_id)
+		event ||=	Event.get(event_id) || halt(api_error 1001)
+		comment ||= comments.get(comment_id) || halt(api_error 1001)
 		comment.to_json
 	end
 
 	# Create comment for an event by a user
-	post '/:id/comment' do
-		user_id = api_request[:json_body]["user_id"]
+	post '/:id/comments' do
+		user_commenting_id = api_request[:json_body]["user_id"]
 		content = api_request[:json_body]["content"]
-		user ||= User.get(user_id) || halt(api_error 1001)
+		user ||= User.get(user_commenting_id) || halt(api_error 1001)
 		event ||= Event.get(event_id) || halt(api_error 1001)
-		attributes = [
-			:user => user,
-			:content => content
-		]
-		comment = evnet.comments.new
-		comment.attributes = attributes
-		halt(1002) unless comment.save
-		comment.to_json
+		comment = event.comments.new
+		comment.content = content
+		comment.user = user
+		halt(api_error 1002) unless comment.save
+		comment.to_json(relationships: {user: {methods: [:account]}})
 	end
 
 	# EVENT SECTIONS
 
 	# Get all event widgets in sections
-	get '/:id/sections/' do
+	get '/:id/sections' do
 		event ||= Event.get(event_id) || halt(api_error 1001)
 		widgets ||= event.sections.widget || halt(api_error 1001)
 		widgets.to_json
@@ -159,12 +151,9 @@ class EventsController < Sinatra::Base
 		event ||= Event.get(event_id) || halt(api_error 1001)
 		widget_type = api_request[:json_body]["widget_type"]
 		widget ||= Widget.first_or_create(:type => widget_type) || halt(api_error 1001)
-		attributes = [
-			:enable => true,
-			:widget => widget
-		]
 		new_section = event.sections.new
-		new_section.attributes = attributes
+		new_section.enable = true
+		new_section.widget = widget
 		halt(api_error 1002) unless new_section.save
 		new_section.to_json
 	end
