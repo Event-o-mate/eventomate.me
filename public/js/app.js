@@ -30,13 +30,13 @@
       })
       .when("/event/:id", {
           controller: "EventsController",
-          controllerAs: "events",
+          controllerAs: "event",
           templateUrl : "templates/event"
 
       })
       .when("/create_event", {
           controller: "CreateEventController",
-          controllerAs: "events",
+          controllerAs: "event",
           templateUrl : "templates/create_event"
       });
     }])

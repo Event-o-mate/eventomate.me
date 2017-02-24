@@ -25,7 +25,6 @@
 				console.log(error)
 			})
 
-			console.log("attending")
 			vm.dashboardService.attendingEvents()
 			.then(function(response){
 				console.log('-== Attending events ==-')

@@ -45,21 +45,20 @@ class WebController < Sinatra::Base
     	'/js/common/controllers/menu.ctrl.js',
       '/js/common/controllers/auth.ctrl.js',
       '/js/common/directives/datetime.js',
-    	#pages controllers
+      #home page
     	'/js/home/home.ctrl.js',
+      #dashboard page
     	'/js/dashboard/dashboard.ctrl.js',
-    	'/js/event/events.ctrl.js',
-      '/js/create_event/create_event.ctrl.js',
-      #pages services
+    	'/js//dashboard/dashboard.service.js',
+      #event page
+      '/js/event/event.ctrl.js',
       '/js/event/event.service.js',
-      '/js/event/section.directive.js',
-      '/js/event/widget.directive.js',
-      '/js/create_event/add_event.service.js',
-      '/js//dashboard/dashboard.service.js'
-
+      #create event page
+      '/js/create_event/create_event.ctrl.js',
+      '/js/create_event/create_event.service.js'
     ]
 
-    # js local libs
+    # js libs
     js :libs, [
     	#bootstrap date time picker
     	'/lib/datetimepicker/js/datetimepicker.js',

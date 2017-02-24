@@ -56,7 +56,7 @@
 					vm.eventSections = response.sections
 
 					// Temp patch
-					if (vm.eventSections.length > 1 ) {
+					if (vm.eventSections.length > 0 ) {
 						var commentsAdded = vm.eventSections.filter(function ( section ) {
 					    return section.widget.type == 'comments'
 						})[0];

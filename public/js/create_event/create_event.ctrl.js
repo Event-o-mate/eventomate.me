@@ -6,13 +6,14 @@
 		.module("EventoMate")
 		.controller("CreateEventController", CreateEventController)
 
-	function CreateEventController($scope, $routeParams, $location, security, ngDialog, AddEventService) {
+	function CreateEventController($scope, $routeParams, $location, security, ngDialog, CreateEventService) {
 		var vm = this
 
 		//Method Bindables
 		vm.createEvent = createEvent
 		vm.addSection = addSection
 		vm.removeSection = removeSection
+		vm.selectWidget = selectWidget
 
 		//Properties
 		vm.eventId
@@ -22,15 +23,15 @@
 		vm.endTime
 		vm.location
 		vm.description
-		vm.eventSections
+		vm.sections
 		vm.eventService
 		vm.security
 
 		init()
 
 		function init() {
-			vm.eventService = AddEventService
-			vm.eventSections = []
+			vm.eventService = CreateEventService
+			vm.sections = []
 			vm.security = security
 		}
 
@@ -58,7 +59,7 @@
 			}
 
 			if ($scope.createEventForm.$valid) {
-				vm.eventData = {
+				vm.eventData = JSON.stringify({
 					"title": vm.title,
 					"address": vm.location.formatted_address,
 					"lat": vm.location.geometry.location.lat(),
@@ -66,33 +67,15 @@
 					"start_date": $scope.dateRangeStart,
 					"finish_date": $scope.dateRangeEnd,
 					"description": vm.description,
-				}
+					"sections": vm.sections
+				})
 
-				var jsonData = JSON.stringify(vm.eventData)
-
-				vm.eventService.create(jsonData)
+				console.log(vm.eventData)
+				
+				vm.eventService.create(vm.eventData)
 				.then(function(response) {
 					if (response.errors === undefined) {
-						console.log("sections", vm.eventSections)
-						if (vm.eventSections.length > 0){
-							console.log("add sections", vm.eventSections.length)
-							
-							// var eventId = response.id
-							// angular.forEach(vm.eventSections, function(section, index){
-
-							// 	sectionData = JSON.stringify(section)
-							// 	vm.eventService.addwidget(eventId, sectionData)
-							// 	.then(function(response){
-									
-							// 	})
-							// 	.catch(function(error){
-							// 		console.log(error)
-							// 	})
-
-
-							// })
-
-						}
+						$location.path('/dashboard')
 					}
 				})
 				.catch(function(error){
@@ -102,18 +85,18 @@
 		}
 
 		function addSection(type) {
-			if (vm.eventSections.length < 2){
+			if (vm.sections.length < 3){
 				var section = {"type": type}
-				vm.eventSections.push(section)
+				vm.sections.push(section)
 			}
 		}
 
 		function removeSection(type) {
-			if (vm.eventSections.length > 0){
-				vm.eventSections = vm.eventSections.filter(function(section) { 
-					return section.type !== type 
-				});
-			}
+			vm.sections.pop()
+		}
+
+		function selectWidget(type) {
+			vm.sections[vm.sections.length - 1].type = type
 		}
 
 		//Default datapicker settings 

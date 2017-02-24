@@ -15,12 +15,13 @@ class Event
   property :updated_at,    DateTime
   property :updated_on,    Date
 
-  belongs_to :user
+  has n, :users
   has n, :attendees
-  has n, :users, :through => :attendees
   has n, :sections
-  has n, :widgets, :through => :sections
   has n, :comments
+  has n, :users, :through => :owns
+  has n, :users, :through => :attendees
+  has n, :widgets, :through => :sections
   has n, :users, :through => :comments
 
 end

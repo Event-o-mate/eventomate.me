@@ -2,17 +2,17 @@
     <div class="row">
 
       <div class="col-md-8 offset-md-2" id="event-wrapper">
-        <h1 class="text-center">{{ events.title}}</h1>
-        <h5 class="text-center">{{events.startTime | date: 'EEEE d MMM HH:mm'}} - {{events.endTime | date: 'EEEE d MMM HH:mm'}}</h5>
+        <h1 class="text-center">{{ event.title}}</h1>
+        <h5 class="text-center">{{event.startTime | date: 'EEEE d MMM HH:mm'}} - {{event.endTime | date: 'EEEE d MMM HH:mm'}}</h5>
 
-        <div id="rsvp-button-wrapper" ng-hide="events.currentUserAttending">
-          <button type="button" class="btn btn-publish2" ng-click="events.submitRsvp()">
+        <div id="rsvp-button-wrapper" ng-hide="event.currentUserAttending">
+          <button type="button" class="btn btn-publish2" ng-click="event.submitRsvp()">
               RSVP
           </button>
         </div>
 
-        <div id="rsvp-confirmed-button-wrapper" ng-show="events.currentUserAttending">
-          <button type="button" class="btn btn-publish2 unattend-button" ng-click="events.submitRsvp()">
+        <div id="rsvp-confirmed-button-wrapper" ng-show="event.currentUserAttending">
+          <button type="button" class="btn btn-publish2 unattend-button" ng-click="event.submitRsvp()">
               I'M ATTENDING
           </button>
         </div>
@@ -20,7 +20,7 @@
         <div id="atendees-wrapper">
           <h4>People Attending this event</h4>
           <ul class="atendees-list">
-            <li ng-repeat="attendee in events.attendees">
+            <li ng-repeat="attendee in event.attendees">
                 <img gravatar-src="attendee.email" gravatar-size="100">
                 <span>{{attendee.name}}</span>
             </li>
@@ -31,36 +31,36 @@
         </div>
 
         <div class="map-wrapper">
-          <h5>{{events.address}}</h5>
-          <div id="googleMap" ng-map center="[{{events.lat}}, {{events.lng}}]" zoom="13">
-            <marker position="[{{events.lat}}, {{events.lng}}]" />
+          <h5>{{event.address}}</h5>
+          <div id="googleMap" ng-map center="[{{event.lat}}, {{event.lng}}]" zoom="13">
+            <marker position="[{{event.lat}}, {{event.lng}}]" />
           </div>
         </div>
 
         <div class="details-wrapper">
           <div class="event-decription">
             <h4>Event Description</h4>
-            <p>{{ events.description }}</p>
+            <p>{{ event.description }}</p>
           </div>
         </div>
 
-        <div class="details-wrapper event-section snt-comment-widget" ng-show='events.commentsAdded'>
+        <div class="details-wrapper event-section snt-comment-widget" ng-show='event.commentsAdded'>
           <div class="container">
             <div class="row">
               <div class="snt-comment-profile-img col-md-2">
-                <img gravatar-src="events.security.userEmail()" gravatar-size="50" width="50">
+                <img gravatar-src="event.security.userEmail()" gravatar-size="50" width="50">
               </div>
               <div class="snt-comment-content col-md-10">
-                <textarea ng-model="events.comment" placeholder="Write a comment ..."></textarea>
+                <textarea ng-model="event.comment" placeholder="Write a comment ..."></textarea>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <a class="snt-submit-comment btn btn-xs btn-primary" ng-click="events.addComment()">Submit</a>
+                <a class="snt-submit-comment btn btn-xs btn-primary" ng-click="event.addComment()">Submit</a>
               </div>
             </div>
             
-            <div class="row" ng-repeat="comment in events.eventComments | orderBy: '-created_at'">
+            <div class="row" ng-repeat="comment in event.eventComments | orderBy: '-created_at'">
               <hr>
               <div class="col-md-2">
                 <img gravatar-src="comment.user.email" gravatar-size="50" width="50">
