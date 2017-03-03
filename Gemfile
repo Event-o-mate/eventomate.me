@@ -7,5 +7,6 @@ gem "json"
 gem "data_mapper"
 gem "haml"
 gem "sinatra-contrib"
-gem 'dm-postgres-adapter'
+gem "dm-postgres-adapter"
+gem "sinatra-assetpack
 

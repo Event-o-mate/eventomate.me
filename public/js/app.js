@@ -10,7 +10,8 @@
     'ngDialog',
     'ngMap',
     'ui.gravatar',
-    'ngMessages'
+    'ngMessages',
+    'uiSwitch'
   ]
 
   angular

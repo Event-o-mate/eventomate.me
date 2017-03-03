@@ -33,7 +33,9 @@ class WebController < Sinatra::Base
     	'/lib/datetimepicker/css/datetimepicker.css',
       #ngDialog
       '/lib/ngDialog/css/ngDialog.min.css',
-      '/lib/ngDialog/css/ngDialog-theme-default.css'
+      '/lib/ngDialog/css/ngDialog-theme-default.css',
+      #ngUISwitchButton
+      '/lib/ngSwitch/angular-ui-switch.min.css'
     ]
 
     # angular app files
@@ -69,7 +71,9 @@ class WebController < Sinatra::Base
       '/lib/ngMap/ngMap.js',
       #ngGravatar
       '/lib/ngGravatar/ngGravatar.js',
-      '/lib/autocomplete.js'
+      '/lib/autocomplete.js',
+      #ngUISwitchButton
+      '/lib/ngSwitch/angular-ui-switch.min.js'
     ] 
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify

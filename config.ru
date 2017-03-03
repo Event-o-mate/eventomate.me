@@ -24,7 +24,7 @@ Dir[File.dirname(__FILE__) + '/controllers/*.rb'].each {|file| require file}
 
 #Setup Database
 if ENV['RACK_ENV'] == 'development' 
-	DataMapper.setup(:default, "postgres://eventomate_dev:developer@127.0.0.1/eventomate_db")
+	DataMapper.setup(:default, "postgres://sinatra_dev:developer@127.0.0.1/sinatra_db")
 elsif ENV['RACK_ENV'] == 'heroku'
 	DataMapper.setup(:default, ENV['DATABASE_URL'])
 end

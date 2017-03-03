@@ -101,6 +101,8 @@ class UsersController < Sinatra::Base
 	# Create event record for a user
 	post '/:id/events' do 
 		sections = api_request[:json_body]["sections"]
+		user ||= User.get(user_id) || halt(api_error 1001)
+		user_owns = user.owns.new
 		attributes = {
 			:title => api_request[:json_body]["title"],
   		:address => api_request[:json_body]["address"],
@@ -110,9 +112,10 @@ class UsersController < Sinatra::Base
 			:finish_date => api_request[:json_body]["finish_date"],
   		:description => api_request[:json_body]["description"]
 		}
-  	user ||= User.get(user_id) || halt(api_error 1001)
-		event = user.owns.event.new
+  	event = Event.new 
 		event.attributes = attributes
+		user_owns.event = event
+		user_owns.save
 
 		sections.each do |section|  
 			widget_type = section["type"]
@@ -123,9 +126,8 @@ class UsersController < Sinatra::Base
 			new_section.widget = widget
 			halt(api_error 1002) unless new_section.save
 		end
-
 		halt(api_error 1002) unless event.save
-		
+		event.to_json
 	end
 
 	# COMMENTS CREATED BY THE USER

@@ -40,7 +40,7 @@ class EventsController < Sinatra::Base
   		:description => api_request[:json_body]["description"],
 		}
 		user ||= User.get(user_id) || halt(api_error 1001)
-		event = user.events.new
+		event = user.owns.event.new
 		event.attributes = attributes
 		halt(api_error 1002) unless event.save
 		event.to_json
@@ -50,6 +50,7 @@ class EventsController < Sinatra::Base
 	put '/:id' do
 		user_id = api_request[:json_body]["user_id"]
 		user ||= User.get(user_id) || halt(api_error 1001)
+		event ||= Event.get(event_id) || halt(api_error 1001)
 		attributes = {
 			:title => api_request[:json_body]["title"],
 	  	:address => api_request[:json_body]["address"],
@@ -59,8 +60,7 @@ class EventsController < Sinatra::Base
 			:finish_date => api_request[:json_body]["finish_date"],
   		:description => api_request[:json_body]["description"],
 		}
-		event = Event.new
-		event.attributes
+		event.attributes = attributes
 		event.user = user
 		halt(api_error 1003) unless event.save
 		event.to_json

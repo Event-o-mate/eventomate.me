@@ -97,10 +97,26 @@
                   </div>  
                 </div>
 
+                <div class="container" ng-show="section.type == 'img-gallery'">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>Image Gallery section will be added soon!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container" ng-show="section.type == 'fb-invitations'">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>Facebook Invitations section will be added soon!</p>
+                    </div>
+                  </div>
+                </div>
+
                 <ul class="widgets-list" ng-show="section.type == undefined">
                   <li class="comment-widget-icon" ng-click="event.selectWidget('comments')"></li>
                   <li class="photos-widget-icon" ng-click="event.selectWidget('img-gallery')" ></li>
-                  <li class="poll-widget-icon" ng-click="event.selectWidget('poll')" ></li>
+                  <li class="fb-invitations-widget-icon" ng-click="event.selectWidget('fb-invitations')" ><div class="fb-icon-bg"></div></li>
                 </ul>
 
               </div>

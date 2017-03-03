@@ -10,6 +10,14 @@
         <li class="nav-item">
           <a class="nav-link create-event-button" ng-href="#/create_event" >Create event</a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link register-button" ng-hide="menu.security.userValid" ng-click="menu.toggleRegister()" href> Register</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link dashboard-button" ng-show="menu.security.userValid" ng-href="#/dashboard"> Dashboard</a>
+        </li>
         
         <li class="nav-item">
           <a class="nav-link login-button" ng-hide="menu.security.userValid" ng-click="menu.toggleLogin()" href> Log In</a>
@@ -18,19 +26,66 @@
         <li class="nav-item">
           <a class="nav-link logout-button" ng-show="menu.security.userValid" ng-click="menu.logout()" href>Log Out </a>
         </li>
-        
-        <li class="nav-item">
-          <a class="nav-link register-button" ng-hide="menu.security.userValid" ng-click="menu.toggleRegister()" href> Register</a>
-        </li>
 
         <li class="nav-item">
-          <a class="nav-link dashboard-button" ng-show="menu.security.userValid" ng-href="#/dashboard"> Dashboard</a>
+          <a class="nav-link" ng-show="menu.security.userValid" ng-click="menu.userProfileOpen=!menu.userProfileOpen"><img class="snt-profile-icon" gravatar-src="menu.security.userEmail()" gravatar-size="100"></a>
         </li>
 
       </ul>
     </div>
 
   </nav>
+  <div class="container snt-user-profile" ng-show="menu.userProfileOpen"> 
+    <div class="row">
+      <div class="col-md-12">
+        <form name="userProfileForm" required>
+          <div class="form-group">
+            <img class="snt-user-profile-settings-icon" gravatar-src="menu.security.userEmail()" gravatar-size="100"> 
+            <p class="text-center">Profile images are handled via <a href="http://www.gravatar.com" target="_blank"><em>gravatar.com</em></a></p>
+          </div>
+          <div class="form-group">
+            <input name="userName" placeholder="name*" type="text" ng-model="name" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <input name="userEmail" placeholder="email*" type="email" ng-model="menu.security.userEmail()" autocomplete="off" class="snt-profile-form-input">
+          </div>
+          <div class="form-group">
+            <button class="button-dropdown btn" ng-click="register()"> SAVE</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <form name="changePasswordForm" required>
+          <div class="form-group">
+            <input name="oldPassword" placeholder="old password*" type="password" ng-model="password" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <input name="newPassword" placeholder="new password*" type="password" ng-model="new_password" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <input name="confirmPassword" placeholder="confirm password*" type="password" ng-model="confirm_password" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <button class="button-dropdown btn" ng-click=""> Change Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <form name="changePasswordForm" required>
+          <div class="form-group">
+            <label><h3>Notifications</h3></label>
+            <hr>
+            <span>Send me emails!</span>
+            <switch id="enabled" name="enabled" ng-model="enabled" class="snt-email-notifications-switch green"></switch>
+          </div>  
+        </form>
+      </div>
+    </div>
+  </div>
 </ng-controller>
 
 <!-- LOGIN MENU-->

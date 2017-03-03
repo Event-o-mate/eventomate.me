@@ -18,11 +18,13 @@
 
 		//Properties
 		vm.security
+		vm.userProfileOpen
 
 		init()
 
 		function init() {
 			vm.security = security
+			vm.userProfileOpen = false
 		}
 
 		// Bindables
