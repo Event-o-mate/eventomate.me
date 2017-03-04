@@ -15,8 +15,8 @@ class Event
   property :updated_at,    DateTime
   property :updated_on,    Date
 
-  has n, :users
   has n, :attendees
+  has n, :owns
   has n, :sections
   has n, :comments
   has n, :users, :through => :owns

@@ -93,6 +93,15 @@ ul.nav a:hover { color: #fff !important; }
   float: right;
 }
 
+.badge {
+  background-color: #FCB549;
+  padding: 5px 15px 5px 15px;
+  border-radius: 3px;
+  font-size: 75%;
+  font-weight: 700;
+  margin-left: -20px
+}
+
 .remove-section-btn {
   float: right;
   cursor: pointer;
@@ -132,7 +141,8 @@ ul.nav a:hover { color: #fff !important; }
 
 
 .snt-comment-profile-img {
-  height: 50px;
+  height: 50px !important;
+  width: 50px !important;
 }
 
 .snt-comment-widget hr {

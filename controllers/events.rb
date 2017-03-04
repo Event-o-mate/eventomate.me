@@ -78,7 +78,7 @@ class EventsController < Sinatra::Base
 	get '/:id/attendees' do
 		event ||= Event.get(event_id) || halt(api_error 1001)
 		attendees ||= event.attendees.all().user.account || halt(api_error 1001)
-		attendees.to_json
+		attendees.to_json(relationships: {user: {methods: :attendee}})
 	end
 
 	# Get specific user record attending the event 
@@ -98,6 +98,13 @@ class EventsController < Sinatra::Base
 		attendee.user = user
 		halt(api_error 1002) unless attendee.save
 		attendee.to_json
+	end
+
+	delete '/:id' do
+		user_id = api_request[:json_body]["user_id"]
+		user ||= User.get(user_id) || halt(api_error 1001)
+		event ||= Event.get(attendee_id) || halt(api_error 1001)
+		Attendee.first(:user => user, :event => event).destroy
 	end
 
 	# EVENT COMMENTS

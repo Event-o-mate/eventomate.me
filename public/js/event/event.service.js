@@ -9,6 +9,7 @@
       var service = {
         get: get,
         sumbitRsvp: sumbitRsvp,
+        revokeRsvp: revokeRsvp,
         attendees: attendees,
         getSections: getSections,
         getComments: getComments,
@@ -58,6 +59,29 @@
         .catch(rsvpRquestFailed)
 
         return submitRsvpRquest
+      }
+
+      function revokeRsvp(eventId, data){
+        var revokeRsvpUrl = '/api/events/'+ eventId
+
+        function revokeRsvpRequestCompleted(response) {
+          return response.data
+        }
+
+        function revokeRsvpRquestFailed(error) {
+          return error
+        }
+
+        var submitRevokeRsvpRquest = $http({
+          method: "DELETE",
+          url: revokeRsvpUrl,
+          data: data
+        })
+        .then(revokeRsvpRequestCompleted)
+        .catch(revokeRsvpRquestFailed)
+
+        return submitRevokeRsvpRquest
+
       }
 
       function attendees(eventId) {

@@ -1,5 +1,7 @@
 #TODO: Add notification layer
 #TODO: Connect to ui 
+#API Blueprint
+
 
 #load sinatra
 require 'rubygems'

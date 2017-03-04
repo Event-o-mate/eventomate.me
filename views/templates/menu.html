@@ -6,6 +6,7 @@
     
     <div class="collapse navbar-toggleable-md" id="navbarResponsive">
       <a class="navbar-brand logo-event-o-mate" href="#/">Event-O-Mate</a>
+      <span class="badge badge-warning">BETA</span>
       <ul class="nav navbar-nav">
         <li class="nav-item">
           <a class="nav-link create-event-button" ng-href="#/create_event" >Create event</a>
@@ -47,7 +48,7 @@
             <input name="userName" placeholder="name*" type="text" ng-model="name" autocomplete="off" class="snt-profile-form-input">  
           </div>
           <div class="form-group">
-            <input name="userEmail" placeholder="email*" type="email" ng-model="menu.security.userEmail()" autocomplete="off" class="snt-profile-form-input">
+            <input name="userEmail" placeholder="email*" type="email" ng-model="email" autocomplete="off" class="snt-profile-form-input">
           </div>
           <div class="form-group">
             <button class="button-dropdown btn" ng-click="register()"> SAVE</button>

@@ -11,6 +11,7 @@
 
 		//Method Bindables
 		vm.submitRsvp = submitRsvp
+		vm.revokeRsvp = revokeRsvp
 		vm.addComment = addComment
 		
 		//Properties
@@ -30,12 +31,13 @@
 		vm.eventComments
 		vm.commentsAdded
 		vm.comment
+		vm.wantsToRevoke
 		
 		init()
 
 		//Bindables
 		function init() {
-
+			vm.wantsToRevoke = false
 			vm.showWidgets = false
 			vm.security = security
 			vm.event = Event
@@ -103,12 +105,14 @@
 				if (vm.security.userValid) {
 					if (!vm.currentUserAttending) {
 						var jsonData = JSON.stringify({user_id: vm.security.userId()})
-						vm.event.sumbitRsvp(vm.event_id, jsonData)
+
+						console.log(jsonData)
+						vm.event.sumbitRsvp(vm.eventId, jsonData)
 						.then(function(response){
 							console.log(response)
-							vm.currentUserAttending = true
 
-							vm.event.attendees(vm.event_id)
+							vm.currentUserAttending = true
+							vm.event.attendees(vm.eventId)
 							.then(function(response){
 								vm.attendees = response
 							})
@@ -128,6 +132,26 @@
 					preCloseCallback: sendAttendance 
 				})
 			}
+		}
+
+		function revokeRsvp() {
+			console.log("revoke")
+			var userInAttending = vm.attendees.filter(function ( attendee ) {
+			    return attendee.user_id == vm.security.userId()
+			})[0];
+
+			var jsonData = JSON.stringify({user_id: vm.security.userId()})
+
+			vm.event.revokeRsvp(vm.eventId, jsonData)
+			.then(function(response){
+				vm.currentUserAttending = false
+				vm.event.attendees(vm.eventId)
+				.then(function(response){
+					vm.attendees = response
+				})
+			})
+
+			console.log(userInAttending)
 		}
 
 		function addComment() {

@@ -42,4 +42,5 @@ class AttendeesController < Sinatra::Base
 		attendee ||= Attendee.get(attendee_id) || halt(api_error 1001)
 		attendee.destroy()
 	end
+
 end

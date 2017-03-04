@@ -12,8 +12,14 @@
         </div>
 
         <div id="rsvp-confirmed-button-wrapper" ng-show="event.currentUserAttending">
-          <button type="button" class="btn btn-publish2 unattend-button" ng-click="event.submitRsvp()">
-              I'M ATTENDING
+          <button 
+            type="button" 
+            class="btn btn-publish2 unattend-button" 
+            ng-class="{'some-class':hovering}" 
+            ng-mouseenter="event.wantsToRevoke=true" 
+            ng-mouseleave="event.wantsToRevoke=false"
+            ng-click="event.revokeRsvp()">
+              {{event.wantsToRevoke ? "REVOKE" : "I'M ATTENDING"}}
           </button>
         </div>
 
@@ -47,8 +53,8 @@
         <div class="details-wrapper event-section snt-comment-widget" ng-show='event.commentsAdded'>
           <div class="container">
             <div class="row">
-              <div class="snt-comment-profile-img col-md-2">
-                <img gravatar-src="event.security.userEmail()" gravatar-size="50" width="50">
+              <div class="col-md-2">
+                <img gravatar-src="event.security.userEmail()" gravatar-size="50" width="50" class="snt-comment-profile-img">
               </div>
               <div class="snt-comment-content col-md-10">
                 <textarea ng-model="event.comment" placeholder="Write a comment ..."></textarea>
@@ -63,7 +69,7 @@
             <div class="row" ng-repeat="comment in event.eventComments | orderBy: '-created_at'">
               <hr>
               <div class="col-md-2">
-                <img gravatar-src="comment.user.email" gravatar-size="50" width="50">
+                <img gravatar-src="comment.user.email" gravatar-size="50" width="50" class="snt-comment-profile-img">
               </div>
               <div class="col-md-10 snt-comment-preview">
                 <span>{{comment.user.account.name}}</span><br>
