@@ -1,0 +1,1730 @@
+FORMAT: 1A
+HOST: http://eventomate.herokuapp.com/
+# EventoMate Api server
+
+This documentation holds information neccessary to communicate with Eveny-O-Mate API server. Api Server is divided in 2 mayors parts: 
+
++ (1) Authentication controller (`/api/authenticate/`)
+    + serves as security interface for validating user signup, login, or account recoveries. 
++ (2) Records controllers(`/api/{controler_name}/{params}`)
+    + interface for managing basic data operations in database records.
+    + all requests follow the same pattern `[HTTP_REQUEST_TYPE] /api/{controler_name}/{params}`, where
+        + `controller_name` invokes controller for managing data collection
+        + `params` expands controller request with adititional opertions on data collection
+
+## Group Eror codes
+
+## HTTP response codes
+
++ `400` - bad request
++ `401` - unautohrized request
++ `403` - forbidden
++ `404` - requested url not found
++ `405` - method not allowed
++ `500` - internal server error
+ 
+## API error response codes
++ `1001` - Invalid data request, or data missing.
++ `1002` - Record not created, invalid data request, or sent data invalid.
++ `1003` - Record not saved, invalid data request, or sent data invalid.
++ `1004` - Record not deleted, data missing, or invalid data request.
++ `1005` - Provided email is in use by another user.
++ `1006` - Invalid email and password combination.
++ `1007` - There is no user with provided email in our records.
++ `1008` - Invalid model request.
++ `1009` - Invalid recovery code.
+
+## Group Authentication
+
+## Request Validation
+Authentication is based on username:password combination witch is passed to the server. In this example email is passed as username. 
+On authenticating the email:password combination, server will return access token(that needs to be stored on the client/device), or it will return 
+appropriate error code.
+
+> 
+```
+{
+  "logged_in": true,
+  "token": "bec38e648cd03c6b82e2e1ba64ae0e",
+  "user_id": 39
+}
+```
+_response json eg. on successfull login_
+
+All requests must have `Content-Type` set to `application/json`. 
+All `/api/records/` requests require authentication token passed in `Authentication` header of the request.
+> 
+```
+    Content-Type: application/json
+    Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+```
+_HTTP headers eg. for all `/api/records/` requests_
+
+If any of mandatory headers is missing in the request headers, the server will return error response `401` for missing or invalid token, 
+or `400` bad request for invalid content type and/or format.
+
+## Log in [/authenticate/login]
+
+Sign the user in using username and password. Returns a token to use on all future requests.
+
+### Log in [POST]
+
+
++ Request (application/json)
+
+        {
+            "email":    "simunstrukan@gmail.com",
+            "password": "kr4v4gr1z3k4bl0v3"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "loged_in": true,
+            "token": "bec38e648cd03c6b82e2e1ba64ae0e",
+            "user_id": 1
+        }
+
++ Response 401 (application/json)
+
+        {
+            "error": {
+                "code":1006,
+                "msg": "invalid email and password combination"
+            }
+        }
+
+
+## Register User [/authenticate/register/]
+
+Register new user.
+
+### Register [POST]
+
++ Request (application/json)
+
+        {
+            "email":         "simunstrukan@gmail.com",
+            "password":      "kr4v4gr1z3k4bl0v3"
+        }
+
++ Response 200 (application/json)
+
+    + Attributes (User)
+
++ Response 401 (application/json)
+
+        {
+            "error": {
+                "code":1006,
+                "msg": "invalid email and password combination"
+            }
+        }
+        
+## Group Data Requests
+
+Request for all data tables are performed trough basic C(reate) R(ead) U(pdate) D(elete) url interface, in wich 
+the client needst to inform the server on what table will the opearation be performed on, and append apropriet parameters and data.
+For eg. the client is creating a new record in table `User`, full url would then be:
+
+> `[PUT] http://www.eventomate.me/api/records/user`
+
+Full request wold look something like this:
+
+>  
+```
+PUT /api/records/create/user HTTP/1.1
+Content-Type: application/json
+Authorization: hash=bec38e648cd03c6b82e2e1ba64ae0e7d81e1853a1c17e763241d08a02be0b8aa
+Host: http://www.eventomate.com/
+Connection: close
+User-Agent: Paw/2.2.9 (Macintosh; OS X/10.11.2) GCDHTTPRequest
+Content-Length: 57
+{
+    "email":"simunstrukan@gmail.com",
+    "password":"1234qwert"
+}
+```
+
+API returns json values for all data model properties, and their values. 
+
+# Data structures
+
+## User (object)
+- email: `simunstrukan@gmail.com` (string, required)
+- password: `kr4v4gr1z3k4bl0v3` (string, required)
+- token: `bec38e648cd03c6b82e2e1ba64ae0e` (string, required)
+- recover_code: `null` (string)
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
+
+## ResponseUser (object)
+- id: `12` (number)
+- Include User
+- account (object) 
+    - Include ResponseAccount
+- owns (array)
+    - (object)
+        - Include ResponseEventNoChild
+- attendees (array)
+    - (object)
+        - Include ResponseAttendee
+        - event (object)
+            - Include ResponseEventNoChild
+- comments (array)
+    - (object)
+
+## Account (object)
+- email: `simun.strukan@gmail.com` (string)
+- name: `Simun` (string)
+- verified: `false` (boolean)
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
+
+## ResponseAccount (object)
+- user_id: `12` (number)
+- id: `23` (number)
+- Include Account
+
+## Event (object)
+- name: `BBQ @ struki` (string)
+- address: `Josipa Prikrila 3, Zagreb` (string)
+- lat: `98734375.12` (number)
+- lng: `12334375.12` (number)
+- start_date: `2015-24-03 17:00:00 +0000` (string)
+- finish_date: `2015-24-03 17:00:00 +0000` (string)
+- all_day: `false` (boolean)
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
+
+## ResponseEventNoChild (object)
+- id: `13` (number)
+- Include Event
+
+## ResponseEvent (object)
+- id: `13` (number)
+- Include Event
+
+## Attendee (object)
+- event_id: `13` (number)
+- user_id: `12`(number)
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
+
+## ResponseAttendee
+- id: `23` (number)
+- Include Attendee
+
+## Own (object)
+- event_id: `13` (number)
+- user_id: `12`(number)
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
+
+## ResponseOwn
+- id: `23` (number)
+- Include Attendee
+
+## Group User Collection
+
+## User Records [/users]
+
+Perform CRUD operations on `User` table.
+
+### Get Records [GET]
+
++ Request (application/json)
+    
+    + Headers
+        
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes
+        - data (array[ResponseUser])
+
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+### Get record [GET /users/{id}]
+
++ Parameters
+    + id (required, number, `12`)
+    
++ Request (application/json)
+
+
+    + Headers
+            
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
++ Response 200 (application/json)
+
+    + Attributes (ResponseUser)
+    
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create Record [POST /users]
+
++ Request (application/json)
+
+    + Attributes(User)
+    
+    + Headers
+            
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
++ Response 200 (application/json)
+
+    + Attributes (ResponseUser)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+
+### Update Record [PUT /users/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (User)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes(ResponseUser)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /users/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+    
+    + Headers
+        
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
++ Response 200 (application/json)
+
+        {
+            "deleted": true
+        }
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+## User Account [/users/{id}/account]
+        
+### Get records[GET]
+
++ Request (application/json)
+    
+    + Headers
+        
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+### Create record [POST /users/{id}/account]
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+### Update record [PUT /users/{id}/account]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+### Delete record [DELETE /users/{id}/account]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+    
+    + Headers
+        
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
++ Response 200 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+## User Hosting Events [/user/{id}/owns]
+        
+### Get records [GET]
+
++ Request (application/json)
+    
+    + Headers
+        
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes
+        - data (array[ResponseEvent])
+
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+### Get record [GET /users/{id}/owns/{owns_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+    + owns_id (required, number, `12`)
+
++ Request (application/json)
+
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseOwn)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /users/{id}/owns]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /users/{id}/owns/{owns_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /users/{id}/owns/{owns_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+## User Attending Events [/users/{id}/attendees]
+
+### Get records [GET]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get record [GET /users/{id}/attendees/{attendee_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /users/{id}/attendees]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /users/{id}/attendees/{attendee_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /users/{id}/attendees/{attendee_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+
+## User Comments [/user/{id}/comments]
+
+### Get records [GET]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get record [GET /users/{id}/comments/{comments_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /users/{id}/comments]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /users/{id}/comments/{comments_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /users/{id}/comments/{comments_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+## Group Event Collection
+
+## Event Records [/events]
+
+### Get records [GET]
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get record [GET /events/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /events]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /events/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /events/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+
+## Event Host Records [/events/{id}/owns]
+
+### Get records [GET]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get record [GET /events/{id}/owns/{owns_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /events/{id}/owns]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /events/{id}/owns/{owns_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /events/{id}/owns/{owns_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+## Event Attendee Records [/events/{id}/attnedees]
+
+### Get records [GET]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get record [GET /events/{id}/attendees/{attendees_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /events/{id}/attendees]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /events/{id}/attendees/{attendees_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /events/{id}/attendees/{attendees_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+## Event Comments Records [/events/{id}/comments]
+
+### Get records [GET]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
+### Get record [GET /events/{id}/comments/{comments_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /events/{id}/comments]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /events/{id}/comments/{comments_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /events/{id}/comments/{comments_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+
+## Event Sections Records [/events/{id}/sections]
+
+### Get records [GET]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get record [GET /events/{id}/sections/{sections_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /events/{id}/sections]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /events/{id}/sections/{sections_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /events/{id}/sections/{sections_id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+## Group Widget Collection
+
+## Widgets Records [/widgets]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get records [GET]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Get record [GET /widgets/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Create record [POST /widgets]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Update record [PUT /widgets/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+### Delete record [DELETE /widgets/{id}]
+
++ Parameters
+    
+    + id (required, number, `12`)
+
++ Request (application/json)
+
+    + Attributes (Account)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + Attributes (ResponseAccount)
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+        
+
+## Widget Sections Records [/widgets/{id}/sections]
+
+### Get records [GET]
+### Get record [GET /widgets/{id}/sections/{sections_id}]
+### Create record [POST /widgets/{id}/sections]
+### Update record [PUT /widgets/{id}/sections/{sections_id}]
+### Delete record [DELETE /widgets/{id}/sections/{sections_id}]
