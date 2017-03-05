@@ -155,14 +155,14 @@ API returns json values for all data model properties, and their values.
 - password: `kr4v4gr1z3k4bl0v3` (string, required)
 - token: `bec38e648cd03c6b82e2e1ba64ae0e` (string, required)
 - recover_code: `null` (string)
-- created_on: `2015-24-03` (string)
-- created_at: `2015-24-03 17:00:00 +0000` (string)
-- updated_on: `2015-24-03` (string)
-- updated_at: `2015-24-03 17:00:00 +0000` (string)
 
 ## ResponseUser (object)
 - id: `12` (number)
 - Include User
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
 - account (object) 
     - Include ResponseAccount
 - owns (array)
@@ -180,14 +180,14 @@ API returns json values for all data model properties, and their values.
 - email: `simun.strukan@gmail.com` (string)
 - name: `Simun` (string)
 - verified: `false` (boolean)
-- created_on: `2015-24-03` (string)
-- created_at: `2015-24-03 17:00:00 +0000` (string)
-- updated_on: `2015-24-03` (string)
-- updated_at: `2015-24-03 17:00:00 +0000` (string)
 
 ## ResponseAccount (object)
 - user_id: `12` (number)
 - id: `23` (number)
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
 - Include Account
 
 ## Event (object)
@@ -198,30 +198,34 @@ API returns json values for all data model properties, and their values.
 - start_date: `2015-24-03 17:00:00 +0000` (string)
 - finish_date: `2015-24-03 17:00:00 +0000` (string)
 - all_day: `false` (boolean)
-- created_on: `2015-24-03` (string)
-- created_at: `2015-24-03 17:00:00 +0000` (string)
-- updated_on: `2015-24-03` (string)
-- updated_at: `2015-24-03 17:00:00 +0000` (string)
 
 ## ResponseEventNoChild (object)
 - id: `13` (number)
 - Include Event
-
-## ResponseEvent (object)
-- id: `13` (number)
-- Include Event
-
-## Attendee (object)
-- event_id: `13` (number)
-- user_id: `12`(number)
 - created_on: `2015-24-03` (string)
 - created_at: `2015-24-03 17:00:00 +0000` (string)
 - updated_on: `2015-24-03` (string)
 - updated_at: `2015-24-03 17:00:00 +0000` (string)
 
+## ResponseEvent (object)
+- id: `13` (number)
+- Include Event
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
+
+## Attendee (object)
+- event_id: `13` (number)
+- user_id: `12`(number)
+
 ## ResponseAttendee
 - id: `23` (number)
 - Include Attendee
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
 
 ## ResponseOwn
 - id: `23` (number)
@@ -231,6 +235,19 @@ API returns json values for all data model properties, and their values.
 - updated_at: `2015-24-03 17:00:00 +0000` (string)
 - event (object)
     - Include Event
+
+## Comment
+- content: `2015-24-03` (string)
+
+## ResponseComment
+- id: `23` (number)
+- Include Comment
+- created_on: `2015-24-03` (string)
+- created_at: `2015-24-03 17:00:00 +0000` (string)
+- updated_on: `2015-24-03` (string)
+- updated_at: `2015-24-03 17:00:00 +0000` (string)
+
+
 
 ## Group User Collection
 
@@ -546,6 +563,7 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + owns_id (required, number, `12`)
 
 + Request (application/json)
 
@@ -576,6 +594,7 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + owns_id (required, number, `12`)
 
 + Request (application/json)
     
@@ -604,16 +623,14 @@ Perform CRUD operations on `User` table.
     + id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
-    
+   
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseAttendee)
         
 + Response 400 (application/json)
 
@@ -629,6 +646,7 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + attendee_id (required, number, `12`)
 
 + Request (application/json)
 
@@ -640,7 +658,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseAttendee)
         
 + Response 400 (application/json)
 
@@ -659,15 +677,18 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
+    + Body 
+            {
+                "event_id": 13
+            }
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseAttendee)
         
 + Response 400 (application/json)
 
@@ -683,18 +704,21 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + attendee_id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
-    
+  
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+    + Body 
+            {
+                "user_id": 14
+            }
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseAttendee)
         
 + Response 400 (application/json)
 
@@ -710,18 +734,16 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + attendee_id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
-    
+  
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
         
 + Response 400 (application/json)
 
@@ -743,7 +765,7 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Comment)
     
     + Headers
     
@@ -751,7 +773,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -767,18 +789,17 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + comment_id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
-    
+   
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -797,7 +818,7 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Comment)
     
     + Headers
     
@@ -805,7 +826,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -821,10 +842,11 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + comment_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Comment)
     
     + Headers
     
@@ -832,7 +854,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -848,18 +870,17 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + comment_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -875,13 +896,8 @@ Perform CRUD operations on `User` table.
 ## Event Records [/events]
 
 ### Get records [GET]
-+ Parameters
-    
-    + id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
     
     + Headers
     
@@ -889,7 +905,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseEvent)
         
 + Response 400 (application/json)
 
@@ -908,15 +924,13 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseEvent)
         
 + Response 400 (application/json)
 
@@ -929,13 +943,9 @@ Perform CRUD operations on `User` table.
         
 ### Create record [POST /events]
 
-+ Parameters
-    
-    + id (required, number, `12`)
-
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Event)
     
     + Headers
     
@@ -962,7 +972,7 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Event)
     
     + Headers
     
@@ -989,8 +999,6 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
@@ -1018,8 +1026,6 @@ Perform CRUD operations on `User` table.
     + id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
     
     + Headers
     
@@ -1027,7 +1033,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseEventHost)
         
 + Response 400 (application/json)
 
@@ -1054,7 +1060,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseEventHost)
         
 + Response 400 (application/json)
 
@@ -1073,15 +1079,17 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+    + Body 
+            {
+                "user_id": 1
+            }
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseEventHost)
         
 + Response 400 (application/json)
 
@@ -1097,18 +1105,22 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + owns_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
+    + Body 
+            {
+                "user_id": 2
+            }
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseEventHost)
         
 + Response 400 (application/json)
 
@@ -1124,11 +1136,10 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + owns_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
@@ -1156,15 +1167,13 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseAttendees)
         
 + Response 400 (application/json)
 
@@ -1180,18 +1189,17 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + attendee_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseAttendee)
         
 + Response 400 (application/json)
 
@@ -1210,15 +1218,18 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
+    + Body 
+            {
+                "user_id": 2
+            }
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseAttendee)
         
 + Response 400 (application/json)
 
@@ -1234,14 +1245,18 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + attendee_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+
+    + Body 
+            {
+                "user_id": 2
+            }
             
 + Response 200 (application/json)
 
@@ -1261,18 +1276,16 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + attendee_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
         
 + Response 400 (application/json)
 
