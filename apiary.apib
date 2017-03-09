@@ -52,7 +52,7 @@ appropriate error code.
 _response json eg. on successfull login_
 
 All requests must have `Content-Type` set to `application/json`. 
-All `/api/records/` requests require authentication token passed in `Authentication` header of the request.
+All `/api` requests require authentication token passed in `Authentication` header of the request.
 > 
 ```
     Content-Type: application/json
@@ -572,6 +572,7 @@ Perform CRUD operations on `User` table.
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
 
     + Body
+    
             {
                 "event_id": 14
             }
