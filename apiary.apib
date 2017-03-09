@@ -247,6 +247,11 @@ API returns json values for all data model properties, and their values.
 - updated_on: `2015-24-03` (string)
 - updated_at: `2015-24-03 17:00:00 +0000` (string)
 
+## Error
+
+- errors (object)
+    - code: 1001
+    - msg: "error message content"
 
 
 ## Group User Collection
@@ -266,16 +271,11 @@ Perform CRUD operations on `User` table.
 + Response 200 (application/json)
 
     + Attributes
-        - data (array[ResponseUser])
+        - (array[ResponseUser])
 
 + Response 400 (application/json)
 
-        {
-            "error": {
-                "code":1001,
-                "msg": "message content"
-            }
-        }
+    + Attributes (Error)
 
 ### Get record [GET /users/{id}]
 
@@ -489,7 +489,7 @@ Perform CRUD operations on `User` table.
 + Response 200 (application/json)
 
     + Attributes
-        - data (array[ResponseEvent])
+        - (array[ResponseOwn])
 
 + Response 400 (application/json)
 
@@ -630,7 +630,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAttendee)
+    - (array[ResponseAttendee])
         
 + Response 400 (application/json)
 
@@ -764,8 +764,6 @@ Perform CRUD operations on `User` table.
     + id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Comment)
     
     + Headers
     
@@ -773,7 +771,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseComment)
+    + (array[ResponseComment])
         
 + Response 400 (application/json)
 
@@ -784,7 +782,7 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Get record [GET /users/{id}/comments/{comments_id}]
+### Get record [GET /users/{id}/comments/{comment_id}]
 
 + Parameters
     
@@ -837,7 +835,7 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Update record [PUT /users/{id}/comments/{comments_id}]
+### Update record [PUT /users/{id}/comments/{comment_id}]
 
 + Parameters
     
@@ -865,7 +863,7 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Delete record [DELETE /users/{id}/comments/{comments_id}]
+### Delete record [DELETE /users/{id}/comments/{comment_id}]
 
 + Parameters
     
@@ -905,7 +903,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseEvent)
+    + (array[ResponseEvent])
         
 + Response 400 (application/json)
 
@@ -1033,7 +1031,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseEventHost)
+    + (array[ResponseEventHost])
         
 + Response 400 (application/json)
 
@@ -1173,7 +1171,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAttendees)
+    + (array[ResponseAttendees])
         
 + Response 400 (application/json)
 
@@ -1305,8 +1303,6 @@ Perform CRUD operations on `User` table.
     + id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
     
     + Headers
     
@@ -1314,7 +1310,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + (array[ResponseComment])
         
 + Response 400 (application/json)
 
@@ -1330,10 +1326,11 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + comment_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Comment)
     
     + Headers
     
@@ -1341,7 +1338,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -1360,7 +1357,7 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Comment)
     
     + Headers
     
@@ -1368,7 +1365,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -1384,10 +1381,11 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + comment_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Comment)
     
     + Headers
     
@@ -1395,7 +1393,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseComment)
         
 + Response 400 (application/json)
 
@@ -1411,18 +1409,16 @@ Perform CRUD operations on `User` table.
 + Parameters
     
     + id (required, number, `12`)
+    + comment_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
         
 + Response 400 (application/json)
 
@@ -1444,15 +1440,13 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + (array[ResponseSection])
         
 + Response 400 (application/json)
 
@@ -1463,15 +1457,14 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Get record [GET /events/{id}/sections/{sections_id}]
+### Get record [GET /events/{id}/sections/{section_id}]
 
 + Parameters
     
     + id (required, number, `12`)
+    + section_id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
     
     + Headers
     
@@ -1479,7 +1472,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseSection)
         
 + Response 400 (application/json)
 
@@ -1498,7 +1491,7 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Section)
     
     + Headers
     
@@ -1506,7 +1499,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseSection)
         
 + Response 400 (application/json)
 
@@ -1517,15 +1510,16 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Update record [PUT /events/{id}/sections/{sections_id}]
+### Update record [PUT /events/{id}/sections/{section_id}]
 
 + Parameters
     
     + id (required, number, `12`)
+    + section_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Section)
     
     + Headers
     
@@ -1533,7 +1527,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseSection)
         
 + Response 400 (application/json)
 
@@ -1544,23 +1538,21 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Delete record [DELETE /events/{id}/sections/{sections_id}]
+### Delete record [DELETE /events/{id}/sections/{section_id}]
 
 + Parameters
     
     + id (required, number, `12`)
+    + section_id (required, number, `12`)
 
 + Request (application/json)
 
-    + Attributes (Account)
-    
     + Headers
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
         
 + Response 400 (application/json)
 
