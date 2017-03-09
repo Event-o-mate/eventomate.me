@@ -572,7 +572,7 @@ Perform CRUD operations on `User` table.
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
 
     + Body
-    
+
             {
                 "event_id": 14
             }
@@ -1043,15 +1043,14 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Get record [GET /events/{id}/owns/{owns_id}]
+### Get record [GET /events/{id}/owns/{own_id}]
 
 + Parameters
     
     + id (required, number, `12`)
+    + own_id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
     
     + Headers
     
@@ -1082,6 +1081,7 @@ Perform CRUD operations on `User` table.
     
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
     + Body 
+
             {
                 "user_id": 1
             }
@@ -1099,12 +1099,12 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Update record [PUT /events/{id}/owns/{owns_id}]
+### Update record [PUT /events/{id}/owns/{own_id}]
 
 + Parameters
     
     + id (required, number, `12`)
-    + owns_id (required, number, `12`)
+    + own_id (required, number, `12`)
 
 + Request (application/json)
 
@@ -1130,12 +1130,12 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Delete record [DELETE /events/{id}/owns/{owns_id}]
+### Delete record [DELETE /events/{id}/owns/{own_id}]
 
 + Parameters
     
     + id (required, number, `12`)
-    + owns_id (required, number, `12`)
+    + own_id (required, number, `12`)
 
 + Request (application/json)
 
@@ -1183,7 +1183,7 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Get record [GET /events/{id}/attendees/{attendees_id}]
+### Get record [GET /events/{id}/attendees/{attendee_id}]
 
 + Parameters
     
@@ -1222,6 +1222,7 @@ Perform CRUD operations on `User` table.
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
 
     + Body 
+
             {
                 "user_id": 2
             }
@@ -1239,7 +1240,7 @@ Perform CRUD operations on `User` table.
             }
         }
         
-### Update record [PUT /events/{id}/attendees/{attendees_id}]
+### Update record [PUT /events/{id}/attendees/{attendee_id}]
 
 + Parameters
     
@@ -1253,6 +1254,7 @@ Perform CRUD operations on `User` table.
             Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
 
     + Body 
+
             {
                 "user_id": 2
             }
@@ -1567,41 +1569,10 @@ Perform CRUD operations on `User` table.
 ## Group Widget Collection
 
 ## Widgets Records [/widgets]
-
-+ Parameters
-    
-    + id (required, number, `12`)
-
-+ Request (application/json)
-
-    + Attributes (Account)
-    
-    + Headers
-    
-            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
-            
-+ Response 200 (application/json)
-
-    + Attributes (ResponseAccount)
-        
-+ Response 400 (application/json)
-
-        {
-            "error": {
-                "code":1001,
-                "msg": "message content"
-            }
-        }
         
 ### Get records [GET]
 
-+ Parameters
-    
-    + id (required, number, `12`)
-
 + Request (application/json)
-
-    + Attributes (Account)
     
     + Headers
     
@@ -1609,7 +1580,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + (ARRAY[ResponseWidget])
         
 + Response 400 (application/json)
 
@@ -1628,7 +1599,7 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Widget)
     
     + Headers
     
@@ -1636,7 +1607,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseWidget)
         
 + Response 400 (application/json)
 
@@ -1649,13 +1620,9 @@ Perform CRUD operations on `User` table.
         
 ### Create record [POST /widgets]
 
-+ Parameters
-    
-    + id (required, number, `12`)
-
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Widget)
     
     + Headers
     
@@ -1663,7 +1630,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseWidget)
         
 + Response 400 (application/json)
 
@@ -1682,7 +1649,7 @@ Perform CRUD operations on `User` table.
 
 + Request (application/json)
 
-    + Attributes (Account)
+    + Attributes (Widget)
     
     + Headers
     
@@ -1690,7 +1657,7 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
+    + Attributes (ResponseWidget)
         
 + Response 400 (application/json)
 
@@ -1708,8 +1675,6 @@ Perform CRUD operations on `User` table.
     + id (required, number, `12`)
 
 + Request (application/json)
-
-    + Attributes (Account)
     
     + Headers
     
@@ -1717,7 +1682,6 @@ Perform CRUD operations on `User` table.
             
 + Response 200 (application/json)
 
-    + Attributes (ResponseAccount)
         
 + Response 400 (application/json)
 
@@ -1732,6 +1696,26 @@ Perform CRUD operations on `User` table.
 ## Widget Sections Records [/widgets/{id}/sections]
 
 ### Get records [GET]
+
++ Request (application/json)
+    
+    + Headers
+    
+            Authentication: hash=bec38e648cd03c6b82e2e1ba64ae0e
+            
++ Response 200 (application/json)
+
+    + (array[ResponseSections])
+        
++ Response 400 (application/json)
+
+        {
+            "error": {
+                "code":1001,
+                "msg": "message content"
+            }
+        }
+
 ### Get record [GET /widgets/{id}/sections/{sections_id}]
 ### Create record [POST /widgets/{id}/sections]
 ### Update record [PUT /widgets/{id}/sections/{sections_id}]
