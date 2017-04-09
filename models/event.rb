@@ -24,4 +24,4 @@ class Event
   has n, :widgets, :through => :sections
   has n, :users, :through => :comments
 
-end
+end 

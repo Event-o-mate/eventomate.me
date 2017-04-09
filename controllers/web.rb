@@ -35,7 +35,7 @@ class WebController < Sinatra::Base
       '/lib/ngDialog/css/ngDialog.min.css',
       '/lib/ngDialog/css/ngDialog-theme-default.css',
       #ngUISwitchButton
-      '/lib/ngSwitch/angular-ui-switch.min.css'
+      '/lib/ngSwitch/angular-ui-switch.css'
     ]
 
     # angular app files
@@ -73,7 +73,7 @@ class WebController < Sinatra::Base
       '/lib/ngGravatar/ngGravatar.js',
       '/lib/autocomplete.js',
       #ngUISwitchButton
-      '/lib/ngSwitch/angular-ui-switch.min.js'
+      '/lib/ngSwitch/angular-ui-switch.js'
     ] 
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify

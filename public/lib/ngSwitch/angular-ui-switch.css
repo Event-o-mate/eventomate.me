@@ -1,4 +1,4 @@
-.switch {
+.ng-ui-switch {
   background: #fff;
   border: 1px solid #dfdfdf;
   position: relative;
@@ -16,11 +16,11 @@
   -webkit-transition: 0.3s ease-out all;
   top: -1px;
 }
-/*adding a wide width for larger switch text*/
-.switch.wide {
+/*adding a wide width for larger ng-ui-switch text*/
+.ng-ui-switch.wide {
   width:80px;
 }
-.switch small {
+.ng-ui-switch small {
   background: #fff;
   border-radius: 100%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.4);
@@ -32,24 +32,24 @@
   transition: 0.3s ease-out all;
   -webkit-transition: 0.3s ease-out all;
 }
-.switch.checked {
+.ng-ui-switch.checked {
   background: rgb(100, 189, 99);
   border-color: rgb(100, 189, 99);
 }
-.switch.checked small {
+.ng-ui-switch.checked small {
   left: 22px;
 }
-/*wider switch text moves small further to the right*/
-.switch.wide.checked small {
+/*wider ng-ui-switch text moves small further to the right*/
+.ng-ui-switch.wide.checked small {
   left:52px;
 }
-/*styles for switch-text*/
-.switch .switch-text {
+/*styles for ng-ui-switch-text*/
+.ng-ui-switch .switch-text {
   font-family:Arial, Helvetica, sans-serif;
   font-size:13px;
 }
 
-.switch .off {
+.ng-ui-switch .off {
   display:block;
   position: absolute;
   right: 10%;
@@ -58,7 +58,7 @@
   color:#A9A9A9;
 }
 
-.switch .on {
+.ng-ui-switch .on {
   display:none;
    z-index: 0;
   color:#fff;
@@ -67,16 +67,16 @@
   left: 9%;
 }
 
-.switch.checked .off {
+.ng-ui-switch.checked .off {
   display:none;
 }
 
-.switch.checked .on {
+.ng-ui-switch.checked .on {
   display:block;
 
 }
 
-.switch.disabled {
+.ng-ui-switch.disabled {
   opacity: .50;
   cursor: not-allowed;
 }

@@ -19,7 +19,7 @@
   	}
 
   	var url = {
-      root: "api/events"
+      root: "/api/events"
   	}
 
     var method = {
@@ -169,6 +169,10 @@
       .catch(function(error){
         failure(error)
       })
+    }
+
+    function revokeRSVP(id) {
+
     }
   }
 
