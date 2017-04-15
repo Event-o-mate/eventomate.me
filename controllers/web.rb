@@ -49,6 +49,7 @@ class WebController < Sinatra::Base
       '/js/common/directives/datetime.js',
       #home page
     	'/js/home/home.ctrl.js',
+      '/js/home/home.service.js',
       #dashboard page
     	'/js/dashboard/dashboard.ctrl.js',
     	'/js//dashboard/dashboard.service.js',

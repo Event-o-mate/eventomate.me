@@ -100,10 +100,10 @@ class EventsController < Sinatra::Base
 		attendee.to_json
 	end
 
-	delete '/:id' do
-		user_id = api_request[:json_body]["user_id"]
+	delete '/:id/attendees/:user_id' do
+		user_id = api_request[:params][:user_id]
 		user ||= User.get(user_id) || halt(api_error 1001)
-		event ||= Event.get(attendee_id) || halt(api_error 1001)
+		event ||= Event.get(event_id) || halt(api_error 1001)
 		Attendee.first(:user => user, :event => event).destroy
 	end
 

@@ -61,8 +61,8 @@
         return submitRsvpRquest
       }
 
-      function revokeRsvp(eventId, data){
-        var revokeRsvpUrl = '/api/events/'+ eventId
+      function revokeRsvp(eventId, userId){
+        var revokeRsvpUrl = '/api/events/'+ eventId + '/attendees/' + userId 
 
         function revokeRsvpRequestCompleted(response) {
           return response.data
@@ -74,8 +74,7 @@
 
         var submitRevokeRsvpRquest = $http({
           method: "DELETE",
-          url: revokeRsvpUrl,
-          data: data
+          url: revokeRsvpUrl
         })
         .then(revokeRsvpRequestCompleted)
         .catch(revokeRsvpRquestFailed)

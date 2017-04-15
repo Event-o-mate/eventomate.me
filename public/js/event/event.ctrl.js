@@ -135,14 +135,7 @@
 		}
 
 		function revokeRsvp() {
-			console.log("revoke")
-			var userInAttending = vm.attendees.filter(function ( attendee ) {
-			    return attendee.user_id == vm.security.userId()
-			})[0];
-
-			var jsonData = JSON.stringify({user_id: vm.security.userId()})
-
-			vm.event.revokeRsvp(vm.eventId, jsonData)
+			vm.event.revokeRsvp(vm.eventId, vm.security.userId())
 			.then(function(response){
 				vm.currentUserAttending = false
 				vm.event.attendees(vm.eventId)
@@ -150,8 +143,6 @@
 					vm.attendees = response
 				})
 			})
-
-			console.log(userInAttending)
 		}
 
 		function addComment() {
