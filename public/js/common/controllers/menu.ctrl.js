@@ -12,6 +12,7 @@
 		vm.logout = logout
 		vm.toggleRegister = toggleRegister
 		vm.toggleLogin = toggleLogin
+		vm.saveUserProfile = saveUserProfile
 
 		//ngDialog patch
 		$scope.toggleRegister = vm.toggleRegister
@@ -63,6 +64,14 @@
 			userCookie.user_id = 0
 			userCookie.email = null
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
+		}
+
+		function saveUserProfile() {
+
+		}
+
+		function changeUserPassword() {
+
 		}
 
 	}

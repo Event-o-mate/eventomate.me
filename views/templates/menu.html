@@ -36,6 +36,8 @@
     </div>
 
   </nav>
+
+  <!-- PROFILE VIEW -->
   <div class="container snt-user-profile" ng-show="menu.userProfileOpen"> 
     <div class="row">
       <div class="col-md-12">
@@ -51,7 +53,7 @@
             <input name="userEmail" placeholder="email*" type="email" ng-model="email" autocomplete="off" class="snt-profile-form-input">
           </div>
           <div class="form-group">
-            <button class="button-dropdown btn" ng-click="register()"> SAVE</button>
+            <button class="button-dropdown btn" ng-click="menu.saveUserData()"> Save</button>
           </div>
         </form>
       </div>
@@ -69,7 +71,7 @@
             <input name="confirmPassword" placeholder="confirm password*" type="password" ng-model="confirm_password" autocomplete="off" class="snt-profile-form-input">  
           </div>
           <div class="form-group">
-            <button class="button-dropdown btn" ng-click=""> Change Password</button>
+            <button class="button-dropdown btn" ng-click="menu.changeUserPassword()"> Change Password</button>
           </div>
         </form>
       </div>
