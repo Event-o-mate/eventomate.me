@@ -130,6 +130,7 @@
         var startDate = moment.utc(startOfDecade(milliseconds)).subtract(1, 'year').startOf('year')
 
         var yearFormat = 'YYYY'
+        
         var activeFormat = formatValue(ngModelController.$modelValue, yearFormat)
         var currentFormat = moment().format(yearFormat)
 
