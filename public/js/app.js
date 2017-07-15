@@ -54,7 +54,7 @@
           email: null
         }
         var expireDate = new Date();
-        expireDate.setDate(expireDate.getDate() + 3);
+        expireDate.setDate(expireDate.getDate() + 3)
         $cookies.putObject('userCookie', {'expires': expireDate})
       }
       security.userValid = userCookie.valid
