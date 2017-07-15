@@ -86,7 +86,7 @@
       expireDate.setDate(expireDate.getDate() + 3);
 			var userCookie = $cookies.getObject('userCookie')
 			userCookie.valid = false
-			userCookie.token = ''
+			userCookie.token = null
 			userCookie.user_id = 0
 			userCookie.email = null
 			$cookies.putObject("userCookie", userCookie, {'expires': expireDate})
