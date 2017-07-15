@@ -1,5 +1,5 @@
 (function() {
-  'use_strict'
+  'use strict';
 
   var modules = [
     "ngRoute",

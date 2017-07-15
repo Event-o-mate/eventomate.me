@@ -1,6 +1,6 @@
 (function($){  
 
-	'use_strict'
+	'use strict';
 
 	angular
 		.module("EventoMate")

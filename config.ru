@@ -30,6 +30,7 @@ if ENV['RACK_ENV'] == 'development'
 elsif ENV['RACK_ENV'] == 'production'
 	DataMapper.setup(:default, ENV['DATABASE_URL'])
 end
+
 DataMapper.finalize.auto_upgrade!
 
 #map controllers

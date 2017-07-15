@@ -11,7 +11,7 @@
  */
 
 ;(function (root, factory) {
-  'use strict'
+  'use strict';
   /* istanbul ignore if */
   if (typeof module !== 'undefined' && module.exports) {
     var ng = typeof angular === 'undefined' ? require('angular') : angular
@@ -25,7 +25,7 @@
     factory(root.angular, root.moment)
   }
 }(this, function (angular, moment) {
-  'use strict'
+  'use strict';
   angular.module('ui.bootstrap.datetimepicker', [])
     .service('dateTimePickerConfig', DateTimePickerConfigProvider)
     .service('dateTimePickerValidator', DateTimePickerValidatorService)
