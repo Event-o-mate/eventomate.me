@@ -5,7 +5,7 @@
 		.module("EventoMate")
 		.controller("AuthenticationController", AuthenticationController)
 
-	function AuthenticationController($scope, $cookies, security, ngDialog) {
+	function AuthenticationController($scope, $cookies, security, $location, ngDialog) {
 		var vm = this
 
 		//Method Bindables
@@ -87,6 +87,7 @@
 						$scope.userValid = true
 						updateCookie(data)
 						ngDialog.closeAll()
+						$location.path('/dashboard')
 					}
 					else {
 						$scope.errorMsg = data.errors.msg

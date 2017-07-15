@@ -1,5 +1,0 @@
-- name: hanlders | vars
-  include_vars: ../config.yaml
-
-- name: restart nginx
-  service: name=nginx state=restarted

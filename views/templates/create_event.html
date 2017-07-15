@@ -14,7 +14,7 @@
                     </span>
                   </span>
 
-                  <input name="eventTitle" type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" ng-model="events.title" required>
+                  <input name="eventTitle" type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" ng-model="event.title" required>
               </div>
               <div class="row">
                   <div class="col-md-6 dropdown">
@@ -51,7 +51,7 @@
                           </span>
                         </span>
 
-                        <input name="endTime" type="text" id="inputLabel1" class="form-control" datetime="EEE dd MMM yyyy HH:mm" data-ng-model="dateRangeEnd" required>
+                        <input name="endTime" type="text" id="inputLabel1" class="form-control" datetime="dd MMM" data-ng-model="dateRangeEnd" required>
                       </div>
                     </a>
                     <ul class="dropdown-menu datepicker-dropdown" role="menu" aria-labelledby="dLabel">
@@ -71,16 +71,58 @@
                     </span>
                   </span>
 
-                  <input name="location" type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" g-places-autocomplete ng-model="events.location" required>
+                  <input name="location" type="text" class="form-control" id="inputLabel1" data-com.agilebits.onepassword.user-edited="yes" g-places-autocomplete ng-model="event.location" required>
               </div>
               <div class="form-group">
                   <label class="control-label" for="textareaLabel1">Description</label>
-                  <textarea class="form-control" id="textareaLabel1" ng-model="events.description">{{ events.description }}</textarea>
+                  <textarea class="form-control" id="textareaLabel1" ng-model="event.description">{{ event.description }}</textarea>
               </div>
-              <button type="button" class="btn btn-add-section">+ Add new Section</button>
-              <button type="button" class="btn btn-publish" ng-click="events.publish()"> 
-                  Publish event
-              </button>
+
+              <div class="details-wrapper event-section" ng-repeat="section in event.sections">
+                <button type="button" class="remove-section-btn close" aria-label="Close">
+                  <span aria-hidden="true" ng-click="event.removeSection()">&times;</span>
+                </button>
+                
+                <div class="container" ng-show="section.type == 'comments'">
+                  <div class="row">
+                    <div class="col-md-2"><img src="img/user-placeholder.png" class="snt-comment-profile-img"></div>
+                    <div class="snt-comment-content col-md-10">
+                      <textarea placeholder="Write a comment ..."></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <a class="snt-submit-comment btn btn-xs btn-primary disabled">Submit</a>
+                    </div>
+                  </div>  
+                </div>
+
+                <div class="container" ng-show="section.type == 'img-gallery'">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>Image Gallery section will be added soon!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container" ng-show="section.type == 'fb-invitations'">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>Facebook Invitations section will be added soon!</p>
+                    </div>
+                  </div>
+                </div>
+
+                <ul class="widgets-list" ng-show="section.type == undefined">
+                  <li class="comment-widget-icon" ng-click="event.selectWidget('comments')"></li>
+                  <li class="photos-widget-icon" ng-click="event.selectWidget('img-gallery')" ></li>
+                  <li class="fb-invitations-widget-icon" ng-click="event.selectWidget('fb-invitations')" ><div class="fb-icon-bg"></div></li>
+                </ul>
+
+              </div>
+              
+              <button type="button" class="btn btn-add-section" ng-click="event.addSection()">+ Add new Section</button>
+              <button type="button" class="btn btn-publish" ng-click="event.createEvent()"> Publish event </button>
           </form>
         </div><!-- END COL -->
 

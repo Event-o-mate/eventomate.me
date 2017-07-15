@@ -10,7 +10,8 @@
     'ngDialog',
     'ngMap',
     'ui.gravatar',
-    'ngMessages'
+    'ngMessages',
+    'uiSwitch'
   ]
 
   angular
@@ -30,13 +31,13 @@
       })
       .when("/event/:id", {
           controller: "EventsController",
-          controllerAs: "events",
+          controllerAs: "event",
           templateUrl : "templates/event"
 
       })
       .when("/create_event", {
-          controller: "EventsController",
-          controllerAs: "events",
+          controller: "CreateEventController",
+          controllerAs: "event",
           templateUrl : "templates/create_event"
       });
     }])

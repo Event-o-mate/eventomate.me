@@ -6,44 +6,103 @@
     
     <div class="collapse navbar-toggleable-md" id="navbarResponsive">
       <a class="navbar-brand logo-event-o-mate" href="#/">Event-O-Mate</a>
+      <span class="badge badge-warning">BETA</span>
       <ul class="nav navbar-nav">
         <li class="nav-item">
           <a class="nav-link create-event-button" ng-href="#/create_event" >Create event</a>
         </li>
-        
+
         <li class="nav-item">
-          <a class="nav-link login-button" ng-hide="menu.security.userValid" ng-click="menu.toggleLogin()" href> LOG IN </a>
+          <a class="nav-link register-button" ng-hide="menu.security.userValid" ng-click="menu.toggleRegister()" href> Register</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link logout-button" ng-show="menu.security.userValid" ng-click="menu.logout()" href>LOG OUT </a>
+          <a class="nav-link dashboard-button" ng-show="menu.security.userValid" ng-href="#/dashboard"> Dashboard</a>
         </li>
         
         <li class="nav-item">
-          <a class="nav-link register-button" ng-hide="menu.security.userValid" ng-click="menu.toggleRegister()" href> REGISTER</a>
+          <a class="nav-link login-button" ng-hide="menu.security.userValid" ng-click="menu.toggleLogin()" href> Log In</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" ng-show="menu.security.userValid" ng-href="#/dashboard"> DASHBOARD</a>
+          <a class="nav-link logout-button" ng-show="menu.security.userValid" ng-click="menu.logout()" href>Log Out </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" ng-show="menu.security.userValid" ng-click="menu.openProfile()"><img class="snt-profile-icon" gravatar-src="menu.security.userEmail()" gravatar-size="100"></a>
         </li>
 
       </ul>
     </div>
 
   </nav>
+
+  <!-- PROFILE VIEW -->
+  <div class="container snt-user-profile" ng-show="menu.userProfileOpen"> 
+    <div class="row">
+      <div class="col-md-12">
+        <form name="userProfileForm" required>
+          <div class="form-group">
+            <img class="snt-user-profile-settings-icon" gravatar-src="menu.security.userEmail()" gravatar-size="100"> 
+            <p class="text-center">Profile images are handled via <a href="http://www.gravatar.com" target="_blank"><em>gravatar.com</em></a></p>
+          </div>
+          <div class="form-group">
+            <input name="userName" type="text" ng-model="menu.userName" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <input name="userEmail" type="email" ng-model="menu.userEmail" autocomplete="off" class="snt-profile-form-input">
+          </div>
+          <div class="form-group">
+            <button class="button-dropdown btn" ng-click="menu.saveUserProfile()"> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <form name="changePasswordForm" required>
+          <div class="form-group">
+            <input name="oldPassword" placeholder="old password*" type="password" ng-model="menu.userPassword" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <input name="newPassword" placeholder="new password*" type="password" ng-model="menu.newUserPassword" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <input name="confirmPassword" placeholder="confirm password*" type="password" ng-model="menu.confirmUserPassword" autocomplete="off" class="snt-profile-form-input">  
+          </div>
+          <div class="form-group">
+            <button class="button-dropdown btn" ng-click="menu.changeUserPassword()"> Change Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <form name="changePasswordForm" required>
+          <div class="form-group">
+            <label><h3>Notifications</h3></label>
+            <hr>
+            <span>Send me emails!</span>
+            <switch id="enabled" name="enabled" ng-model="enabled" class="snt-email-notifications-switch green"></switch>
+          </div>  
+        </form>
+      </div>
+    </div>
+  </div>
 </ng-controller>
 
 <!-- LOGIN MENU-->
 <script type="text/ng-template" id="loginDialog">
   <form name="loginForm" required>
     <div class="login-dialog">
-      <input type="email" name="userEmail" class="input-email-login" placeholder="email*" ng-model="email" required>
-      <input name="userPassword" class="input-password-login" placeholder="password*" type="password" ng-model="password" required>
+      <input type="email" name="userEmail" class="input-email-login ng-remove-focus" placeholder="email*" ng-model="email" autocomplete="off" required>
+      <input name="userPassword" class="input-password-login ng-remove-focus" placeholder="password*" type="password" ng-model="password" autocomplete="off" required>
       <button class="button-dropdown  btn" ng-click="login()"> LOGIN</button>
+      <p><a href ng-click=closeThisDialog("register")>Don't have an account? Register.</a></p>
 
       <!--alerts-->
       <!-- email -->
-      <div ng-messages="loginForm.userEmail.$error" ng-if="loginForm.userEmail.$touched">
+      <div ng-messages="loginForm.userEmail.$error" ng-if="loginForm.userPassword.$touched">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>
@@ -53,7 +112,7 @@
       </div>
 
       <!-- password -->
-      <div ng-messages="loginForm.userPassword.$error" ng-if="loginForm.userPassword.$touched">
+      <div ng-messages="loginForm.userPassword.$error" ng-if="loginSubmited">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>
@@ -67,18 +126,19 @@
     </div>
 
   </form>
+
 </script>
 
 <!-- REGISTER MENU -->
 <script type="text/ng-template" id="registerDialog">
   <form name="registerForm" required>
     <div class="registar-dialog" >
-      <input name="userName" class="input-name-register" placeholder="name*" type="name" ng-model="name" required>
-      <input name="userEmail" class="input-email-register" placeholder="email*" type="email" ng-model="email" required>
-      <input name="userPassword" class="input-password-register" placeholder="password*" type="password" ng-model="password" required>
+      <input name="userName" class="input-name-register ng-remove-focus" placeholder="name*" type="name" ng-model="name" autocomplete="off" required>
+      <input name="userEmail" class="input-email-register ng-remove-focus" placeholder="email*" type="email" ng-model="email" autocomplete="off" required>
+      <input name="userPassword" class="input-password-register" placeholder="password*" type="password" ng-model="password" autocomplete="off" required>
       <button class="button-dropdown btn" ng-click="register()"> REGISTER</button>
 
-      <div ng-messages="registerForm.userName.$error" ng-if="registerForm.userName.$touched">
+      <div ng-messages="registerForm.userName.$error" ng-if="registerSubmited">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>
@@ -94,7 +154,7 @@
       </div>
 
       <!-- password -->
-      <div ng-messages="registerForm.userPassword.$error" ng-if="registerForm.userPassword.$touched">
+      <div ng-messages="registerForm.userPassword.$error" ng-if="registerSubmited">
         <div ng-message="required" class="alert alert-danger login-errors" role="alert">
           Please eneter all required fields!
         </div>
