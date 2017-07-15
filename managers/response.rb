@@ -32,6 +32,10 @@ class Response
 		@content = @data if @error.nil?
 	end
 
+	def change_password
+		@content = @data if @error.nil?
+	end
+	
 	def password_recovery
 		@content = @data if @error.nil?
 	end

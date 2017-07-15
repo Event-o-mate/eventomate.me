@@ -53,7 +53,7 @@ $script = <<SCRIPT
   fi
 
   # run ansible playbook for db setup
-  ansible-playbook db_setup.yaml --connection=local -i localhost,  
+  ansible-playbook /var/www/app/db_setup.yaml --connection=local -i localhost,  
 SCRIPT
 
 $run_thin = <<SCRIPT

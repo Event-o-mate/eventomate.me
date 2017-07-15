@@ -29,7 +29,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" ng-show="menu.security.userValid" ng-click="menu.userProfileOpen=!menu.userProfileOpen"><img class="snt-profile-icon" gravatar-src="menu.security.userEmail()" gravatar-size="100"></a>
+          <a class="nav-link" ng-show="menu.security.userValid" ng-click="menu.openProfile()"><img class="snt-profile-icon" gravatar-src="menu.security.userEmail()" gravatar-size="100"></a>
         </li>
 
       </ul>
@@ -47,13 +47,13 @@
             <p class="text-center">Profile images are handled via <a href="http://www.gravatar.com" target="_blank"><em>gravatar.com</em></a></p>
           </div>
           <div class="form-group">
-            <input name="userName" placeholder="name*" type="text" ng-model="name" autocomplete="off" class="snt-profile-form-input">  
+            <input name="userName" type="text" ng-model="menu.userName" autocomplete="off" class="snt-profile-form-input">  
           </div>
           <div class="form-group">
-            <input name="userEmail" placeholder="email*" type="email" ng-model="email" autocomplete="off" class="snt-profile-form-input">
+            <input name="userEmail" type="email" ng-model="menu.userEmail" autocomplete="off" class="snt-profile-form-input">
           </div>
           <div class="form-group">
-            <button class="button-dropdown btn" ng-click="menu.saveUserData()"> Save</button>
+            <button class="button-dropdown btn" ng-click="menu.saveUserProfile()"> Save</button>
           </div>
         </form>
       </div>
@@ -62,13 +62,13 @@
       <div class="col-md-12">
         <form name="changePasswordForm" required>
           <div class="form-group">
-            <input name="oldPassword" placeholder="old password*" type="password" ng-model="password" autocomplete="off" class="snt-profile-form-input">  
+            <input name="oldPassword" placeholder="old password*" type="password" ng-model="menu.userPassword" autocomplete="off" class="snt-profile-form-input">  
           </div>
           <div class="form-group">
-            <input name="newPassword" placeholder="new password*" type="password" ng-model="new_password" autocomplete="off" class="snt-profile-form-input">  
+            <input name="newPassword" placeholder="new password*" type="password" ng-model="menu.newUserPassword" autocomplete="off" class="snt-profile-form-input">  
           </div>
           <div class="form-group">
-            <input name="confirmPassword" placeholder="confirm password*" type="password" ng-model="confirm_password" autocomplete="off" class="snt-profile-form-input">  
+            <input name="confirmPassword" placeholder="confirm password*" type="password" ng-model="menu.confirmUserPassword" autocomplete="off" class="snt-profile-form-input">  
           </div>
           <div class="form-group">
             <button class="button-dropdown btn" ng-click="menu.changeUserPassword()"> Change Password</button>

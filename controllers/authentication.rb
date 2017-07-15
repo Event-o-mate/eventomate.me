@@ -95,12 +95,28 @@ class AuthenticationController < Sinatra::Base
 			else
 				response.error = Error.code 1009 #invalid recovery code
 			end
+			response.submit
 		end
-		response.submit
 	end
 
-	post 'change/password' do
+	post '/change/password' do
+		Response.for :change_password, api_request do |response|
 
+			email = api_request.body["email"]
+			password = api_request.body["password"]
+			new_password = api_request.body["new_password"]
+			login_valid = security.login email, password 
+				
+			if login_valid 
+				security.user.password = new_password
+				if security.user.save 
+					response.data = {:password_changed => true}
+				end 
+			else
+				response.error = Error.code 1006 #invalid email and password combination
+			end
+			response.submit
+		end
 	end
 
 	put '/logout/:id' do

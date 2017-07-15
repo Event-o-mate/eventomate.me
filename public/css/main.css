@@ -1,5 +1,5 @@
 body{
-	background-image: url('../img/space-bg-tileable.jpg');
+	background-image: url('../img/space-bg-tileable.png');
 	background-size: 200px;
 	color: white;
 }
@@ -68,6 +68,15 @@ ul.nav a:hover { color: #fff !important; }
   background-color: rgba(0,0,0,0.4);
   width: 440px;
 }
+
+.snt-btn-success-save-profile {
+  
+}
+
+.snt-btn-error-save-profile {
+
+}
+
 .snt-user-profile hr {
   background-color: white
 }
@@ -88,6 +97,8 @@ ul.nav a:hover { color: #fff !important; }
   height: 40px;
   border-radius: 5px;
 }
+
+
 
 .snt-email-notifications-switch {
   float: right;

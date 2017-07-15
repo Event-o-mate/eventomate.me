@@ -30,12 +30,12 @@ class WebController < Sinatra::Base
     # css local libs
     css :libs, [
     	#bootstrap date time picker
-    	'/lib/datetimepicker/css/datetimepicker.css',
+    	'/js/lib/datetimepicker/css/datetimepicker.css',
       #ngDialog
-      '/lib/ngDialog/css/ngDialog.min.css',
-      '/lib/ngDialog/css/ngDialog-theme-default.css',
+      '/js/lib/ngDialog/css/ngDialog.min.css',
+      '/js/lib/ngDialog/css/ngDialog-theme-default.css',
       #ngUISwitchButton
-      '/lib/ngSwitch/angular-ui-switch.css'
+      '/js/lib/ngSwitch/angular-ui-switch.css'
     ]
 
     # angular app files
@@ -47,6 +47,7 @@ class WebController < Sinatra::Base
     	'/js/common/controllers/menu.ctrl.js',
       '/js/common/controllers/auth.ctrl.js',
       '/js/common/directives/datetime.js',
+      '/js/common/services/user.service.js',
       #home page
     	'/js/home/home.ctrl.js',
       '/js/home/home.service.js',
@@ -64,17 +65,17 @@ class WebController < Sinatra::Base
     # js libs
     js :libs, [
     	#bootstrap date time picker
-    	'/lib/datetimepicker/js/datetimepicker.js',
-    	'/lib/datetimepicker/js/datetimepicker.templates.js',
+    	'/js/lib/datetimepicker/js/datetimepicker.js',
+    	'/js/lib/datetimepicker/js/datetimepicker.templates.js',
       #ngDialog
-      '/lib/ngDialog/js/ngDialog.min.js',
+      '/js/lib/ngDialog/js/ngDialog.min.js',
       #ngMap
-      '/lib/ngMap/ngMap.js',
+      '/js/lib/ngMap/ngMap.js',
       #ngGravatar
-      '/lib/ngGravatar/ngGravatar.js',
-      '/lib/autocomplete.js',
+      '/js/lib/ngGravatar/ngGravatar.js',
+      '/js/lib/autocomplete.js',
       #ngUISwitchButton
-      '/lib/ngSwitch/angular-ui-switch.js'
+      '/js/lib/ngSwitch/angular-ui-switch.js'
     ] 
 
     js_compression  :jsmin    # :jsmin | :yui | :closure | :uglify

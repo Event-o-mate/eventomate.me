@@ -22,7 +22,7 @@ class AccountsController < Sinatra::Base
 		account.to_json
 	end
 
-	post '/' do 
+	post '/' do
 		user ||= User.get(user_id) || halt(api_error 1001)
 		attributes = [
 			:name => api_request[:json_body]["name"],
@@ -35,12 +35,11 @@ class AccountsController < Sinatra::Base
 	end
 
 	put '/:id' do
-		attributes = [
-			:name => api_request[:json_body]["name"],
-			:email => api_request[:json_body]["email"]
-		]
 		account ||= Account.get(account_id) || halt(api_error 1001)
-		account.attributes = attributes
+		account.name = api_request[:json_body]["name"]
+		account.email = api_request[:json_body]["email"]
+		account.verified ||= api_request[:json_body]["verified"] || false
+		account.receive_emails ||= api_request[:json_body]["receive_emails"] || true
 		halt(api_error 1003) unless account.save
 		account.to_json
 	end
