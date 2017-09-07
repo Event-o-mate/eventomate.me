@@ -276,3 +276,8 @@ Maximum connections set to 1024
 Listening on 0.0.0.0:8080, CTRL+C to stop
 Waiting for 6 connection(s) to finish, can take up to 30 sec, CTRL+C to stop now
 Exiting!
+Writing PID to /var/www/app/thin/thin.pid
+Thin web server (v1.7.1 codename Muffin Mode)
+Maximum connections set to 1024
+Listening on 0.0.0.0:8080, CTRL+C to stop
+Exiting!

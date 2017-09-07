@@ -55,6 +55,11 @@
 				template: 'registerDialog',
 				controller: "AuthenticationController"
 			})
+			.closePromise.then(function(){
+				if (vm.security.userValid) {
+					$location.path("/dashboard")
+				}
+			})
 		}
 
 		function toggleLogin() {
@@ -65,6 +70,10 @@
 			.closePromise.then(function (data) {
 				if (data.value == "register") {
 					toggleRegister()
+				}
+
+				if (vm.security.userValid) {
+					$location.path("/dashboard")
 				}
 			});
 		}

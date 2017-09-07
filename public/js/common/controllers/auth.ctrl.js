@@ -50,8 +50,8 @@
 			if ($scope.registerForm.$valid) {
 				vm.security.registerUser(jsonData)
 				.then(function(data) {
-					console.log(data)	
-					if (data.errors == undefined) {
+					console.log(data)
+					if (data.errors === undefined) {
 						updateCookie(data)
 						ngDialog.closeAll()
 						$scope.userValid = true
@@ -87,7 +87,6 @@
 						$scope.userValid = true
 						updateCookie(data)
 						ngDialog.closeAll()
-						$location.path('/dashboard')
 					}
 					else {
 						$scope.errorMsg = data.errors.msg

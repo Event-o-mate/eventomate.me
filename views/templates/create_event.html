@@ -80,7 +80,7 @@
 
               <div class="details-wrapper event-section" ng-repeat="section in event.sections">
                 <button type="button" class="remove-section-btn close" aria-label="Close">
-                  <span aria-hidden="true" ng-click="event.removeSection()">&times;</span>
+                  <span aria-hidden="true" ng-click="event.removeSection(section.type)">&times;</span>
                 </button>
                 
                 <div class="container" ng-show="section.type == 'comments'">
@@ -113,7 +113,7 @@
                   </div>
                 </div>
 
-                <ul class="widgets-list" ng-show="section.type == undefined">
+                <ul class="widgets-list" ng-show="section.type == 'widget-menu'">
                   <li class="comment-widget-icon" ng-click="event.selectWidget('comments')"></li>
                   <li class="photos-widget-icon" ng-click="event.selectWidget('img-gallery')" ></li>
                   <li class="fb-invitations-widget-icon" ng-click="event.selectWidget('fb-invitations')" ><div class="fb-icon-bg"></div></li>
@@ -121,7 +121,7 @@
 
               </div>
               
-              <button type="button" class="btn btn-add-section" ng-click="event.addSection()">+ Add new Section</button>
+              <button type="button" class="btn btn-add-section" ng-click="event.addSection('widget-menu')">+ Add new Section</button>
               <button type="button" class="btn btn-publish" ng-click="event.createEvent()"> Publish event </button>
           </form>
         </div><!-- END COL -->

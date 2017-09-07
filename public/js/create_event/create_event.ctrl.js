@@ -36,26 +36,34 @@
 		}
 
 		function createEvent() {
-
-			console.log("create event")
-
-			if (!vm.security.userValid){
-				var loginDialog = ngDialog.open({
+	
+			function openLogin(callback) {
+				ngDialog.open({
 					template: 'loginDialog',
 					controller: "AuthenticationController"
-				})	
-				
-				loginDialog.closePromise.then(function(data){
+				})
+				.closePromise.then(function (data) {
 					if (data.value == "register") {
-						var registerDialog = ngDialog.open({template: 'registerDialog'})
-						registerDialog.closePromise.then(function(data){
-							createEvent()
+						ngDialog.open({
+							template: 'registerDialog',
+							controller: "AuthenticationController"
+						})
+						.closePromise.then(function(){
+							callback()
 						})
 					}
 					else {
-						createEvent()
+						callback()
 					}
-				})
+				});
+			}
+
+			function validateUser(callback) {
+				if (!vm.security.userValid)	{
+					openLogin(function(){
+						callback()
+					})
+				}
 			}
 
 			if ($scope.createEventForm.$valid) {
@@ -69,30 +77,42 @@
 					"description": vm.description,
 					"sections": vm.sections
 				})
-
-				console.log(vm.eventData)
 				
-				vm.eventService.create(vm.eventData)
-				.then(function(response) {
-					if (response.errors === undefined) {
-						$location.path('/dashboard')
+				validateUser(function(){
+					if (vm.security.userValid) {
+						vm.eventService.create(vm.eventData)
+						.then(function(response) {
+							if (response.errors === undefined) {
+								$location.path("/dashboard")
+							}
+						})
+						.catch(function(error){
+								console.log(error)
+						})
 					}
 				})
-				.catch(function(error){
-						console.log(error)
-				})
+
+				
 			}
 		}
 
 		function addSection(type) {
+			var widgetMenu = vm.sections.filter(function(section){
+				return section.type == type
+			})
+
 			if (vm.sections.length < 3){
-				var section = {"type": type}
-				vm.sections.push(section)
+				if (widgetMenu.length < 1 ) {
+					var section = {"type": type}
+					vm.sections.push(section)
+				}
 			}
 		}
 
 		function removeSection(type) {
-			vm.sections.pop()
+			vm.sections = vm.sections.filter(function(section){
+				return section.type != type
+			})
 		}
 
 		function selectWidget(type) {
