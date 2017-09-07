@@ -1,3 +1,7 @@
 .vagrant/
 thin/
+.vagrant/
+.vscode/
 .DS_Store
+requests.http
+

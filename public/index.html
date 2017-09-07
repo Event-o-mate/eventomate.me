@@ -1,0 +1,82 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<title>Event-o-mate</title>
+
+ <!-- Load Pacifico font -->
+ <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
+ <!-- Bootstrap -->
+ <link href='css/bootstrap.css' rel='stylesheet'>
+ <link href='css/autocomplete.css' rel='stylesheet'>
+ <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+ <!-- Include main css file -->
+ <link rel='stylesheet' href='css/main.css' />
+ <!-- Include used libraries css files -->
+
+ <!-- bootstrap date time picker -->
+ <link rel='stylesheet' href='js/lib/datetimepicker/css/datetimepicker.css' />
+ <!-- ngDialog -->
+ <link rel='stylesheet' href='js/lib/ngDialog/css/ngDialog.min.css' />
+ <link rel='stylesheet' href='js/lib/ngDialog/css/ngDialog-theme-default.css' />
+ <!-- ngUISwitchButton -->
+ <link rel='stylesheet' href='js/lib/ngSwitch/angular-ui-switch.css' />
+ 
+<body class="snt-body-bg" ng-app="EventoMate">
+	<ng-include src="'templates/menu.html'"></ng-include>
+	<ng-view></ng-view>
+
+
+<!-- JQuery -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
+<!-- Momnet.js -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js'></script>
+<!-- AngularJS -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.js'></script>
+<!-- Angular libs -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.5.8/angular-resource.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-messages.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-cookies.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js'></script>
+<!-- Google maps API -->
+<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyC20xo5vUPz42LM5lG0GOhdwjniQR7pUu0&amp;libraries=places&amp;'></script>
+<!-- Boostrap -->
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+<!-- Include used libraries -->
+<!-- bootstrap date time picker -->
+<script src='js/lib/datetimepicker/js/datetimepicker.js'></script>
+<script src='js/lib/datetimepicker/js/datetimepicker.templates.js'></script>
+<!-- ngDialog -->
+<script src='js/lib/ngDialog/js/ngDialog.min.js'></script>
+<!-- ngMap -->
+<script src='js/lib/ngMap/ngMap.js'></script>
+<!-- ngGravatar -->
+<script src='js/lib/ngGravatar/ngGravatar.js'></script>
+<script src='js/lib/autocomplete.js'></script>
+<!-- ngUISwitchButton -->
+<script src='js/lib/ngSwitch/angular-ui-switch.js'></script>
+<!-- Include angular app files -->
+<!-- main app js file -->
+<script src='js/app.js'></script>
+<!-- app common libs -->
+<script src='js/common/services/security.service.js'></script>
+<script src='js/common/controllers/menu.ctrl.js'></script>
+<script src='js/common/controllers/auth.ctrl.js'></script>
+<script src='js/common/directives/datetime.js'></script>
+<script src='js/common/services/user.service.js'></script>
+<!-- home page -->
+<script src='js/home/home.ctrl.js'></script>
+<script src='js/home/home.service.js'></script>
+<!-- dashboard page -->
+<script src='js/dashboard/dashboard.ctrl.js'></script>
+<script src='js//dashboard/dashboard.service.js'></script>
+<!-- event page -->
+<script src='js/event/event.ctrl.js'></script>
+<script src='js/event/event.service.js'></script>
+<!-- create event page -->
+<script src='js/create_event/create_event.ctrl.js'></script>
+<script src='js/create_event/create_event.service.js'></script>

@@ -22,23 +22,23 @@
       .when("/", {
           controller: "HomeController",
           controllerAs: "landing",
-          templateUrl: "templates/home"
+          templateUrl: "templates/home.html"
       })
       .when("/dashboard", {
           controller: "DashboardController",
           controllerAs: "dashboard",
-          templateUrl : "templates/dashboard" 
+          templateUrl : "templates/dashboard.html" 
       })
       .when("/event/:id", {
           controller: "EventsController",
           controllerAs: "event",
-          templateUrl : "templates/event"
+          templateUrl : "templates/event.html"
 
       })
       .when("/create_event", {
           controller: "CreateEventController",
           controllerAs: "event",
-          templateUrl : "templates/create_event"
+          templateUrl : "templates/create_event.html"
       });
     }])
 

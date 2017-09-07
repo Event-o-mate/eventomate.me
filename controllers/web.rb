@@ -84,15 +84,15 @@ class WebController < Sinatra::Base
 	end
 
 	# fetch layout and index(ng-view) with home page
-	get '/' do 
-		haml :index
+  get '/' do 
+    redirect '/index.html'
 	end
 
 	# fetch angular templates
-	get '/templates/:filename' do
-		template = File.join("#{settings.views}/templates", "#{params[:filename]}.html")
-		send_file template
-	end
+	# get '/templates/:filename' do
+	# 	template = File.join("#{settings.views}/templates", "#{params[:filename]}.html")
+	# 	send_file template
+	# end
 end
 
 
