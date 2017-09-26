@@ -109,15 +109,10 @@
 		}
 
 		function addSection(type) {
-			var widgetMenu = vm.sections.filter(function(section){
-				return section.type == type
-			})
-
+			
 			if (vm.sections.length < 3){
-				if (widgetMenu.length < 1 ) {
-					var section = {"type": type}
-					vm.sections.push(section)
-				}
+				var section = {"type": type}
+				vm.sections.push(section)
 			}
 		}
 
@@ -128,7 +123,13 @@
 		}
 
 		function selectWidget(type) {
-			vm.sections[vm.sections.length - 1].type = type
+			var widgetSelected = vm.sections.filter(function(section){
+				return section.type == type
+			})
+
+			if (widgetSelected.length == 0) {
+				vm.sections[vm.sections.length - 1] = {"type" : type}
+			}
 		}
 
 		//Default datapicker settings 
