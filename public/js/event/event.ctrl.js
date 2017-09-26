@@ -148,7 +148,7 @@
 		function addComment() {
 
 			if (vm.comment.length > 0) {
-				data = {
+				var data = {
 					"content": vm.comment,
 					"user_id": vm.security.userId()
 				}

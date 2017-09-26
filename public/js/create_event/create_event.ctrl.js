@@ -36,6 +36,8 @@
 		}
 
 		function createEvent() {
+
+			console.log("create event")
 	
 			function openLogin(callback) {
 				ngDialog.open({
@@ -67,6 +69,9 @@
 			}
 
 			if ($scope.createEventForm.$valid) {
+
+				console.log("form is valid")
+
 				vm.eventData = JSON.stringify({
 					"title": vm.title,
 					"address": vm.location.formatted_address,
@@ -79,7 +84,12 @@
 				})
 				
 				validateUser(function(){
+
+					console.log("validate user")
 					if (vm.security.userValid) {
+						
+						console.log("user is valid")
+						
 						vm.eventService.create(vm.eventData)
 						.then(function(response) {
 							if (response.errors === undefined) {
@@ -90,9 +100,11 @@
 								console.log(error)
 						})
 					}
-				})
+					else {
+						console.log("user is NOT valid")
+					}
 
-				
+				})
 			}
 		}
 
