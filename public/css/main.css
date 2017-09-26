@@ -87,10 +87,11 @@ ul.nav a:hover { color: #fff !important; }
 }
 
 .snt-user-profile-settings-icon {
-  margin: 20 auto;
+  margin: 20px auto;
   display: block;
   border-radius: 15px
 }
+
 
 .snt-profile-form-input {
   width: 100%;
