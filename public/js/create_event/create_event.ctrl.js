@@ -66,6 +66,9 @@
 						callback()
 					})
 				}
+				else {
+					callback()
+				}
 			}
 
 			if ($scope.createEventForm.$valid) {
