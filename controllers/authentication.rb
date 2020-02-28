@@ -87,7 +87,7 @@ class AuthenticationController < Sinatra::Base
 		end
 	end
 
-	post 'recover/account' do
+	post '/recover/account' do
 		Response.for :account_recovery, api_request do |response|
 			record = security.model.first(:recovery_code => api_request.body["code"])
 			unless record.nil?
@@ -125,6 +125,7 @@ class AuthenticationController < Sinatra::Base
 			record = security.model.get(id)
 			unless record.nil?
 				record.token = nil
+				# TODO - logged out typo
 				response.data = {:loged_out => true}
 			else
 				response.error Error.code 1001 #invalid data request, or data missing?
