@@ -2,6 +2,8 @@
 require 'haml'
 require 'sinatra/assetpack'
 
+# TODO - refactor for vue output files
+
 class WebController < Sinatra::Base
 	enable :method_override
 

@@ -64,50 +64,61 @@
 
 ### `/api/records`
 
-| method | route               | req data | res data | res errors |
-| ------ | ------------------- | -------- | -------- | ---------- |
-| get    | /user/:id/event     | -        | -        | -          |
-| get    | /event/:id/attendee | -        | -        | -          |
-| put    | /user/:id/event     | -        | -        | -          |
-| put    | /event/:id/attendee | -        | -        | -          |
-| get    | /:model             | -        | -        | -          |
-| get    | /:model/:id         | -        | -        | -          |
-| put    | /:model             | -        | -        | -          |
-| post   | /:model/?:id?       | -        | -        | -          |
-| delete | /:model/:id         | -        | -        | -          |
+| method | route                    | req data   | res data        | res errors       |
+| ------ | ------------------------ | ---------- | --------------- | ---------------- |
+| get    | /user/:id/event          | -          | user events     | -                |
+| get    | /event/:id/attendee      | -          | event attendees | -                |
+| put    | /user/:id/event          | event data | -               | 1002             |
+| put    | /event/:id/attendee      | user_id    | event attendee  | -                |
+| get    | /:model (abstract)       | -          | -               | 1001, 1008       |
+| get    | /:model/:id (abstract)   | -          | -               | 1001, 1008       |
+| put    | /:model (abstract)       | -          | -               | 1002, 1008       |
+| post   | /:model/?:id? (abstract) | -          | -               | 1001, 1003, 1008 |
+| delete | /:model/:id (abstract)   | -          | -               | 1001, 1004, 1008 |
 
 ### `/api/sections`
 
-| method | route | req data | res data | res errors |
-| ------ | ----- | -------- | -------- | ---------- |
-| get    | /     | -        | -        | -          |
-| post   | /     | -        | -        | -          |
-| put    | /     | -        | -        | -          |
-| delete | /     | -        | -        | -          |
+| method | route | req data                       | res data     | res errors |
+| ------ | ----- | ------------------------------ | ------------ | ---------- |
+| get    | /     | -                              | all sections | 1001       |
+| get    | /:id  | -                              | section      | 1001       |
+| post   | /     | event_id, widget_type          | section      | 1001, 1002 |
+| put    | /:id  | event_id, widget_type, enabled | -            | 1001, 1003 |
+| delete | /:id  | -                              | -            | 1001       |
 
 ### `/api/users`
 
-| method | route | req data | res data | res errors |
-| ------ | ----- | -------- | -------- | ---------- |
-| get    | /     | -        | -        | -          |
-| post   | /     | -        | -        | -          |
-| put    | /     | -        | -        | -          |
-| delete | /     | -        | -        | -          |
+| method | route                       | req data                                                                 | res data         | res errors |
+| ------ | --------------------------- | ------------------------------------------------------------------------ | ---------------- | ---------- |
+| get    | /                           | -                                                                        | all users        | 1001       |
+| get    | /:id                        | -                                                                        | user             | 1001       |
+| post   | /                           | email, password, token                                                   | user             | 1002       |
+| put    | /:id                        | email, password, token                                                   | user             | 1001, 1003 |
+| delete | /:id                        | -                                                                        | -                | 1001       |
+| get    | /:id/account                | -                                                                        | user.account     | -          |
+| post   | /:id/account                | name, email                                                              | -                | 1001, 1002 |
+| get    | /:id/events                 | -                                                                        | all user events  | 1001       |
+| get    | /:id/events/:event_id       | -                                                                        | user event       | 1001       |
+| post   | /:id/events                 | sections, title, address, lat, lng, start_date, finish_date, description | user event       | 1001, 1002 |
+| get    | /:id/comments               | -                                                                        | user comments    | 1001       |
+| get    | /:id/comments/:comment_id   | -                                                                        | user comments    | 1001       |
+| get    | /:id/attendees              | -                                                                        | attending events | 1001       |
+| get    | /:id/attendees/:attendee_id | -                                                                        | attending event  | 1001       |
 
-### `/api/widge`
+### `/api/widgets`
 
-| method | route | req data | res data | res errors |
-| ------ | ----- | -------- | -------- | ---------- |
-| get    | /     | -        | -        | -          |
-| post   | /     | -        | -        | -          |
-| put    | /     | -        | -        | -          |
-| delete | /     | -        | -        | -          |
+| method | route | req data | res data    | res errors |
+| ------ | ----- | -------- | ----------- | ---------- |
+| get    | /     | -        | all widgets | 1001       |
+| get    | /:id  | -        | widget      | 1001       |
+| post   | /     | type     | widget      | 1001       |
+| put    | /:id  | type     | widget      | 1001, 1003 |
 
 ## Respose errors:
 
 1001, "Invalid data request, or data missing."  
--1002, "Record not created, invalid data request, or sent data invalid."  
--, "Record not saved, invalid data request, or sent data invalid."  
+1002, "Record not created, invalid data request, or sent data invalid."  
+1003, "Record not saved, invalid data request, or sent data invalid."  
 1004, "Record not deleted, data missing, or invalid data request."  
 1005, "Provided email is in use by another user."  
 1006, "Invalid email and password combination."  

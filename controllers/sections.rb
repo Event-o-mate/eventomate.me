@@ -41,6 +41,7 @@ class SectionsController < Sinatra::Base
 		event ||= Event.get(event_id) || halt(api_error 1001)
 		widget ||= first_or_create(:type => widget_type) || halt(api_error 1001)
 		section ||= Section.get(section_id) || halt(api_error 1001)
+		# TODO - attributes not assigned/saved to section
 		attributes = [
 			:event => event,
 			:widget => widget,
